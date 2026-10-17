@@ -62,4 +62,4 @@ Offline checks (no credits used): `python test_search.py` in `app/backend`, whic
 - Prices come from a third-party search API and can change.
 
 ## Licence
-Not chosen yet.
+[MIT](LICENSE). The code is free to use; the product data, brand names and the Sarvam and QuickCommerceAPI services belong to their owners.
