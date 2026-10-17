@@ -2,7 +2,7 @@
 
 A voice assistant that helps shoppers in smaller Indian cities find fashion and beauty products across Myntra, Amazon and Nykaa by speaking naturally in English or Hinglish. Built as a product-management portfolio project to learn how voice AI works and, above all, how it is **evaluated**.
 
-> **Status:** work in progress. The voice loop and live product search work locally. Not deployed yet. Offers from DesiDime, the evaluation harness and the demo video are still to come.
+> **Status:** work in progress. The voice loop and live product search work locally. Not deployed yet. Offers from DesiDime were descoped (see spec 02). The speech evaluation harness and the demo video are next.
 
 ## The idea
 Neha, 27, lives in Raipur and wants a specific item (branded sneakers, a saree blouse) that local shops do not stock. Today she searches platform by platform and compares prices in her head. Pia lets her say what she wants, shows the three lowest-priced matches across platforms, takes spoken follow-ups ("thoda sasta dikhao", "Myntra pe hi dikhao", "agle 3 dikhao"), and replies in the language she spoke.

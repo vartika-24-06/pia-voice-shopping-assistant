@@ -1,6 +1,6 @@
 # Spec 02: Goals and Non-Goals
 
-**Status:** CLOSED v1.1 (2026-10-17). Assumed non-goals are accepted as written. v1.1: platforms changed to Myntra, Amazon and Nykaa with category routing; duplicates are grouped (section 7).
+**Status:** CLOSED v1.2 (2026-10-17; DesiDime offers descoped, see section 8). Assumed non-goals are accepted as written. v1.1: platforms changed to Myntra, Amazon and Nykaa with category routing; duplicates are grouped (section 7).
 **Owner:** PM. Non-goal reasons drafted by Claude at PM's request.
 
 ---
@@ -10,13 +10,13 @@
 For the persona in spec 01 (Neha, tier 2/3, cost-conscious, Hinglish):
 1. She can say what she wants and see the best-priced matching options across Myntra, Amazon and Nykaa (routed by category), in one place.
 2. She can refine the results by speaking, in the language she naturally uses.
-3. For the product she picks, she can find the best applicable offers without leaving the conversation.
+3. *(Descoped on 2026-10-17, see the decision log.)* For the product she picks, she can find the best applicable offers without leaving the conversation.
 4. She always gets a trustworthy answer: never an invented price, and a clear "nothing matched" when that is true.
 
 ## 2. Portfolio and learning goals
 
 1. Demonstrate an understanding of how a voice AI product works end to end (speech in, reasoning with tools, speech out) and how it is evaluated.
-2. Demonstrate sound use of MCP and OAuth: a tool layer behind a clean interface, user-delegated access, and honest handling of third-party limits.
+2. Demonstrate sound tool design: a tool layer behind a clean interface, and honest handling of third-party limits. (Third-party sign-in with OAuth was descoped; see the decision log.)
 3. Show product judgment: defined user, measurable targets, explicit trade-offs, documented cuts.
 4. **PM's own learning goal:** understand how voice AI works, and how voice AI is evaluated.
 
@@ -31,7 +31,6 @@ For the persona in spec 01 (Neha, tier 2/3, cost-conscious, Hinglish):
 | Top 3 results by price, user ratings as tiebreaker | None. Core |
 | Spoken follow-up refinement (price, brand, platform, "thoda sasta"). Colour words ("black mein") are added to the search text but results are **not verified for colour** | None. Core to the voice hypothesis |
 | On-screen cards with links to each platform | None. Core |
-| Connect DesiDime and find offers for the **one product picked**, one at a time | **Recorded demo** plus a snapshot of offers for test products |
 | Saying clearly when nothing matches | None. Core |
 | "Show more" by voice: the next 3 results | None. Core |
 | Vague follow-ups such as "isse accha kuch" answered with preset choices on screen (higher rated, higher priced, new search) | None |
@@ -45,8 +44,7 @@ For the persona in spec 01 (Neha, tier 2/3, cost-conscious, Hinglish):
 ### Cut order if time runs short
 Cut from the top, and never cut below the Must line:
 1. Usage and cost display
-2. DesiDime live mode (fall back to the recorded demo and snapshot)
-3. Nykaa (beauty would then route to Myntra only). The three platforms are the plan; this is only the last-resort cut
+2. Nykaa (beauty would then route to Myntra only). The three platforms are the plan; this is only the last-resort cut
 
 *(Draft order proposed by Claude. PM to confirm or reorder.)*
 
@@ -67,6 +65,7 @@ Each is a deliberate cut, with the reason.
 | **Streaming and automatic end-of-speech detection** *(assumed, confirm)* | Phase 2. Press-to-talk is the Phase 1 decision |
 | **Other Indian languages** *(assumed, confirm)* | English and Hinglish are the target user's languages. More languages multiply the eval work |
 | **Stacking several offers into one final price** *(assumed, confirm)* | Needs precise rules on how offers combine, and a large labelled test set |
+| **Offers and coupons from DesiDime** *(descoped 2026-10-17)* | Needs a per-user sign-in flow, token handling, rate-limit care and an unresolved terms question. The time is better spent on the speech evaluation. Kept in the specs as a documented option for later |
 
 ## 5. Phase 1 is done when
 - Every Must works end to end on a laptop browser.
@@ -94,3 +93,4 @@ Category scope (decided): clothing, footwear, fashion accessories, jewellery and
 | 2026-10-17 | Public write-up is a Must (lightweight) | It is the deliverable a hiring manager reads |
 | 2026-10-17 | DesiDime offers on the picked product only, one at a time | Rate limit and scope |
 | 2026-10-17 | Fallback for BYOK and DesiDime is a recorded demo | PM decision |
+| 2026-10-17 | **DesiDime offers descoped.** Moved from Must to a non-goal; the time goes to a speech-evaluation harness | The learning goal is voice AI and how it is evaluated, and the biggest lessons so far came from recognition and pronunciation, not offers. DesiDime also needed per-user sign-in, token handling and an unresolved terms question |

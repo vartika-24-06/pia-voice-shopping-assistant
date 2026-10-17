@@ -70,7 +70,7 @@ Even when she is very specific about what she wants, she has to search platform 
 | Faithfulness (guardrail) | Every price, discount, code and condition spoken or shown exists in the retrieved data. Counted per response | 0 errors in 60 test conversations | Same | A wrong price breaks trust for a cost-conscious user. Also enforced by a code check before speaking, not only measured |
 | Response speed, Phase 1 | Time from end of speech to first audio. p50 and p90 | p50 ≤ 7s, p90 ≤ 10s | p50 ≤ 5s, p90 ≤ 8s | Phase 1 is not streaming and searches several platforms. Human conversation gaps are well under a second and good voice agents aim around one second, so 1s is a Phase 2 goal, not Phase 1. A "searching" audio cue is used to cover the wait |
 | Speech recognition | Brand and product-term accuracy on Hinglish recordings. Word error rate is reported, not gated | ≥ 70% | ≥ 85% | Baseline from the first run: about 67% on the first set and 77% on the held-out set, counting agreed spelling variants as correct. The target assumes brand repair and "did you mean" confirmation (spec 04). Measured as key-term accuracy, not word error rate, because Hinglish spelling varies |
-| Discount correctness | On ~25 labelled cases, is "applicable" correct? | 0 false "applicable" claims | ≥ 90% overall correct | Saying a discount applies when it doesn't is worse than missing a real one |
+| Discount correctness (descoped with offers, see spec 02) | On ~25 labelled cases, is "applicable" correct? | 0 false "applicable" claims | ≥ 90% overall correct | Saying a discount applies when it doesn't is worse than missing a real one |
 | "I don't know" behaviour (guardrail) | On ~10 unanswerable queries, the agent says nothing matched and does not invent | 9 of 10 | 10 of 10 | An invented product is a faithfulness failure |
 | Cost per session (guardrail) | Your cost per session. Sarvam is on the visitor's key | ≤ ₹2 | ≤ ₹1 | Search credits: ₹500 buys 2,500 credits, so about ₹0.2 per credit. A 3-platform search is about ₹0.6, so a 3-search session is about ₹1.8 before caching |
 
@@ -86,6 +86,7 @@ These are v0 targets. After the first baseline run on the eval set, each target 
 | 2026-10-17 | Pipeline: hand-rolled, press-to-talk (Phase 1) | Learning goal, speed |
 | 2026-10-17 | Web app only | Scope |
 | 2026-10-17 | Sarvam key is BYOK; DesiDime offers via the user's own account (backend OAuth) | Cost control and privacy |
+| 2026-10-17 | DesiDime offers descoped (spec 02); the discount-correctness metric goes with it | Time goes to the speech evaluation |
 | 2026-10-17 | Core search: multi-platform through QuickCommerceAPI; deals are an add-on on the top 3 | Scope |
 | 2026-10-17 | Persona: Neha, 27, Raipur | Drafted by Claude at PM's request; to be validated |
 | 2026-10-17 | Replies in the user's language | PM decision |

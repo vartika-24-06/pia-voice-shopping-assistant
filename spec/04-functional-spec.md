@@ -20,7 +20,7 @@ Routing is decided by the LLM when it calls the search tool (it passes a categor
 | Tool | Input | Output | Cost |
 |---|---|---|---|
 | `search_products` | `query`, `category`, optional filters: `max_price`, `brand`, `platform`, `sort` (`lowest_price` by default, or `highest_rating` / `highest_price` for the "isse accha kuch" presets), and `page` (1 = top 3, 2 = next 3, and so on; later pages come from the already-fetched, cached results and cost no extra credits) | Up to 3 product groups, ranked (section 4), each with listings per platform | 1 credit per platform searched |
-| `find_offers` | `product_group_id` (the one the user tapped) | Applicable offers (coupon codes, bank offers, price-drop note) from DesiDime, or a status: `not_connected`, `rate_limited`, `none_found` | DesiDime rate limit |
+| ~~`find_offers`~~ *(descoped 2026-10-17)* | `product_group_id` (the one the user tapped) | Applicable offers (coupon codes, bank offers, price-drop note) from DesiDime, or a status: `not_connected`, `rate_limited`, `none_found` | DesiDime rate limit |
 
 The browser runs the conversation with Sarvam and calls these two tools on the backend. A third tool, `show_choices` (kind `refine`), runs in the browser only: it shows the "higher rated / higher priced / new search" buttons when a request is vague. Platform buttons ("All", "Myntra", "Amazon" or "Nykaa") under the results re-run the search through the same conversation. The Sarvam key stays in the browser.
 
@@ -31,7 +31,7 @@ The browser runs the conversation with Sarvam and calls these two tools on the b
 
 **Product group** (what the user sees): `group_id`, `display_name`, `brand`, `listings[]` (one or more platforms, each with its price), `best_listing` (the lowest-priced one).
 
-**Fields we do not have:** colour, gender, category, discount percentage from the source, and anything about offers (that comes from DesiDime).
+**Fields we do not have:** colour, gender, category, discount percentage from the source, and anything about offers (descoped).
 
 ## 4. Search and ranking pipeline (one turn)
 
@@ -55,7 +55,9 @@ The browser runs the conversation with Sarvam and calls these two tools on the b
 - **Three bands (built in step 4):** exact or very close to one known brand (similarity at least 0.8): accept and search; moderately close (0.62 to 0.8) or a known ambiguous spelling ("K Beauty", "Honetsuka"): no search, the screen shows the candidates as buttons and Pia asks once; nothing close: search as heard (the brand list is incomplete, so an unknown brand is not proof of a mishearing). Confirmations cost no search credits. Known ambiguous spellings are also checked on what the user said **before the model sees it** (`/api/ambiguity`), because the model can silently rewrite "K Beauty" into "Korean" and search before the backend ever sees the original words (found in the second retest).
 - **Screen confirmation:** when a brand needs confirming, the candidates show as tappable chips with name and logo (logos from product images if available), so Pia need not spend another voice turn.
 
-## 5. Offers flow (DesiDime)
+## 5. Offers flow (DesiDime): DESCOPED on 2026-10-17
+
+*Kept for the record and for a possible later version. It is not being built; spec 02 gives the reason.*
 
 1. The user taps a product card.
 2. If DesiDime is not connected, the screen shows a "Connect DesiDime" button (backend OAuth flow). Pia says nothing about login by voice.
@@ -81,7 +83,7 @@ The browser runs the conversation with Sarvam and calls these two tools on the b
 - Nykaa search is inconsistent.
 - No pincode or delivery check.
 - Product matching across platforms can be wrong.
-- Offers come from a community site, may be stale, and need the user's DesiDime login.
+- Offers are not offered (descoped, see spec 02).
 
 ## 9. Decisions (PM accepted each "I propose" below)
 1. **Loud failure or quiet?** When one platform fails (timeout or error), does Pia mention it ("Amazon abhi nahi mila") or show the other platform's results silently? I propose mentioning it, in one short line.

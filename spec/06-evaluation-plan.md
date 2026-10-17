@@ -17,7 +17,7 @@
 | 1 | Speech recognition | Did it hear the key words? | **Key-term accuracy** (brands, product types) with agreed variants. Word error rate is reported, not gated | Automatic, using the variants list (section 4) | Automatic; variants approved by PM |
 | 2 | Understanding | Did the LLM extract the right search and call the right tool? | Intent accuracy: product type, brand, price limit, category, platform | Compare to expected tool call | Automatic |
 | 3 | Retrieval | Are the top 3 relevant, correctly grouped and correctly ranked? | Precision@3; grouping errors; ranking follows the rule in spec 03 | Labelled by PM on a sample; ranking rule checked in code | PM + automatic |
-| 4 | Response | Are all prices and offers real? Is the reply in "aap", feminine grammar, the language the user selected (English or Hinglish, whatever language they spoke), correct Hinglish grammar, within the speech budget? | Hallucinated facts per 100 replies; register violations; reply length | Automatic checks on every reply | Automatic |
+| 4 | Response | Are all prices real? Is the reply in "aap", feminine grammar, the language the user selected (English or Hinglish, whatever language they spoke), correct Hinglish grammar, within the speech budget? | Hallucinated facts per 100 replies; register violations; reply length | Automatic checks on every reply | Automatic |
 | 5 | Speech output | Does the Hinglish sound right? | Naturalness 1 to 5 on a sample | Human listening | PM |
 | 6 | Speed | How long does each stage take? | p50 and p90 per stage and total | Timing logs | Automatic |
 | 7 | Whole task | Did the user get what they wanted? | Task success on full conversations | Judged against the expected outcome | PM |
@@ -29,7 +29,7 @@
 | Speech set | Your recordings, English and Hinglish, fan noise throughout | 39 clips | Exists (`recordings/`) |
 | Held-out brand set | The 13 later brand clips. Never used to tune anything | 13 of the 39 | Exists. Rule: keep untouched |
 | Conversation set | Full multi-turn conversations with expected outcomes | 0 | **[PM TO WRITE]** 20 conversations (template in section 5) |
-| Offers set | Products with known offers and known conditions, labelled applicable or not | 0 | Later, once DesiDime access works. About 25 cases |
+| ~~Offers set~~ | *(Descoped with DesiDime offers.)* | n/a | Dropped |
 | Refusal and no-match set | Out-of-scope and unanswerable requests | A few in the speech set | Part of the conversation set. At least 10 |
 
 ## 4. Scoring rules
@@ -134,3 +134,28 @@ See `tools/eval/STT_FINDINGS.md`. In short: translit gives Roman text; brands re
 4. What failed and why, with examples.
 5. What I changed and what happened.
 6. What I would do next.
+
+## 9. Next: the speech evaluation harness (planned for the next session)
+
+**Why:** with offers descoped, the evaluation of the voice pipeline is the core of the project. Everything learned so far came from this layer (brand names misheard, Hinglish spelling variants making word error rate unfair, models rewriting words, words mispronounced).
+
+**Inputs:** `recordings/transcripts.csv` (41 clips, with 13 held-out brand clips that are never tuned on), the agreed brand variants (section 4.1), and the saved results in `tools/eval/results/`.
+
+**Error taxonomy** (every difference between what was said and what was heard gets one label):
+1. Brand misheard (for example "Kay Beauty" heard as "Ke koti")
+2. Product word misheard
+3. Word dropped (start, middle or end of the clip)
+4. Word inserted
+5. Wrong script (Devanagari when Roman letters were wanted)
+6. Number or price written differently ("1500", "fifteen hundred", "Rs. 100")
+7. Accepted spelling variant (not an error)
+8. Invented brand ("show me" heard as "Xiaomi")
+
+**Metrics:** key-term accuracy (brand, product, price), dropped-word rate by position, insertion rate, word error rate (reported, not gated), and all of these split by language, clip type and background noise. Time per clip.
+
+**Speech output test:** a listening sheet of the words Pia says often (price, platform, brand, budget, rating, search, Myntra, Amazon, Nykaa and the product words), in Roman and Devanagari, rated blind with repeated trials, to grow the pronunciation list from data.
+
+**Fallback measurement:** how often a user would need to type a correction ("type instead" box), estimated from the taxonomy.
+
+**Mechanics:** one script reads the transcripts and the variants file, runs a configuration, labels errors, and writes a dated markdown report to `tools/eval/results/`. Each run records the configuration, so changes can be compared with the baseline.
+

@@ -19,7 +19,7 @@
 6. **Speech budget:** a spoken reply fits in about 15 seconds (roughly 40 words). Anything longer goes on the screen.
 7. **Only the top pick is read aloud,** with its price and rating, in one line. The full top 3 (highlight, rating, price, link) is on the screen cards.
 8. **Claims stay grounded:** say "best offer I found" or "lowest listed price", never "cheapest overall" (spec 02).
-9. **Scope of what Pia does:** she searches for fashion items on the supported platforms, and looks up offers for the product the user picks. She **refuses anything else** (other topics, advice, opinions on how an outfit looks, items outside fashion), with one polite redirect in the user's language: "Main sirf fashion aur beauty products search karne mein madad kar sakti hoon. Aap kya dekhna chahenge?" (The earlier wording with "dhoondh" was dropped: the Roman spelling is mispronounced by the voice.) She does not try to answer out-of-scope questions.
+9. **Scope of what Pia does:** she searches for fashion items on the supported platforms. She **refuses anything else** (other topics, advice, opinions on how an outfit looks, items outside fashion), with one polite redirect in the user's language: "Main sirf fashion aur beauty products search karne mein madad kar sakti hoon. Aap kya dekhna chahenge?" (The earlier wording with "dhoondh" was dropped: the Roman spelling is mispronounced by the voice.) She does not try to answer out-of-scope questions.
 
 10. **Replies are generated, not scripted** (PM decision, 2026-10-17). The model writes each reply; the sentence patterns in the prompt guide wording and grammar only. If Hinglish quality stays weak, the response is better prompting, a better model, or a stricter evaluation of Hinglish grammar, not fixed sentences.
 
@@ -44,7 +44,7 @@ This keeps the PM's decision (price first, rating second) and protects the user 
 | 3 | User | "Need a purple one jo saree ke contrast mein ho" |
 | 4 | Pia | Natural confirmation ("Pink saree ke saath contrast mein purple blouse, yeh rahe"), searches again, shows the new selection |
 | 5 | User | Taps a card (tap only in v1) |
-| 6 | Pia | Looks up offers for that product. Says the best offer found and the price after it, or says plainly that no offer was found |
+| 6 | Pia | *(Descoped with offers.)* Looks up offers for that product. Says the best offer found and the price after it, or says plainly that no offer was found |
 
 ## 4. Sample conversation 2: no match
 
@@ -76,7 +76,7 @@ This keeps the PM's decision (price first, rating second) and protects the user 
 | 4 | Silence or empty recording | "Mujhe kuch sunai nahi diya, kripya dobara bolein." (neutral wording, with no gendered form for the user) | Proposed |
 | 5 | Slow response | A short spoken or visual cue while searching ("Dhoondh rahi hoon") | Proposed |
 | 6 | Sarvam key invalid or out of credits | Clear message on screen with a link to top up. Not spoken | Proposed |
-| 7 | DesiDime not connected, rate limited, or no offers found | Not connected: show the Connect button. Rate limited: "Abhi offers check nahi ho paa rahe, thodi der baad try karein." No offers: say so plainly | Proposed |
+| 7 | *(Descoped with offers.)* DesiDime not connected, rate limited, or no offers found | Not connected: show the Connect button. Rate limited: "Abhi offers check nahi ho paa rahe, thodi der baad try karein." No offers: say so plainly | Proposed |
 | 8 | Result missing a price or a rating | Say the detail is missing. Never fill it in | Proposed |
 
 ## 6. Decisions on follow-ups and selection

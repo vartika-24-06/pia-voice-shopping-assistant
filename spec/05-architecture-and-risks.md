@@ -16,8 +16,10 @@ Browser (static page)                         Backend (small, one service)
             +------ tool calls (search, offers) -----------+
 ```
 
+*Descoped 2026-10-17: the `/offers` and `/oauth/*` parts of this diagram (DesiDime) are not being built.*
+
 - The **visitor's Sarvam key never leaves the browser.** The browser calls Sarvam directly (the chat endpoint allows browser requests; STT and TTS still need a check).
-- The **backend holds your QuickCommerceAPI key** and each connected user's DesiDime token (in memory, short lifetime, with a Disconnect button).
+- The **backend holds your QuickCommerceAPI key** (DesiDime tokens are no longer needed: descoped).
 - Frontend and backend are served from **one domain**, so session cookies stay simple.
 
 ## 2. Proposed stack (PM may overrule)
@@ -36,7 +38,7 @@ Browser (static page)                         Backend (small, one service)
 | 2 | Bulbul reads mixed Hindi-English text unnaturally | Medium | High | Use the documented format (Devanagari for Hindi words, English words in Latin); test the `enhi` voices | Generate 10 sample sentences and listen |
 | 3 | **MOSTLY CLEARED:** 7 of 7 tool-calling tests passed in the browser check, but the model invented a platform filter once (fix: prompt rule and eval check). Was: Sarvam-105B calls tools unreliably in Hinglish | Medium | High | Validate every tool call's arguments; retry once; measure in evals | 20 Hinglish prompts, count correct tool calls |
 | 4 | Latency beyond p90 of 10s | High | Medium | Reasoning off, parallel searches, "searching" cue, short replies | Time each stage on a simple conversation |
-| 5 | DesiDime refuses our client registration or restricts third-party apps | Medium | Medium | Recorded-demo fallback (spec 02) | Try registration with a local redirect URL |
+| 5 | **DESCOPED 2026-10-17.** DesiDime refuses our client registration or restricts third-party apps | Medium | Medium | Recorded-demo fallback (spec 02) | Try registration with a local redirect URL |
 | 6 | Wrong cross-platform grouping shows a misleading price | Medium | High | Cautious grouping; measure grouping errors in evals | Review 20 groups by hand |
 | 7 | QuickCommerceAPI credits expire in 30 days | Certain | Low | Buy the pack close to the final evaluation run; cache results | Check the expiry header |
 | 8 | Nykaa returns nothing for common queries | High | Low | Myntra first; Nykaa is optional | Already seen |
@@ -48,7 +50,7 @@ Browser (static page)                         Backend (small, one service)
 2. **Voice loop with a fake search:** press-to-talk, STT, LLM, TTS, with hard-coded products. Timing logs from the start.
 3. **Real search:** backend, routing, normalisation, grouping, ranking.
 4. **Follow-ups and the no-match, refusal and failure behaviours** from spec 03.
-5. **Offers:** DesiDime OAuth (risk 5), with the fallback ready.
+5. ~~Offers: DesiDime OAuth (risk 5)~~ **Descoped.** Replaced by a speech evaluation harness (see spec 06, section 9).
 6. **Eval harness and the baseline run;** recalibrate targets.
 7. **Recorded demo and write-up.**
 
@@ -58,3 +60,4 @@ Browser (static page)                         Backend (small, one service)
 | 2026-10-17 | One backend service, one domain; visitor's Sarvam key stays in the browser |
 | 2026-10-17 | Stack: plain JS frontend, Python (FastAPI) backend, one free-tier host. PM accepted the proposal |
 | 2026-10-17 | Build order in section 4 accepted by PM |
+| 2026-10-17 | Step 5 (DesiDime offers) descoped; replaced by the speech evaluation harness |
