@@ -1,6 +1,6 @@
 'use strict';
-/* Pia, voice shopping assistant. Step 2: the voice loop with made-up sample products.
-   Sarvam is called straight from this page with the visitor's own key. */
+/* Pia, a voice shopping assistant. The voice loop runs in this page with the visitor's own Sarvam key;
+   product search goes through our own backend (/api/search). */
 
 const BASE = 'https://api.sarvam.ai';
 const $ = id => document.getElementById(id);
@@ -9,7 +9,8 @@ const MAX_RECORD_MS = 25000;
 const S = {
   key: '', name: '', gender: '', lang: 'hi', voice: 'simran_enhi_companion',
   messages: [], recording: false, busy: false, speaking: false,
-  rec: null, stream: null, chunks: [], tStop: 0, autoStop: null, audio: null,
+  rec: null, stream: null, chunks: [], tStop: 0, startedAt: 0, autoStop: null,
+  audio: null, cueAudio: null, playingEl: null, cues: {},
   last: null, // last search: { args, total, page }
   turn: 0,
 };
@@ -22,23 +23,39 @@ const store = {
 };
 const titleCase = s => String(s || '').replace(/\w\S*/g, w => w[0].toUpperCase() + w.slice(1));
 const rupees = n => '₹' + Math.round(n).toLocaleString('en-IN');
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+const ICON = {
+  speaker: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>',
+};
 
 /* ---------------- the two languages: English and Hinglish (Hindi in English letters) ---------------- */
 const I18N = {
   en: {
-    setupTitle: 'Get started',
-    setupIntro: 'Pia uses Sarvam AI to hear and to speak. Your Sarvam key stays in this browser tab and is sent only to api.sarvam.ai.',
+    heroTitle: 'Tell Pia what you want. She finds the best price.',
+    heroSub: 'Say it in English or Hinglish. Pia checks Myntra, Amazon and Nykaa and shows you the three lowest prices.',
+    howTitle: 'How it works',
+    step1T: '1. Speak', step1P: 'Tap the mic and say what you need.',
+    step2T: '2. Pia searches', step2P: 'She compares the stores live.',
+    step3T: '3. You choose', step3P: 'Tap a result to open the store.',
+    tryTitle: 'Try it',
     lblKey: 'Sarvam API key', phKey: 'Paste your Sarvam key',
     lblName: 'Your name (optional)', phName: 'e.g. Neha',
     lblGender: 'Gender (optional)', gNone: 'Prefer not to say', gFemale: 'Female', gMale: 'Male',
-    lblVoice: "Pia's voice", btnStart: 'Get started', demoLink: 'Watch the recorded demo (coming soon)',
+    advanced: 'Advanced', lblVoice: "Pia's voice", btnStart: 'Get started',
+    keyNote: 'Your key stays in this browser tab and is sent only to Sarvam. It is never saved on our server.',
+    getKey: 'How to get a Sarvam key', demoLink: 'Watch the recorded demo (coming soon)',
+    github: 'View the code and specs on GitHub',
+    disclaimer: 'A portfolio project built with Sarvam AI. Not affiliated with Myntra, Amazon or Nykaa. Prices come from a third-party search and may differ in the store.',
     needKey: 'Please paste your Sarvam key first.',
     greeting: n => `Hello${n ? ' ' + n : ''}! Tell me what you are looking for. I can search Myntra, Amazon and Nykaa.`,
-    micIdle: 'Tap to speak', micRec: 'Done? Tap to stop', micSpeak: 'Pia is speaking...', micThink: 'Pia is thinking...',
-    chipReady: 'You can speak now', chipListen: 'Listening', chipThink: 'Thinking', chipSpeak: 'Pia is speaking',
-    btnStop: 'Stop Pia', hint: 'Say one thing at a time. The mic stays off while Pia speaks.',
-    btnMore: 'Show next 3', moreText: 'Show the next 3', speed: 'Speed (ms)', changeKey: 'Change key',
-    notRated: 'No ratings yet', viewOn: p => `View on ${p}`,
+    chips: ['white sneakers under 2000', 'pink saree blouse', 'Huda Beauty concealer'],
+    statusReady: 'Tap to speak', statusListen: 'Listening... tap to send', statusThink: 'Thinking...', statusSpeak: 'Pia is speaking',
+    earlier: n => `Earlier (${n})`, replay: 'Play this reply', stopPlay: 'Stop',
+    btnMore: 'Show next 3', moreText: 'Show the next 3', changeKey: 'Change key',
+    detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
+    notRated: 'No ratings yet', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'The Sarvam key does not look right. Please try a different key.',
     errCredits: 'Your Sarvam credits or rate limit seem to have run out. Please check the Sarvam dashboard.',
     errServer: 'Sarvam is not responding right now. Please try again in a moment.',
@@ -54,19 +71,29 @@ const I18N = {
     fallback: 'Sorry, something went wrong. Could you say that again?',
   },
   hi: {
-    setupTitle: 'Shuru karne ke liye',
-    setupIntro: 'Pia sunne aur bolne ke liye Sarvam AI use karti hai. Aapki Sarvam key sirf is browser tab mein rehti hai aur sirf api.sarvam.ai ko bheji jaati hai.',
+    heroTitle: 'Pia ko bataiye aap kya chahte hain. Sabse achha price woh nikaal degi.',
+    heroSub: 'English ya Hinglish mein bolein. Pia Myntra, Amazon aur Nykaa dekhkar sabse kam daam ke teen options dikhati hai.',
+    howTitle: 'Yeh kaise kaam karta hai',
+    step1T: '1. Bolein', step1P: 'Mic dabayein aur bataiye aapko kya chahiye.',
+    step2T: '2. Pia dekhti hai', step2P: 'Woh stores ko live compare karti hai.',
+    step3T: '3. Aap chunein', step3P: 'Kisi bhi option par tap karke store kholein.',
+    tryTitle: 'Aazma kar dekhein',
     lblKey: 'Sarvam API key', phKey: 'Apni Sarvam key paste karein',
     lblName: 'Aapka naam (optional)', phName: 'jaise Neha',
     lblGender: 'Gender (optional)', gNone: 'Batana nahi chahte', gFemale: 'Female', gMale: 'Male',
-    lblVoice: 'Pia ki awaaz', btnStart: 'Shuru karein', demoLink: 'Recorded demo dekhein (jaldi aa raha hai)',
+    advanced: 'Advanced', lblVoice: 'Pia ki awaaz', btnStart: 'Shuru karein',
+    keyNote: 'Aapki key sirf is browser tab mein rehti hai aur sirf Sarvam ko bheji jaati hai. Hamare server par save nahi hoti.',
+    getKey: 'Sarvam key kaise paayein', demoLink: 'Recorded demo dekhein (jaldi aa raha hai)',
+    github: 'Code aur specs GitHub par dekhein',
+    disclaimer: 'Yeh ek portfolio project hai, Sarvam AI ke saath banaya gaya. Myntra, Amazon ya Nykaa se judaa nahi hai. Prices ek third-party search se aate hain aur store mein alag ho sakte hain.',
     needKey: 'Pehle apni Sarvam key paste karein.',
     greeting: n => `Namaste${n ? ' ' + n : ''}! Bolkar batayein aap kya dhoondh rahe hain. Main Myntra, Amazon aur Nykaa dekh sakti hoon.`,
-    micIdle: 'Bolne ke liye tap karein', micRec: 'Bol chuke? Rokne ke liye tap karein', micSpeak: 'Pia bol rahi hai...', micThink: 'Pia soch rahi hai...',
-    chipReady: 'Aap bol sakte hain', chipListen: 'Sun rahi hoon', chipThink: 'Soch rahi hoon', chipSpeak: 'Pia bol rahi hai',
-    btnStop: 'Pia ko roken', hint: 'Ek baar mein ek hi baat bolein. Pia bolti hai tab mic band rehta hai.',
-    btnMore: 'Agle 3 dikhao', moreText: 'Agle 3 dikhao', speed: 'Speed (ms)', changeKey: 'Key badlein',
-    notRated: 'Abhi ratings nahi hain', viewOn: p => `${p} par dekhein`,
+    chips: ['2000 ke andar white sneakers', 'pink saree ke liye blouse', 'Huda Beauty ka concealer'],
+    statusReady: 'Bolne ke liye tap karein', statusListen: 'Sun rahi hoon... bhejne ke liye tap karein', statusThink: 'Soch rahi hoon...', statusSpeak: 'Pia bol rahi hai',
+    earlier: n => `Pehle ki baatein (${n})`, replay: 'Yeh jawab sunein', stopPlay: 'Roken',
+    btnMore: 'Agle 3 dikhao', moreText: 'Agle 3 dikhao', changeKey: 'Key badlein',
+    detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
+    notRated: 'Abhi ratings nahi hain', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.',
     errCredits: 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.',
     errServer: 'Sarvam abhi jawab nahi de raha. Thodi der baad try karein.',
@@ -84,15 +111,18 @@ const I18N = {
 };
 const t = (k, ...a) => { const v = (I18N[S.lang] || I18N.hi)[k]; return typeof v === 'function' ? v(...a) : v ?? k; };
 const speechLang = () => (S.lang === 'en' ? 'en-IN' : 'hi-IN');
+
 function applyLang() {
   document.documentElement.lang = S.lang === 'en' ? 'en' : 'hi-Latn';
-  document.querySelectorAll('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); });
-  document.querySelectorAll('[data-ph]').forEach(el => { el.placeholder = t(el.dataset.ph); });
+  document.querySelectorAll('[data-i]').forEach(e => { e.textContent = t(e.dataset.i); });
+  document.querySelectorAll('[data-ph]').forEach(e => { e.placeholder = t(e.dataset.ph); });
   document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === S.lang)));
-  render();
+  document.querySelectorAll('.row-pia .spk').forEach(b => { b.setAttribute('aria-label', t('replay')); });
+  renderChips(); updateEarlier(); render();
 }
 function setLang(l) { S.lang = l; store.set('lang', l); applyLang(); }
 
+/* ---------------- errors from the services ---------------- */
 class ApiError extends Error {}
 function friendly(status, body) {
   const msg = body?.error?.message || '';
@@ -112,58 +142,85 @@ async function api(path, init) {
 }
 const headers = extra => ({ 'api-subscription-key': S.key, ...extra });
 
-/* ---------------- UI state ---------------- */
-function setChip(kind, text) {
-  const c = $('chip'); c.className = 'chip ' + kind; c.textContent = text;
-}
+/* ---------------- screen state ---------------- */
 function render() {
   const idle = !S.recording && !S.busy && !S.speaking;
   $('mic').disabled = !(idle || S.recording);
   $('mic').classList.toggle('recording', S.recording);
-  $('mic').classList.toggle('ready', idle);
-  $('micLabel').textContent = S.recording ? t('micRec') : S.speaking ? t('micSpeak') : S.busy ? t('micThink') : t('micIdle');
-  $('stop').hidden = !S.speaking;
+  $('waveL').classList.toggle('on', S.recording);
+  $('waveR').classList.toggle('on', S.recording);
+  $('status').textContent = S.recording ? t('statusListen') : S.speaking ? t('statusSpeak') : S.busy ? t('statusThink') : t('statusReady');
   $('more').disabled = !idle;
-  if (S.recording) setChip('listening', t('chipListen'));
-  else if (S.busy) setChip('thinking', t('chipThink'));
-  else if (S.speaking) setChip('speaking', t('chipSpeak'));
-  else setChip('', t('chipReady'));
+  document.querySelectorAll('#chips button').forEach(b => { b.disabled = !idle; });
 }
 function showError(text) { $('error').textContent = text || ''; }
-function addMsg(who, text, meta, flags) {
-  const d = document.createElement('div'); d.className = 'msg ' + who;
-  d.append(document.createTextNode(text));
-  if (meta || (flags && flags.length)) {
-    const m = document.createElement('span'); m.className = 'meta'; m.textContent = meta || '';
-    if (flags && flags.length) {
-      const f = document.createElement('span'); f.className = 'flag'; f.textContent = ' ⚠ ' + flags.join('; ');
-      m.append(f);
-    }
-    d.append(m);
+
+/* ---------------- conversation bubbles: only the latest exchange stays open ---------------- */
+function shiftLatest() {
+  const latest = $('latest');
+  while (latest.firstChild) $('earlierList').append(latest.firstChild);
+  updateEarlier();
+}
+function updateEarlier() {
+  const n = $('earlierList').children.length;
+  $('earlier').hidden = n === 0;
+  $('earlierSum').textContent = t('earlier', n);
+}
+function scrollIntoViewSoft(node) { try { node.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch { /* ignore */ } }
+function addUser(text) {
+  shiftLatest(); $('chips').hidden = true;
+  const row = el('div', 'row-me'); row.append(el('div', 'bubble me', text));
+  $('latest').append(row); scrollIntoViewSoft(row);
+}
+function addPia(text) {
+  const row = el('div', 'row-pia');
+  const avatar = el('span', 'avatar', 'P'); avatar.setAttribute('aria-hidden', 'true');
+  const col = el('div', 'pia-col'); col.append(el('span', 'pname', t('pniaName')));
+  const bubble = el('div', 'bubble pia');
+  const btn = el('button', 'spk'); btn.type = 'button'; btn.disabled = true; btn.innerHTML = ICON.speaker; btn.setAttribute('aria-label', t('replay'));
+  bubble.append(btn, el('span', null, text)); col.append(bubble); row.append(avatar, col);
+  row.btn = btn; row.b64 = null;
+  btn.onclick = () => toggleBubble(row);
+  $('latest').append(row); scrollIntoViewSoft(row);
+  return row;
+}
+function renderChips() {
+  const box = $('chips'); box.textContent = '';
+  const list = t('chips');
+  if (!Array.isArray(list)) return;
+  for (const text of list) {
+    const b = el('button', null, text); b.type = 'button';
+    b.onclick = () => guarded(() => runTurn(text, speechLang(), 0, performance.now()));
+    box.append(b);
   }
-  $('log').append(d); d.scrollIntoView({ block: 'nearest' });
 }
 
-/* ---------------- setup screen ---------------- */
+/* ---------------- intro and entering the app ---------------- */
 function enterMain() {
-  $('setup').hidden = true; $('main').hidden = false;
-  $('log').textContent = '';
-  addMsg('pia', t('greeting', S.name));
-  render();
+  $('intro').hidden = true; $('app').hidden = false; $('detailsBtn').hidden = false;
+  $('latest').textContent = ''; $('earlierList').textContent = ''; $('cards').textContent = '';
+  $('results').hidden = true; $('chips').hidden = false;
+  const row = addPia(t('greeting', S.name)); row.btn.hidden = true;
+  updateEarlier(); renderChips(); render();
   if (S.key) preloadCues();
+}
+function leaveMain() {
+  stopAudio(); store.del('key');
+  $('app').hidden = true; $('detailsBtn').hidden = true; $('intro').hidden = false; $('key').value = '';
+  if ($('details').open) $('details').close();
 }
 $('start').onclick = () => {
   const key = $('key').value.trim();
   if (!key) { $('setupError').textContent = t('needKey'); return; }
+  $('setupError').textContent = '';
   S.key = key; S.name = $('name').value.trim(); S.gender = $('gender').value; S.voice = $('voice').value;
   store.set('key', S.key); store.set('name', S.name); store.set('gender', S.gender); store.set('voice', S.voice);
   S.messages = []; enterMain();
 };
-$('changeKey').onclick = e => {
-  e.preventDefault(); stopAudio(); store.del('key');
-  $('main').hidden = true; $('setup').hidden = false; $('key').value = '';
-};
+$('changeKey').onclick = leaveMain;
 $('demoLink').onclick = e => e.preventDefault();
+$('detailsBtn').onclick = () => { if (typeof $('details').showModal === 'function') $('details').showModal(); };
+$('closeDetails').onclick = () => $('details').close();
 
 /* ---------------- tools and prompt ---------------- */
 const TOOLS = [{ type: 'function', function: {
@@ -204,7 +261,7 @@ function systemPrompt() {
 
 Style:
 - ${S.lang === 'en' ? 'Reply in simple English only.' : 'Reply in Hinglish: Hindi written in English letters (Roman script), mixed naturally with English words, never in Devanagari.'} Earlier replies in this conversation may be in the other language: ignore that and use only this language.
-- Address the user as "aap". Never use "tu" or "tum". You are female: use feminine forms for yourself ("dhoondh rahi hoon", "kar sakti hoon").
+- Address the user as "aap". Never use "tu" or "tum". You are female: use feminine forms for yourself ("kar sakti hoon", "dekh rahi hoon").
 - ${who} ${nm}
 - Be warm and calm, never pushy. Show options, then hand the decision to the customer ("aap pick kijiye").
 - Spoken replies are SHORT: at most 35 words, one to three sentences. No lists, no markdown, no emojis.
@@ -250,59 +307,50 @@ function safeLink(u) { return typeof u === 'string' && /^https:\/\//.test(u) ? u
 function renderCards(groups) {
   const box = $('cards'); box.textContent = '';
   for (const g of groups) {
-    const el = document.createElement('article'); el.className = 'product';
-    const top = document.createElement('div'); top.className = 'top';
+    const card = el('article', 'pcard');
+    const top = el('div', 'ptop');
     if (safeLink(g.image_url)) {
-      const img = document.createElement('img'); img.src = g.image_url; img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer'; top.append(img);
-    }
-    const info = document.createElement('div'); info.className = 'info';
-    const rank = document.createElement('span'); rank.className = 'rank'; rank.textContent = '#' + g.rank;
-    const name = document.createElement('span'); name.className = 'name'; name.textContent = g.name;
-    const price = document.createElement('span'); price.className = 'price'; price.textContent = rupees(g.best.price);
-    if (g.mrp > g.best.price) {
-      const mrp = document.createElement('span'); mrp.className = 'mrp'; mrp.textContent = rupees(g.mrp);
-      const off = document.createElement('span'); off.className = 'off'; off.textContent = g.discount_pct + '% off';
-      price.append(mrp, off);
-    }
-    const rating = document.createElement('span'); rating.className = 'muted';
-    rating.textContent = g.rating ? `★ ${g.rating.toFixed(1)} (${g.rating_count.toLocaleString('en-IN')})` : t('notRated');
-    info.append(rank, name, price, rating); top.append(info);
-    const ul = document.createElement('ul');
-    for (const l of g.listings) {
-      const li = document.createElement('li');
-      li.append(document.createTextNode(`${l.platform}: ${rupees(l.price)}`));
-      const href = safeLink(l.link);
-      if (href) { const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = t('viewOn', l.platform); li.append(a); }
-      ul.append(li);
-    }
-    el.append(top, ul); box.append(el);
+      const img = el('img', 'pimg'); img.src = g.image_url; img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer'; top.append(img);
+    } else top.append(el('div', 'pimg'));
+    const info = el('div', 'pinfo');
+    const price = el('div', 'pprice', rupees(g.best.price));
+    if (g.mrp > g.best.price) { price.append(el('span', 'pmrp', rupees(g.mrp)), el('span', 'poff', g.discount_pct + '% off')); }
+    info.append(el('span', 'prank', '#' + g.rank), el('span', 'pname-t', g.name), price,
+      el('span', 'prate', g.rating ? `★ ${g.rating.toFixed(1)} (${g.rating_count.toLocaleString('en-IN')})` : t('notRated')));
+    top.append(info);
+    const stores = el('div', 'stores');
+    g.listings.forEach((l, i) => {
+      const href = safeLink(l.link); if (!href) return;
+      const a = el('a', i === 0 ? 'best' : null, t('viewOn', l.platform, rupees(l.price))); a.href = href; a.target = '_blank'; a.rel = 'noopener'; stores.append(a);
+    });
+    card.append(top, stores); box.append(card);
   }
-  const more = S.last && S.last.total > S.last.page * 3;
-  $('moreRow').hidden = !more;
+  $('results').hidden = groups.length === 0;
+  $('more').hidden = !(groups.length && S.last && S.last.total > S.last.page * 3);
 }
 
 /* ---------------- Sarvam calls ---------------- */
 async function transcribe(blob) {
   const fd = new FormData();
   fd.append('file', blob, 'recording.webm'); fd.append('model', 'saaras:v3'); fd.append('mode', 'translit'); fd.append('language_code', 'unknown');
-  const t = performance.now();
+  const t0 = performance.now();
   const body = await api('/speech-to-text', { method: 'POST', headers: headers(), body: fd });
-  return { text: (body.transcript || '').trim(), lang: body.language_code || '', ms: performance.now() - t };
+  return { text: (body.transcript || '').trim(), lang: body.language_code || '', ms: performance.now() - t0 };
 }
 async function chat(messages) {
-  const t = performance.now();
+  const t0 = performance.now();
   const body = await api('/v1/chat/completions', { method: 'POST', headers: headers({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ model: 'sarvam-105b', temperature: 0.3, max_tokens: 500, reasoning_effort: null, messages, tools: TOOLS, tool_choice: 'auto' }) });
-  return { msg: body.choices?.[0]?.message || {}, ms: performance.now() - t };
+  return { msg: body.choices?.[0]?.message || {}, ms: performance.now() - t0 };
 }
 async function speak(text, lang) {
-  const t = performance.now();
+  const t0 = performance.now();
   let clean = text.replace(/[*_`#]/g, '').slice(0, 2400);
   if (!/^en/i.test(lang)) clean = applyLexicon(clean);
   const body = await api('/text-to-speech', { method: 'POST', headers: headers({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ text: clean, language_code: /^en/i.test(lang) ? 'en-IN' : 'hi-IN', model: 'bulbul:v4-flash',
       speaker: S.voice, pace: 1.0, speech_sample_rate: 24000, output_audio_codec: 'wav' }) });
-  return { b64: body.audios?.[0] || '', ms: performance.now() - t };
+  return { b64: body.audios?.[0] || '', ms: performance.now() - t0 };
 }
 
 /* ---------------- automatic checks on every reply ---------------- */
@@ -319,6 +367,11 @@ function checkReply(reply, allowedText) {
   if (bad.length) flags.push('number not in data: ' + bad.join(', '));
   return { flags, words };
 }
+function addCheck(reply, words, flags) {
+  const li = el('li', null, `${words} words · ${reply.slice(0, 60)}${reply.length > 60 ? '…' : ''}`);
+  if (flags.length) li.append(el('span', 'flag', ' ⚠ ' + flags.join('; ')));
+  $('checks').prepend(li);
+}
 
 /* ---------------- language control and pronunciation ---------------- */
 // Roman spellings the voice says badly are swapped for Devanagari just before speaking (add more as testing finds them).
@@ -328,7 +381,7 @@ function applyLexicon(text) { return text.replace(/\b(dhoondh\w*)\b/gi, w => LEX
 const HI_WORDS = /\b(mujhe|nahi|kya|aap|hai|hain|kijiye|chahiye|dikhao|milega|mila|rahi|karein|bataiye|mein|liye|kuch|dekhna|chahenge)\b/gi;
 function wrongLanguage(r) {
   if (S.lang === 'en') return (r.match(HI_WORDS) || []).length >= 2;
-  return /[\u0900-\u097F]/.test(r);
+  return /[ऀ-ॿ]/.test(r);
 }
 // Models tend to copy the user's language, so remind them of the chosen one inside the latest user message.
 function withLangReminder(msgs) {
@@ -338,8 +391,7 @@ function withLangReminder(msgs) {
   return msgs.map((m, j) => (j === i ? { ...m, content: m.content + note } : m));
 }
 
-/* ---------------- one conversation turn ---------------- */
-// A short "searching" line, made once at the start, is played while the product search runs.
+/* ---------------- audio: the searching line and Pia's replies ---------------- */
 const CUES = { hi: 'एक मिनट, ढूँढ रही हूँ।', en: 'One moment, searching for you.' };
 function preloadCues() {
   S.cues = {};
@@ -356,10 +408,44 @@ function playCue(lang) {
     a.play().catch(() => resolve());
   });
 }
+function markPlaying(row, on) {
+  if (!row) return;
+  row.classList.toggle('playing', on);
+  row.btn.innerHTML = on ? ICON.stop : ICON.speaker;
+  row.btn.setAttribute('aria-label', on ? t('stopPlay') : t('replay'));
+}
+function stopAudio() {
+  if (S.audio) { S.audio.pause(); S.audio = null; }
+  if (S.cueAudio) { S.cueAudio.pause(); S.cueAudio = null; }
+  markPlaying(S.playingEl, false); S.playingEl = null;
+  S.speaking = false; render();
+}
+function playBubble(row, b64, onStart) {
+  return new Promise(resolve => {
+    if (!b64) { resolve(); return; }
+    stopAudio();
+    const audio = new Audio('data:audio/wav;base64,' + b64);
+    S.audio = audio; S.playingEl = row; markPlaying(row, true);
+    let started = false;
+    const begin = () => { if (started) return; started = true; if (onStart) onStart(); S.busy = false; S.speaking = true; render(); };
+    const done = () => {
+      begin();
+      if (S.audio === audio) { S.audio = null; markPlaying(row, false); S.playingEl = null; S.speaking = false; render(); }
+      resolve();
+    };
+    audio.onplaying = begin; audio.onended = done; audio.onerror = done;
+    audio.play().catch(() => { showError(t('errPlay')); done(); });
+  });
+}
+function toggleBubble(row) {
+  if (S.playingEl === row) { stopAudio(); return; }
+  if (row.b64 && !S.recording && !S.busy) playBubble(row, row.b64);
+}
 
+/* ---------------- one conversation turn ---------------- */
 async function runTurn(text, lang, sttMs, tStart) {
   S.messages.push({ role: 'user', content: text });
-  addMsg('me', text);
+  addUser(text);
   let llmMs = 0, searchMs = 0, reply = '', grounding = text, cue = null, cueAt = null;
   for (let i = 0; i < 3 && !reply; i++) {
     const { msg, ms } = await chat(withLangReminder([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]));
@@ -397,43 +483,20 @@ async function runTurn(text, lang, sttMs, tStart) {
   S.messages.push({ role: 'assistant', content: reply });
   const chk = checkReply(reply, grounding);
   if (langNote) chk.flags.push(langNote);
-  addMsg('pia', reply, `${chk.words} words`, chk.flags);
+  addCheck(reply, chk.words, chk.flags);
+  const row = addPia(reply);
 
   const tts = await speak(reply, speechLang());
+  row.b64 = tts.b64; row.btn.disabled = !tts.b64;
   if (cue) await cue; // never talk over the searching line
-  await play(tts.b64, tStart, [sttMs, llmMs, searchMs, tts.ms], cueAt);
+  await playBubble(row, tts.b64, () => addTimingRow([sttMs, llmMs, searchMs, tts.ms], cueAt, performance.now() - tStart));
 }
-
-function play(b64, tStart, parts, cueAt) {
-  return new Promise(resolve => {
-    if (!b64) { resolve(); return; }
-    const audio = new Audio('data:audio/wav;base64,' + b64); S.audio = audio;
-    let logged = false;
-    const logOnce = () => {
-      if (logged) return; logged = true;
-      addTimingRow(parts, cueAt, performance.now() - tStart);
-    };
-    audio.onplaying = () => { logOnce(); S.busy = false; S.speaking = true; render(); };
-    const done = () => { logOnce(); S.speaking = false; S.audio = null; render(); resolve(); };
-    audio.onended = done; audio.onerror = done;
-    audio.play().catch(() => {
-      showError(t('errPlay'));
-      done();
-    });
-  });
-}
-function stopAudio() {
-  if (S.audio) { S.audio.pause(); S.audio = null; }
-  if (S.cueAudio) { S.cueAudio.pause(); S.cueAudio = null; }
-  S.speaking = false; render();
-}
-$('stop').onclick = stopAudio;
 
 function addTimingRow([stt, llm, search, tts], cueAt, total) {
-  const t = $('timings');
-  if (!t.rows.length) t.innerHTML = '<tr><th>Turn</th><th>Speech</th><th>Thinking</th><th>Search</th><th>Voice</th><th>Cue at</th><th>Answer at</th></tr>';
+  const tb = $('timings');
+  if (!tb.rows.length) tb.innerHTML = '<tr><th>Turn</th><th>Speech</th><th>Thinking</th><th>Search</th><th>Voice</th><th>Cue at</th><th>Answer at</th></tr>';
   S.turn += 1;
-  const r = t.insertRow();
+  const r = tb.insertRow();
   [S.turn, ...[stt, llm, search, tts].map(x => Math.round(x)), cueAt == null ? '-' : Math.round(cueAt), Math.round(total)]
     .forEach(v => { r.insertCell().textContent = v; });
 }
@@ -456,15 +519,15 @@ $('mic').onclick = async () => {
   const rec = new MediaRecorder(S.stream); S.rec = rec;
   rec.ondataavailable = e => e.data.size && S.chunks.push(e.data);
   rec.onstop = () => {
-    S.stream.getTracks().forEach(t => t.stop());
+    S.stream.getTracks().forEach(tr => tr.stop());
     // Sarvam accepts plain "audio/webm", not "audio/webm;codecs=opus".
     const blob = new Blob(S.chunks, { type: 'audio/webm' });
     const tStart = S.tStop;
-    if (performance.now() - S.startedAt < 500) { showError(t('errShort')); S.recording = false; render(); return; }
     S.recording = false;
+    if (performance.now() - S.startedAt < 500) { showError(t('errShort')); render(); return; }
     guarded(async () => {
       const stt = await transcribe(blob);
-      if (!stt.text) { addMsg('pia', t('noSpeech')); return; }
+      if (!stt.text) { addPia(t('noSpeech')).btn.hidden = true; return; }
       await runTurn(stt.text, stt.lang, stt.ms, tStart);
     });
   };

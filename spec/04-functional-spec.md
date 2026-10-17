@@ -71,7 +71,8 @@ The browser runs the conversation with Sarvam and calls these two tools on the b
 ## 7. Screens
 
 1. **Key screen:** language choice (English or Hinglish, shown first, switchable on both screens and remembered for the tab), Sarvam key (required), name and gender (optional, for greetings and grammar), note that nothing is stored outside the browser, and a link to the recorded demo.
-2. **Main screen:** a large press-to-talk mic button (disabled while Pia speaks), a visible state (listening, thinking, speaking), a stop button, three product cards (image, name, price per platform, rating, link), a DesiDime connect button, and an optional usage and cost line (Should).
+2. **Intro page** (before the key form): a warm headline, one line on what Pia does, a three-step "How it works", the try-it card, a link to the GitHub repository, and a disclaimer (portfolio project, not affiliated with the stores, prices may differ).
+3. **Conversation screen (redesigned, light theme, minimal):** chat bubbles with Pia's name and avatar, only the latest exchange open (older ones folded under "Earlier"), a loudspeaker icon on each Pia reply (tap to stop or replay), example chips in the chosen language before the first message, a round mic icon with sound waves while listening, product cards as a swipe row on phones and a right-hand panel on wide screens, and a Details drawer for speed and checks. The earlier description follows for reference. **Main screen (earlier version):** a large press-to-talk mic button (disabled while Pia speaks), a visible state (listening, thinking, speaking), a stop button, three product cards (image, name, price per platform, rating, link), a DesiDime connect button, and an optional usage and cost line (Should).
 
 ## 8. Known limitations (to state in the app and the write-up)
 - Colour is not verified in results (no colour field).

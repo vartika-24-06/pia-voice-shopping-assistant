@@ -3,79 +3,129 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pia, shopping assistant</title>
+<meta name="color-scheme" content="light">
+<title>Pia, your shopping assistant</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main>
-  <header>
-    <h1>Pia</h1>
-    <div class="head-right">
+  <header class="top">
+    <span class="logo"><span class="avatar sm" aria-hidden="true">P</span>Pia</span>
+    <div class="top-right">
       <div class="seg" role="group" aria-label="Language">
         <button type="button" data-lang="en" aria-pressed="false">English</button>
         <button type="button" data-lang="hi" aria-pressed="true">Hinglish</button>
       </div>
-      <span class="badge" title="Products come from live search on Myntra, Amazon and Nykaa">Live search</span>
+      <button id="detailsBtn" class="icon-btn" type="button" hidden data-aria="details" aria-label="Details">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      </button>
     </div>
   </header>
 
-  <!-- Key screen -->
-  <section id="setup" class="card">
-    <h2 data-i="setupTitle">Shuru karne ke liye</h2>
-    <p class="muted" data-i="setupIntro"></p>
-    <label for="key" data-i="lblKey">Sarvam API key</label>
-    <input id="key" type="password" autocomplete="off" data-ph="phKey">
-    <div class="two">
-      <div>
-        <label for="name" data-i="lblName">Aapka naam (optional)</label>
-        <input id="name" type="text" autocomplete="off" data-ph="phName">
+  <!-- Intro page -->
+  <section id="intro" class="intro">
+    <h1 data-i="heroTitle"></h1>
+    <p class="lead" data-i="heroSub"></p>
+
+    <h2 class="section-title" data-i="howTitle"></h2>
+    <ol class="steps">
+      <li>
+        <span class="step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg></span>
+        <h3 data-i="step1T"></h3><p data-i="step1P"></p>
+      </li>
+      <li>
+        <span class="step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></span>
+        <h3 data-i="step2T"></h3><p data-i="step2P"></p>
+      </li>
+      <li>
+        <span class="step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>
+        <h3 data-i="step3T"></h3><p data-i="step3P"></p>
+      </li>
+    </ol>
+
+    <div class="card try">
+      <h2 data-i="tryTitle"></h2>
+      <label for="key" data-i="lblKey"></label>
+      <input id="key" type="password" autocomplete="off" data-ph="phKey">
+      <div class="two">
+        <div>
+          <label for="name" data-i="lblName"></label>
+          <input id="name" type="text" autocomplete="off" data-ph="phName">
+        </div>
+        <div>
+          <label for="gender" data-i="lblGender"></label>
+          <select id="gender">
+            <option value="" data-i="gNone"></option>
+            <option value="female" data-i="gFemale"></option>
+            <option value="male" data-i="gMale"></option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label for="gender" data-i="lblGender">Gender (optional)</label>
-        <select id="gender">
-          <option value="" data-i="gNone">Batana nahi chahte</option>
-          <option value="female" data-i="gFemale">Female</option>
-          <option value="male" data-i="gMale">Male</option>
+      <details class="adv">
+        <summary data-i="advanced"></summary>
+        <label for="voice" data-i="lblVoice"></label>
+        <select id="voice">
+          <option>simran_enhi_companion</option><option>simran_enhi_customer</option>
+          <option>ishita_enhi_companion</option><option>ishita_enhi_customer</option>
+          <option>shalini_enhi_companion</option><option>shalini_enhi_customer</option>
         </select>
-      </div>
+      </details>
+      <button id="start" class="primary wide" type="button" data-i="btnStart"></button>
+      <p id="setupError" class="error" role="alert"></p>
+      <p class="note" data-i="keyNote"></p>
+      <p class="note">
+        <a href="https://docs.sarvam.ai/api-reference-docs/authentication" target="_blank" rel="noopener" data-i="getKey"></a>
+        <span aria-hidden="true"> · </span>
+        <a href="#" id="demoLink" aria-disabled="true" data-i="demoLink"></a>
+      </p>
     </div>
-    <label for="voice" data-i="lblVoice">Pia ki awaaz</label>
-    <select id="voice">
-      <option>simran_enhi_companion</option><option>simran_enhi_customer</option>
-      <option>ishita_enhi_companion</option><option>ishita_enhi_customer</option>
-      <option>shalini_enhi_companion</option><option>shalini_enhi_customer</option>
-    </select>
-    <div class="row">
-      <button id="start" class="primary" data-i="btnStart">Shuru karein</button>
-      <a class="muted" href="#" id="demoLink" aria-disabled="true" data-i="demoLink">Recorded demo dekhein</a>
-    </div>
-    <p id="setupError" class="error" role="alert"></p>
+
+    <footer class="foot">
+      <a class="gh" href="https://github.com/vartika-24-06/pia-voice-shopping-assistant" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1-.07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+        <span data-i="github"></span>
+      </a>
+      <p data-i="disclaimer"></p>
+    </footer>
   </section>
 
-  <!-- Main screen -->
-  <section id="main" hidden>
-    <div class="card talk">
-      <div id="chip" class="chip">Ready</div>
-      <button id="mic" class="mic" aria-label="Record">
-        <span id="micLabel"></span>
-      </button>
-      <button id="stop" class="ghost" hidden data-i="btnStop">Pia ko roken</button>
-      <p id="hint" class="muted" data-i="hint"></p>
-      <p id="error" class="error" role="alert"></p>
+  <!-- Conversation page -->
+  <section id="app" hidden>
+    <div class="layout">
+      <div class="convo" aria-live="polite">
+        <details id="earlier" hidden><summary id="earlierSum"></summary><div id="earlierList" class="earlier-list"></div></details>
+        <div id="latest" class="latest"></div>
+        <div id="chips" class="chips"></div>
+      </div>
+
+      <aside id="results" class="results" hidden>
+        <div id="cards" class="cards"></div>
+        <button id="more" class="ghost" type="button" hidden data-i="btnMore"></button>
+      </aside>
+
+      <div class="micbar">
+        <div class="mic-row">
+          <div id="waveL" class="waves" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <button id="mic" class="mic" type="button" aria-label="Record">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg>
+          </button>
+          <div id="waveR" class="waves" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <p id="status" class="status"></p>
+        <p id="error" class="error" role="alert"></p>
+      </div>
     </div>
-
-    <div id="log" class="card log" aria-live="polite"></div>
-
-    <div id="cards" class="cards"></div>
-    <div class="row" id="moreRow" hidden><button id="more" class="ghost" data-i="btnMore">Agle 3 dikhao</button></div>
-
-    <details class="card timings">
-      <summary data-i="speed">Speed (ms)</summary>
-      <table id="timings"></table>
-    </details>
-    <p class="muted"><a href="#" id="changeKey" data-i="changeKey">Key badlein</a></p>
   </section>
 </main>
+
+<dialog id="details">
+  <div class="dlg-head"><h2 data-i="detailsTitle"></h2><button id="closeDetails" class="icon-btn" type="button" aria-label="Close">×</button></div>
+  <h3 data-i="speedTitle"></h3>
+  <table id="timings"></table>
+  <h3 data-i="checksTitle"></h3>
+  <ul id="checks" class="checks"></ul>
+  <p><button id="changeKey" class="ghost" type="button" data-i="changeKey"></button></p>
+</dialog>
 <script src="app.js"></script>
 </body>
 </html>
