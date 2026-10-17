@@ -57,7 +57,7 @@ const I18N = {
     btnMore: 'Show next 3', moreText: 'Show the next 3', changeKey: 'Change key',
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
     refine: [{ label: 'Higher rated', send: 'Show higher rated ones' }, { label: 'Higher priced', send: 'Show higher priced ones' }, { label: 'New search', send: 'I want to start a new search' }],
-    confirmSend: c => `I mean ${c}`, platformOnly: p => `Show only ${p}`, platformAll: 'All platforms', platformAllSend: 'Show all platforms',
+    confirmSend: c => `I mean ${c}`, confirmOriginal: o => `(My original request was: "${o}")`, platformOnly: p => `Show only ${p}`, platformAll: 'All platforms', platformAllSend: 'Show all platforms',
     notRated: 'No ratings yet', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'The Sarvam key does not look right. Please try a different key.',
     errCredits: 'Your Sarvam credits or rate limit seem to have run out. Please check the Sarvam dashboard.',
@@ -98,7 +98,7 @@ const I18N = {
     btnMore: 'Agle 3 dikhao', moreText: 'Agle 3 dikhao', changeKey: 'Key badlein',
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
     refine: [{ label: 'Zyada rating wale', send: 'Zyada rating wale dikhao' }, { label: 'Zyada price wale', send: 'Zyada price wale dikhao' }, { label: 'Naya search', send: 'Mujhe naya search karna hai' }],
-    confirmSend: c => `Mujhe ${c} chahiye`, platformOnly: p => `${p} par hi dikhao`, platformAll: 'Sab platforms', platformAllSend: 'Sab platforms dikhao',
+    confirmSend: c => `Mujhe ${c} chahiye`, confirmOriginal: o => `(Meri pehli request thi: "${o}")`, platformOnly: p => `${p} par hi dikhao`, platformAll: 'Sab platforms', platformAllSend: 'Sab platforms dikhao',
     notRated: 'Abhi ratings nahi hain', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.',
     errCredits: 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.',
@@ -197,7 +197,7 @@ function showChipList(items, mode) {
   const box = $('chips'); box.textContent = ''; box.hidden = false; S.chipMode = mode;
   for (const c of items) {
     const b = el('button', null, c.label); b.type = 'button';
-    b.onclick = () => guarded(() => runTurn(c.send, speechLang(), 0, performance.now()));
+    b.onclick = () => guarded(() => runTurn(c.send, speechLang(), 0, performance.now(), { force: c.force }));
     box.append(b);
   }
   render();
@@ -308,6 +308,7 @@ Rules:
 - If the user wants more results, call search_products again with the same details and page + 1.
 - If the user says something vague like "isse accha kuch", do not guess: call show_choices with kind refine (the screen then shows buttons: higher rated, higher priced, new search) and ask in one short sentence which they would like. When they pick, search again with sort highest_rating or highest_price, or start a new search.
 - When the user starts looking for a different item, start a fresh search: do not carry over the price limit, brand or platform from earlier searches. Carry them over only when they are refining the same search. If they ask for all platforms again after choosing one, search again without a platform.
+- Never ask a brand question twice. After the user answers one, search right away.
 - If status is confirm_brand, do not search yet: ask ONE short question naming the candidates. The screen shows them as buttons.
 - If the user chooses Korean beauty ("I mean Korean beauty"), search with the word korean and the product in the query (for example "korean lipstick", category beauty) and no brand. That means brands from Korea, so never show other brands as Korean beauty.
 - When the user confirms a brand ("I mean Kay Beauty", "Mujhe Kay Beauty chahiye") or rejects one of the candidates ("not Korean beauty"), take the other candidate as the answer and call search_products with that brand in the brand field. Never drop a brand the user asked for and show other brands instead; if nothing is found for that brand, say so.
@@ -378,10 +379,10 @@ async function transcribe(blob) {
   const body = await api('/speech-to-text', { method: 'POST', headers: headers(), body: fd });
   return { text: (body.transcript || '').trim(), lang: body.language_code || '', ms: performance.now() - t0 };
 }
-async function chat(messages) {
+async function chat(messages, forceSearch = false) {
   const t0 = performance.now();
   const body = await api('/v1/chat/completions', { method: 'POST', headers: headers({ 'Content-Type': 'application/json' }),
-    body: JSON.stringify({ model: 'sarvam-105b', temperature: 0.3, max_tokens: 500, reasoning_effort: null, messages, tools: TOOLS, tool_choice: 'auto' }) });
+    body: JSON.stringify({ model: 'sarvam-105b', temperature: 0.3, max_tokens: 500, reasoning_effort: null, messages, tools: TOOLS, tool_choice: forceSearch ? { type: 'function', function: { name: 'search_products' } } : 'auto' }) });
   return { msg: body.choices?.[0]?.message || {}, ms: performance.now() - t0 };
 }
 async function speak(text, lang) {
@@ -495,20 +496,31 @@ async function checkAmbiguity(text) {
   } catch { return null; }
 }
 
-async function runTurn(text, lang, sttMs, tStart) {
-  S.messages.push({ role: 'user', content: text });
+// Old brand questions are removed from the conversation once answered, so the model cannot ask them again.
+function dropConfirmations() {
+  const ids = new Set(S.messages.filter(m => m.role === 'tool' && /"status":"confirm_brand"/.test(m.content)).map(m => m.tool_call_id));
+  S.messages = S.messages.filter(m => !(m.role === 'tool' && ids.has(m.tool_call_id)) && !(m.role === 'assistant' && m.tool_calls && m.tool_calls.some(c => ids.has(c.id))));
+}
+
+async function runTurn(text, lang, sttMs, tStart, opts = {}) {
+  const pend = S.pending; S.pending = null;
+  const answers = !!pend && (opts.force || pend.candidates.some(c => text.toLowerCase().includes(c.toLowerCase().split(' ')[0])));
+  let modelText = text;
+  if (answers) { dropConfirmations(); modelText = `${text}. ${t('confirmOriginal', pend.original)}`; }
+  S.messages.push({ role: 'user', content: modelText });
   addUser(text);
   // A spelling that could mean two things ("K Beauty") is checked before the model can rewrite it into one meaning.
   const amb = await checkAmbiguity(text);
   if (amb) {
     const id = 'amb_' + Date.now();
-    showChoices(amb.candidates.map(c => ({ label: c, send: t('confirmSend', c) })));
+    S.pending = { original: text, candidates: amb.candidates };
+    showChoices(amb.candidates.map(c => ({ label: c, send: t('confirmSend', c), force: true })));
     S.messages.push({ role: 'assistant', content: '', tool_calls: [{ id, type: 'function', function: { name: 'search_products', arguments: JSON.stringify({ query: text, category: 'beauty' }) } }] });
     S.messages.push({ role: 'tool', tool_call_id: id, name: 'search_products', content: JSON.stringify({ status: 'confirm_brand', heard: amb.heard, candidates: amb.candidates }) });
   }
   let llmMs = 0, searchMs = 0, reply = '', grounding = text, cue = null, cueAt = null;
   for (let i = 0; i < 3 && !reply; i++) {
-    const { msg, ms } = await chat(withLangReminder([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]));
+    const { msg, ms } = await chat(withLangReminder([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]), i === 0 && answers);
     llmMs += ms;
     if (msg.tool_calls?.length) {
       if (!cue) { cue = playCue(S.lang); if (cue) cueAt = performance.now() - tStart; }
@@ -523,7 +535,10 @@ async function runTurn(text, lang, sttMs, tStart) {
         const t1 = performance.now();
         const out = await realSearch(args);
         searchMs += performance.now() - t1;
-        if (out.confirm) showChoices(out.confirm);
+        if (out.confirm) {
+          S.pending = { original: args.query, candidates: out.confirm.map(c => c.label) };
+          showChoices(out.confirm.map(c => ({ ...c, force: true })));
+        }
         else {
           S.last = { args, total: out.total, page: out.page };
           renderCards(out.groups);
