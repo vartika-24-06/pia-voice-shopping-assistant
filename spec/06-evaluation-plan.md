@@ -17,7 +17,7 @@
 | 1 | Speech recognition | Did it hear the key words? | **Key-term accuracy** (brands, product types) with agreed variants. Word error rate is reported, not gated | Automatic, using the variants list (section 4) | Automatic; variants approved by PM |
 | 2 | Understanding | Did the LLM extract the right search and call the right tool? | Intent accuracy: product type, brand, price limit, category, platform | Compare to expected tool call | Automatic |
 | 3 | Retrieval | Are the top 3 relevant, correctly grouped and correctly ranked? | Precision@3; grouping errors; ranking follows the rule in spec 03 | Labelled by PM on a sample; ranking rule checked in code | PM + automatic |
-| 4 | Response | Are all prices and offers real? Is the reply in "aap", feminine grammar, the user's language, within the speech budget? | Hallucinated facts per 100 replies; register violations; reply length | Automatic checks on every reply | Automatic |
+| 4 | Response | Are all prices and offers real? Is the reply in "aap", feminine grammar, the language the user selected (English or Hinglish, whatever language they spoke), correct Hinglish grammar, within the speech budget? | Hallucinated facts per 100 replies; register violations; reply length | Automatic checks on every reply | Automatic |
 | 5 | Speech output | Does the Hinglish sound right? | Naturalness 1 to 5 on a sample | Human listening | PM |
 | 6 | Speed | How long does each stage take? | p50 and p90 per stage and total | Timing logs | Automatic |
 | 7 | Whole task | Did the user get what they wanted? | Task success on full conversations | Judged against the expected outcome | PM |

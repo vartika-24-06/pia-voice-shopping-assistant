@@ -179,6 +179,22 @@ const TOOLS = [{ type: 'function', function: {
     page: { type: 'number', description: '1 for the first 3 results, 2 for the next 3, and so on.' } },
     required: ['query', 'category'] } } }];
 
+function wording() {
+  if (S.lang === 'en') return `Use these sentence patterns and fill in the gaps. Do not invent other forms.
+- Results: "The lowest listed price is {short_name} at {price} rupees on {platform}, rated {rating}. Would you like to pick one, or see more?"
+- No match: "Sorry, I could not find anything for '{searched_for}'. Would you like to change the colour or the budget?"
+- Nothing on the chosen platform: "I found nothing on {platform}, but there are results on {platforms}. Shall I show them?"
+- Vague request: "Would you like higher rated, higher priced, or a new search?"
+- Not shopping: "I can only help with finding fashion and beauty products. What would you like to look for?"`;
+  return `Use these sentence patterns and fill in the gaps. Do not invent other forms, and never use the word "dhoondh"; say "search" or "dekh".
+- Results: "Sabse kam daam {short_name} ka hai, {price} rupaye mein {platform} par, rating {rating}. Aap pick kijiye ya aur dekhein?"
+- No match: "Sorry, mujhe '{searched_for}' ke liye kuch nahi mila. Kya aap rang ya budget badalna chahenge?"
+- Nothing on the chosen platform: "{platform} par yeh nahi mila, lekin {platforms} par mila hai. Kya main dikhaun?"
+- Vague request: "Aap kya chahenge: zyada rating wale, zyada price wale, ya naya search?"
+- Not shopping: "Main sirf fashion aur beauty products search karne mein madad kar sakti hoon. Aap kya dekhna chahenge?"
+Grammar: Pia is female and speaks about herself in feminine forms. Pia never offers to do something herself that she cannot do, such as trying another product or brand on her own. Address the user with neutral polite forms like "chahenge" and "dekhein".`;
+}
+
 function systemPrompt() {
   const who = S.gender === 'female' ? 'The user is a woman: when you address her, use feminine verb forms where Hindi needs them.'
     : S.gender === 'male' ? 'The user is a man: when you address him, use masculine verb forms where Hindi needs them.'
@@ -187,7 +203,7 @@ function systemPrompt() {
   return `You are Pia, a friendly, semi-formal Indian shopping assistant who helps people find fashion and beauty products on Myntra, Amazon and Nykaa.
 
 Style:
-- ${S.lang === 'en' ? 'Reply in simple English only.' : 'Reply in Hinglish: Hindi written in English letters (Roman script), mixed naturally with English words, never in Devanagari.'}
+- ${S.lang === 'en' ? 'Reply in simple English only.' : 'Reply in Hinglish: Hindi written in English letters (Roman script), mixed naturally with English words, never in Devanagari.'} Earlier replies in this conversation may be in the other language: ignore that and use only this language.
 - Address the user as "aap". Never use "tu" or "tum". You are female: use feminine forms for yourself ("dhoondh rahi hoon", "kar sakti hoon").
 - ${who} ${nm}
 - Be warm and calm, never pushy. Show options, then hand the decision to the customer ("aap pick kijiye").
@@ -203,7 +219,9 @@ Rules:
 - If the user says something vague like "isse accha kuch", do not guess: offer three choices, higher rated, higher priced, or a new search. If they pick one, search again with sort highest_rating or highest_price.
 - If a brand name sounds misheard or could mean two things, ask once to confirm it before searching.
 - For anything that is not shopping for fashion or beauty (recipes, weather, general questions, whether an outfit suits them), politely say in one sentence that you can only help with finding fashion and beauty products. Do not call a tool.
-- If the user is rude, stay polite and steer back to shopping once.`;
+- If the user is rude, stay polite and steer back to shopping once.
+
+${wording()}`;
 }
 
 const shortName = n => String(n).split(/[|,(]/)[0].trim().split(/\s+/).slice(0, 7).join(' ');
@@ -279,7 +297,8 @@ async function chat(messages) {
 }
 async function speak(text, lang) {
   const t = performance.now();
-  const clean = text.replace(/[*_`#]/g, '').slice(0, 2400);
+  let clean = text.replace(/[*_`#]/g, '').slice(0, 2400);
+  if (!/^en/i.test(lang)) clean = applyLexicon(clean);
   const body = await api('/text-to-speech', { method: 'POST', headers: headers({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ text: clean, language_code: /^en/i.test(lang) ? 'en-IN' : 'hi-IN', model: 'bulbul:v4-flash',
       speaker: S.voice, pace: 1.0, speech_sample_rate: 24000, output_audio_codec: 'wav' }) });
@@ -301,9 +320,27 @@ function checkReply(reply, allowedText) {
   return { flags, words };
 }
 
+/* ---------------- language control and pronunciation ---------------- */
+// Roman spellings the voice says badly are swapped for Devanagari just before speaking (add more as testing finds them).
+const LEXICON = { dhoondh: 'ढूँढ', dhoondhne: 'ढूँढने', dhoondhna: 'ढूँढना', dhoondhti: 'ढूँढती', dhoondhta: 'ढूँढता', dhoondhein: 'ढूँढें' };
+function applyLexicon(text) { return text.replace(/\b(dhoondh\w*)\b/gi, w => LEXICON[w.toLowerCase()] || w); }
+
+const HI_WORDS = /\b(mujhe|nahi|kya|aap|hai|hain|kijiye|chahiye|dikhao|milega|mila|rahi|karein|bataiye|mein|liye|kuch|dekhna|chahenge)\b/gi;
+function wrongLanguage(r) {
+  if (S.lang === 'en') return (r.match(HI_WORDS) || []).length >= 2;
+  return /[\u0900-\u097F]/.test(r);
+}
+// Models tend to copy the user's language, so remind them of the chosen one inside the latest user message.
+function withLangReminder(msgs) {
+  const i = msgs.map(m => m.role).lastIndexOf('user');
+  if (i < 0) return msgs;
+  const note = S.lang === 'en' ? '\n\n(Reply in English only, even if I spoke Hinglish.)' : '\n\n(Reply in Hinglish, English letters only, no Devanagari.)';
+  return msgs.map((m, j) => (j === i ? { ...m, content: m.content + note } : m));
+}
+
 /* ---------------- one conversation turn ---------------- */
 // A short "searching" line, made once at the start, is played while the product search runs.
-const CUES = { hi: 'Ek minute, dhoondh rahi hoon.', en: 'One moment, searching for you.' };
+const CUES = { hi: 'एक मिनट, ढूँढ रही हूँ।', en: 'One moment, searching for you.' };
 function preloadCues() {
   S.cues = {};
   for (const [k, text] of Object.entries(CUES)) {
@@ -325,7 +362,7 @@ async function runTurn(text, lang, sttMs, tStart) {
   addMsg('me', text);
   let llmMs = 0, searchMs = 0, reply = '', grounding = text, cue = null, cueAt = null;
   for (let i = 0; i < 3 && !reply; i++) {
-    const { msg, ms } = await chat([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]);
+    const { msg, ms } = await chat(withLangReminder([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]));
     llmMs += ms;
     if (msg.tool_calls?.length) {
       if (!cue) { cue = playCue(S.lang); if (cue) cueAt = performance.now() - tStart; }
@@ -344,9 +381,22 @@ async function runTurn(text, lang, sttMs, tStart) {
     }
     reply = (msg.content || '').trim();
   }
+  let langNote = null;
+  if (reply && wrongLanguage(reply)) {
+    const ask = S.lang === 'en' ? 'Rewrite your last reply in English only, with the same meaning.' : 'Rewrite your last reply in Hinglish using English letters only, with the same meaning.';
+    try {
+      const fix = await chat(withLangReminder([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24),
+        { role: 'assistant', content: reply }, { role: 'user', content: ask }]));
+      llmMs += fix.ms;
+      const fixed = (fix.msg.content || '').trim();
+      langNote = fixed && !wrongLanguage(fixed) ? 'reply was in the wrong language; rewritten' : 'reply is in the wrong language';
+      if (fixed && !wrongLanguage(fixed)) reply = fixed;
+    } catch { langNote = 'reply is in the wrong language'; }
+  }
   if (!reply) reply = t('fallback');
   S.messages.push({ role: 'assistant', content: reply });
   const chk = checkReply(reply, grounding);
+  if (langNote) chk.flags.push(langNote);
   addMsg('pia', reply, `${chk.words} words`, chk.flags);
 
   const tts = await speak(reply, speechLang());
