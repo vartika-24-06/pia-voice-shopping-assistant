@@ -158,6 +158,17 @@ def do_search(req: SearchRequest):
     }
 
 
+class TextRequest(BaseModel):
+    text: str
+
+
+@app.post("/api/ambiguity")
+def ambiguity(req: TextRequest):
+    """Does what the user said contain a spelling that could mean two things (for example "K Beauty")?"""
+    amb = find_ambiguous(req.text)
+    return {"ambiguous": {"heard": amb[0], "candidates": amb[1]} if amb else None}
+
+
 @app.post("/api/search")
 async def search(req: SearchRequest):
     return await asyncio.to_thread(do_search, req)

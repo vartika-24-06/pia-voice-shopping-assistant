@@ -484,9 +484,24 @@ function toggleBubble(row) {
 }
 
 /* ---------------- one conversation turn ---------------- */
+async function checkAmbiguity(text) {
+  try {
+    const res = await fetch('/api/ambiguity', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
+    return res.ok ? (await res.json()).ambiguous : null;
+  } catch { return null; }
+}
+
 async function runTurn(text, lang, sttMs, tStart) {
   S.messages.push({ role: 'user', content: text });
   addUser(text);
+  // A spelling that could mean two things ("K Beauty") is checked before the model can rewrite it into one meaning.
+  const amb = await checkAmbiguity(text);
+  if (amb) {
+    const id = 'amb_' + Date.now();
+    showChoices(amb.candidates.map(c => ({ label: c, send: t('confirmSend', c) })));
+    S.messages.push({ role: 'assistant', content: '', tool_calls: [{ id, type: 'function', function: { name: 'search_products', arguments: JSON.stringify({ query: text, category: 'beauty' }) } }] });
+    S.messages.push({ role: 'tool', tool_call_id: id, name: 'search_products', content: JSON.stringify({ status: 'confirm_brand', heard: amb.heard, candidates: amb.candidates }) });
+  }
   let llmMs = 0, searchMs = 0, reply = '', grounding = text, cue = null, cueAt = null;
   for (let i = 0; i < 3 && !reply; i++) {
     const { msg, ms } = await chat(withLangReminder([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]));
