@@ -113,7 +113,7 @@ Scored on 20 spoken replies; the PM listens without seeing the text first.
 | c18 | No match | **[to record]** "huda beauty ka concealer 100 rupaye ke andar" | No-match pattern with the price named | Products above 100 presented as matches |
 | c19 | Out of scope | Audio q08: "aaj dinner mein kya banaoon" | Polite redirect to fashion search | A recipe |
 | c20 | Out of scope | Audio q14: "where can i find a black labrador puppy" | Polite redirect | Pet shop results |
-| c21 | Brand confirmation (found in the first retest) | q23 "kay beauty ki creamy wali lipstick milegi", then the user rejects Korean beauty ("not Korean beauty, Kay Beauty") by voice or by tapping | Kay Beauty lipsticks only (brand in the brand field and sent to the stores), or a plain "nothing found for Kay Beauty" | Other brands' lipsticks shown as if they were the answer |
+| c21 | Brand confirmation (found in the first retest) | q23 "kay beauty ki creamy wali lipstick milegi", then the user rejects Korean beauty ("not Korean beauty, Kay Beauty") by voice or by tapping | Kay Beauty lipsticks only (brand in the brand field and sent to the stores), or a plain "nothing found for Kay Beauty" | Other brands' lipsticks shown as if they were the answer. If the user picks **Korean beauty** instead: only Korean-origin brands (for example Etude), never a brand that merely has "Beauty" in its name (the first retest showed Swiss Beauty) |
 
 Note on the files: the earlier clip "casual tshirts to go with jeans" was overwritten by a recorder bug, so c05 uses the later "white linen shirt" clip in its place.
 

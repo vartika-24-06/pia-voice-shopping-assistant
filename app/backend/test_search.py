@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 import qc
-from search import run_pipeline, repair_query, resolve_brand, find_ambiguous, detect_brand_in_query
+from search import is_korean, is_korean, run_pipeline, repair_query, resolve_brand, find_ambiguous, detect_brand_in_query
 
 RAW = Path(__file__).resolve().parents[2] / "spike" / "raw"
 
@@ -77,3 +77,10 @@ g = run_pipeline(lip, "lipstick", brand="Lakme")
 assert g and all("lakme" in (x["brand"] + x["display_name"]).lower() for x in g), "brand filter must only keep Lakme"
 assert run_pipeline(lip, "Kay Beauty lipstick", brand="Kay Beauty") == [] or all("kay" in x["brand"].lower() for x in run_pipeline(lip, "Kay Beauty lipstick", brand="Kay Beauty"))
 print("\nall assertions passed")
+
+# 11. "Korean beauty": only Korean brands, never a brand that merely has "Beauty" in its name
+kg = run_pipeline({"Myntra": load("Myntra__lipstick.json")}, "korean beauty lipstick")
+print("korean lipstick groups:", [(x["brand"], x["display_name"][:30]) for x in kg][:6])
+assert all("swiss" not in x["brand"].lower() for x in kg)
+assert all(is_korean(x["best"]) for x in kg)
+print("korean check ok")

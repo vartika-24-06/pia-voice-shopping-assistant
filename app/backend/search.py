@@ -8,6 +8,7 @@ import re
 from difflib import SequenceMatcher
 from math import ceil
 
+GENERIC = {"beauty", "products", "product", "items", "item"}
 STOP = {"a", "an", "the", "for", "of", "and", "in", "with", "to", "me", "ke", "ka", "ki", "liye", "wala", "wale",
         "men", "mens", "man", "women", "womens", "woman", "ladies", "unisex", "adult", "adults", "new", "best", "good",
         "show", "dikhao", "chahiye", "please", "need", "want", "find"}
@@ -67,7 +68,7 @@ def is_relevant(l, query, wants_kids, skip=frozenset()):
     words = set(tokens(l["name"] + " " + l["brand"]))
     if not wants_kids and words & KIDS:
         return False
-    need = [t for t in tokens(query) if t not in STOP and t not in COLOURS and t not in skip and not t.isdigit()]
+    need = [t for t in tokens(query) if t not in STOP and t not in COLOURS and t not in skip and t not in GENERIC and t != "korean" and not t.isdigit()]
     if not need:
         return True
 
@@ -142,6 +143,21 @@ def rank(groups, sort="lowest_price"):
     return sorted(groups, key=lambda g: (g["best"]["offer_price"], -(g["rating"] or 0)))
 
 
+KOREAN_BRANDS = {
+    "etude", "etudehouse", "innisfree", "laneige", "missha", "tonymoly", "cosrx", "skinfood", "peripera", "romand",
+    "drjart", "naturerepublic", "banilaco", "holikaholika", "thefaceshop", "somebymi", "beautyofjoseon", "nacific",
+    "clio", "3ce", "sulwhasoo", "mamonde", "hera", "apieu", "ahc", "anua", "isntree", "medicube", "torriden", "mediheal",
+    "goodal", "dasique", "unleashia", "colorgram", "wakemake", "espoir", "amuse", "thesaem", "tocobo", "skin1004",
+    "purito", "klairs", "ipkn", "tirtir", "rounlab", "iunik", "numbuzin", "mixsoon", "aprilskin", "makep", "fwee",
+}
+
+
+def is_korean(l):
+    nb = norm_brand(l["brand"])
+    return (nb in KOREAN_BRANDS or any(nb.startswith(k) for k in KOREAN_BRANDS if len(k) >= 5)
+            or "korean" in l["name"].lower() or "k-beauty" in l["name"].lower())
+
+
 def run_pipeline(raw_by_platform, query, max_price=None, brand=None, sort="lowest_price"):
     """raw_by_platform: {platform: [raw product dicts]} -> ranked product groups (all pages)."""
     wants_kids = bool(set(tokens(query)) & KIDS)
@@ -153,6 +169,8 @@ def run_pipeline(raw_by_platform, query, max_price=None, brand=None, sort="lowes
             if l and is_relevant(l, query, wants_kids, skip) and brand_matches(l, brand):
                 listings.append(l)
     listings = collapse_same_platform(listings)
+    if "korean" in tokens(query):  # "Korean beauty" is about where the brand comes from, not a product word
+        listings = [l for l in listings if is_korean(l)]
     if max_price:
         listings = [l for l in listings if l["offer_price"] <= max_price]
     return rank(apply_gate(group_listings(listings)), sort)
