@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarvam browser check</title>
+<style>
+  :root { --bg:#fafaf9; --fg:#1c1917; --muted:#78716c; --card:#fff; --line:#e7e5e4; --accent:#0f766e; --ok:#15803d; --bad:#b91c1c; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1c1917; --fg:#fafaf9; --muted:#a8a29e; --card:#292524; --line:#44403c; --accent:#2dd4bf; --ok:#4ade80; --bad:#f87171; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:24px 16px 80px; }
+  h1 { font-size:1.4rem; margin:0 0 4px; } h2 { font-size:1.1rem; margin:0 0 8px; }
+  p.sub, .muted { color:var(--muted); margin:0 0 16px; font-size:.9rem; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+  input, select { padding:9px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--fg); font:inherit; }
+  input[type=password] { width:100%; }
+  button { font:inherit; padding:9px 14px; border-radius:8px; border:1px solid var(--line); background:var(--bg); color:var(--fg); cursor:pointer; }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; margin-top:10px; }
+  td, th { text-align:left; padding:6px 4px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .ok { color:var(--ok); font-weight:600; } .bad { color:var(--bad); font-weight:600; }
+  code, pre { font-size:.8rem; white-space:pre-wrap; word-break:break-word; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+  #summary { white-space:pre-wrap; font-size:.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sarvam browser check</h1>
+  <p class="sub">Tests, from a real browser, that Sarvam's speech, voice and tool calling work with your key. The key stays in this page's memory only; it is not saved or sent anywhere except to api.sarvam.ai.</p>
+
+  <section>
+    <h2>Your Sarvam key</h2>
+    <input id="key" type="password" placeholder="Paste your Sarvam key here" autocomplete="off">
+    <p class="muted" style="margin-top:8px">Do not share the key in chat. Reload the page to forget it.</p>
+  </section>
+
+  <section>
+    <h2>A. Understanding and tool calling (Sarvam-105B)</h2>
+    <p class="muted">Seven Hinglish requests. Checks whether the model calls the search tool with the right details, or refuses when out of scope. Reasoning is turned off. Costs a few paise.</p>
+    <button id="runChat" class="primary">Run tool-calling tests</button>
+    <table id="chatTable"></table>
+  </section>
+
+  <section>
+    <h2>B. Pia's voice (Bulbul v4 Flash)</h2>
+    <p class="muted">Plays the same sentences in two text formats. The docs say Devanagari for Hindi words plus English words in Latin letters sounds better than all-Roman text. Listen, then rate each 1 to 5 for naturalness.</p>
+    <div class="row">
+      <label>Voice
+        <select id="speaker">
+          <option>simran_enhi_customer</option><option>ishita_enhi_customer</option><option>shalini_enhi_customer</option>
+          <option>simran_enhi_companion</option><option>ishita_enhi_companion</option><option>shalini_enhi_companion</option>
+        </select>
+      </label>
+      <span class="muted">Check each voice is female to your ear; the docs do not label gender.</span>
+    </div>
+    <table id="ttsTable"></table>
+  </section>
+
+  <section>
+    <h2>C. Speech in (Saaras v3, translit)</h2>
+    <p class="muted">Records from your microphone and sends the recording straight from the browser to Sarvam.</p>
+    <div class="row">
+      <button id="recBtn">Start recording</button>
+      <button id="stopBtn" disabled>Stop and send</button>
+      <span id="sttState" class="muted"></span>
+    </div>
+    <table id="sttTable"></table>
+  </section>
+
+  <section>
+    <h2>Summary</h2>
+    <button id="copy">Copy results to clipboard</button>
+    <p class="muted">Paste the copied text to Claude. It contains no key.</p>
+    <div id="summary"></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const BASE = 'https://api.sarvam.ai';
+const results = { chat: [], tts: [], stt: [] };
+const key = () => $('key').value.trim();
+const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+function refreshSummary() {
+  const c = results.chat, ok = c.filter(r => r.pass).length;
+  $('summary').textContent =
+    `Tool calling: ${ok}/${c.length} passed` +
+    (c.length ? `, median ${median(c.map(r => r.ms))} ms\n` : '\n') +
+    `Voice samples played: ${results.tts.length}` + (results.tts.length ? `, median ${median(results.tts.map(r => r.ms))} ms\n` : '\n') +
+    `Speech in: ${results.stt.length} request(s)` + (results.stt.length ? `, median ${median(results.stt.map(r => r.ms))} ms\n` : '\n') +
+    `Browser access (CORS) problems: ${[...c, ...results.tts, ...results.stt].filter(r => r.networkError).length}`;
+}
+function median(a) { if (!a.length) return '-'; const s = [...a].sort((x, y) => x - y); return Math.round(s[Math.floor(s.length / 2)]); }
+
+/* ---------- A. tool calling ---------- */
+const TOOLS = [{ type: 'function', function: {
+  name: 'search_products',
+  description: 'Search fashion and beauty products on Myntra, Amazon and Nykaa.',
+  parameters: { type: 'object', properties: {
+    query: { type: 'string', description: 'Product search text in English letters, e.g. "purple saree blouse"' },
+    category: { type: 'string', enum: ['clothing', 'footwear', 'accessories', 'jewellery', 'beauty'] },
+    max_price: { type: 'number', description: 'Maximum price in rupees, if the user gave one' },
+    brand: { type: 'string', description: 'Brand name if the user named one' },
+    platform: { type: 'string', enum: ['Myntra', 'Amazon', 'Nykaa'] } },
+    required: ['query', 'category'] } } }];
+
+const SYSTEM = `You are Pia, a friendly shopping assistant. Reply in the user's language (English, or Hinglish if they speak Hinglish). Address the user as "aap", never "tu" or "tum". Use feminine grammar for yourself ("kar sakti hoon"). You only help find fashion and beauty products. For any product request, call search_products. For anything else, politely say in one sentence that you can only help with fashion search, and do not call a tool.`;
+
+const CHAT_TESTS = [
+  { say: 'Mujhe purple saree ka blouse chahiye', expect: 'tool', check: a => /blouse/i.test(a.query) && a.category === 'clothing' },
+  { say: 'white sneakers 2000 ke andar', expect: 'tool', check: a => /sneaker/i.test(a.query) && a.max_price === 2000 && a.category === 'footwear' },
+  { say: 'asics ke running wale gel wale shoes chahiye', expect: 'tool', check: a => /asics/i.test(a.brand || a.query) && a.category === 'footwear' },
+  { say: 'Ferrari ke white sneakers fifteen hundred ke andar', expect: 'tool', check: a => a.max_price === 1500 },
+  { say: 'Huda Beauty concealer Rs. 100 ke andar', expect: 'tool', check: a => a.max_price === 100 && a.category === 'beauty' && /huda/i.test(a.brand || a.query) },
+  { say: 'Myntra pe hi pink saree ke liye blouse dikhao', expect: 'tool', check: a => a.platform === 'Myntra' && /blouse/i.test(a.query) },
+  { say: 'aaj dinner mein kya banaun', expect: 'refuse', check: (a, msg) => !/\b(tu|tum)\b/i.test(msg || '') && (msg || '').length > 5 },
+];
+
+$('runChat').onclick = async () => {
+  if (!key()) return alert('Paste your key first.');
+  $('runChat').disabled = true; results.chat = [];
+  $('chatTable').innerHTML = '<tr><th>Request</th><th>Result</th><th>ms</th><th>Detail</th></tr>';
+  for (const t of CHAT_TESTS) {
+    const row = { say: t.say };
+    const t0 = performance.now();
+    try {
+      const res = await fetch(BASE + '/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'api-subscription-key': key() },
+        body: JSON.stringify({ model: 'sarvam-105b', temperature: 0.2, max_tokens: 400, reasoning_effort: null,
+          messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: t.say }],
+          tools: TOOLS, tool_choice: 'auto' }),
+      });
+      row.ms = Math.round(performance.now() - t0);
+      const body = await res.json();
+      row.status = res.status;
+      if (!res.ok) { row.pass = false; row.detail = JSON.stringify(body).slice(0, 300); }
+      else {
+        const m = body.choices?.[0]?.message || {};
+        const calls = m.tool_calls || [];
+        if (t.expect === 'tool') {
+          if (!calls.length) { row.pass = false; row.detail = 'No tool call. Reply: ' + (m.content || ''); }
+          else {
+            let args = null;
+            try { args = JSON.parse(calls[0].function.arguments); } catch (e) { row.detail = 'Arguments are not valid JSON: ' + calls[0].function.arguments; }
+            row.pass = !!args && t.check(args);
+            row.detail = args ? JSON.stringify(args) : row.detail;
+          }
+        } else {
+          row.pass = calls.length === 0 && t.check({}, m.content);
+          row.detail = calls.length ? 'Called a tool when it should refuse: ' + JSON.stringify(calls[0].function) : 'Reply: ' + (m.content || '');
+        }
+      }
+    } catch (e) { row.ms = Math.round(performance.now() - t0); row.pass = false; row.networkError = true; row.detail = 'Network/CORS error: ' + e.message; }
+    results.chat.push(row);
+    $('chatTable').insertAdjacentHTML('beforeend',
+      `<tr><td>${esc(row.say)}</td><td class="${row.pass ? 'ok' : 'bad'}">${row.pass ? 'PASS' : 'FAIL'}</td><td>${row.ms}</td><td><code>${esc(row.detail)}</code></td></tr>`);
+    refreshSummary();
+  }
+  $('runChat').disabled = false;
+};
+
+/* ---------- B. voice ---------- */
+const SAMPLES = [
+  { id: 'results', lang: 'hi-IN',
+    mixed: 'ये रहे आपके लिए तीन blouse. सबसे कम दाम ₹563 में, Tikhi Imli का, rating 4.2 है।',
+    roman: 'Ye rahe aapke liye teen blouse. Sabse kam daam Rs. 563 mein, Tikhi Imli ka, rating 4.2 hai.' },
+  { id: 'no match', lang: 'hi-IN',
+    mixed: "Sorry, मुझे 'Ferrari ke white sneakers 1500 ke andar' के लिए कुछ नहीं मिला। क्या आप रंग या budget बदल कर देखना चाहेंगे?",
+    roman: "Sorry, mujhe 'Ferrari ke white sneakers 1500 ke andar' ke liye kuch nahi mila. Kya aap rang ya budget badal kar dekhna chahenge?" },
+  { id: 'refusal', lang: 'hi-IN',
+    mixed: 'मैं सिर्फ fashion products ढूँढने में मदद कर सकती हूँ। क्या आप कुछ ढूँढना चाहेंगे?',
+    roman: 'Main sirf fashion products dhoondhne mein madad kar sakti hoon. Kya aap kuch dhoondhna chahenge?' },
+  { id: 'english', lang: 'en-IN',
+    mixed: 'Here are three options for you. The lowest price is 563 rupees, from Tikhi Imli, rated 4.2.',
+    roman: 'Here are three options for you. The lowest price is 563 rupees, from Tikhi Imli, rated 4.2.' },
+];
+$('ttsTable').innerHTML = '<tr><th>Sample</th><th>Format</th><th></th><th>ms</th><th>Rating 1-5</th></tr>' +
+  SAMPLES.flatMap((s, i) => ['mixed', 'roman'].map(f => `<tr><td>${s.id}</td><td>${f === 'mixed' ? 'Devanagari + English' : 'All Roman'}</td>
+   <td><button data-i="${i}" data-f="${f}">Play</button></td><td id="ms-${i}-${f}"></td>
+   <td><select data-rate="${i}-${f}"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>`)).join('');
+
+$('ttsTable').addEventListener('click', async e => {
+  const b = e.target.closest('button[data-i]'); if (!b) return;
+  if (!key()) return alert('Paste your key first.');
+  const s = SAMPLES[+b.dataset.i], f = b.dataset.f, id = `${b.dataset.i}-${f}`;
+  const row = { sample: s.id, format: f, speaker: $('speaker').value };
+  const t0 = performance.now(); b.disabled = true;
+  try {
+    const res = await fetch(BASE + '/text-to-speech', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'api-subscription-key': key() },
+      body: JSON.stringify({ text: s[f], language_code: s.lang, model: 'bulbul:v4-flash', speaker: $('speaker').value,
+        pace: 1.0, speech_sample_rate: 24000, output_audio_codec: 'wav' }),
+    });
+    row.ms = Math.round(performance.now() - t0);
+    const body = await res.json();
+    if (!res.ok) { row.error = JSON.stringify(body).slice(0, 200); $('ms-' + id).textContent = 'error: ' + row.error; }
+    else {
+      $('ms-' + id).textContent = row.ms;
+      const audio = new Audio('data:audio/wav;base64,' + body.audios[0]); audio.play();
+    }
+  } catch (err) { row.networkError = true; row.error = err.message; $('ms-' + id).textContent = 'Network/CORS error: ' + err.message; }
+  results.tts.push(row); b.disabled = false; refreshSummary();
+});
+$('ttsTable').addEventListener('change', e => {
+  const sel = e.target.closest('select[data-rate]'); if (!sel) return;
+  const [i, f] = sel.dataset.rate.split('-');
+  const row = [...results.tts].reverse().find(r => r.sample === SAMPLES[+i].id && r.format === f);
+  if (row) row.rating = sel.value;
+});
+
+/* ---------- C. speech in ---------- */
+let rec, chunks = [], t0stt;
+$('recBtn').onclick = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    rec = new MediaRecorder(stream); chunks = [];
+    rec.ondataavailable = e => e.data.size && chunks.push(e.data);
+    // Sarvam rejects "audio/webm;codecs=opus"; send the same bytes labelled plain "audio/webm".
+    rec.onstop = async () => { stream.getTracks().forEach(t => t.stop()); await sendStt(new Blob(chunks, { type: 'audio/webm' })); };
+    rec.start(); $('recBtn').disabled = true; $('stopBtn').disabled = false; $('sttState').textContent = 'Recording... say something in Hinglish';
+  } catch (e) { $('sttState').textContent = 'Microphone problem: ' + e.message; }
+};
+$('stopBtn').onclick = () => { rec.stop(); $('stopBtn').disabled = true; $('sttState').textContent = 'Sending...'; };
+async function sendStt(blob) {
+  if (!key()) { $('sttState').textContent = 'Paste your key first.'; $('recBtn').disabled = false; return; }
+  const row = {}; const t0 = performance.now();
+  try {
+    const fd = new FormData();
+    fd.append('file', blob, 'recording.webm'); fd.append('model', 'saaras:v3'); fd.append('mode', 'translit'); fd.append('language_code', 'unknown');
+    const res = await fetch(BASE + '/speech-to-text', { method: 'POST', headers: { 'api-subscription-key': key() }, body: fd });
+    row.ms = Math.round(performance.now() - t0);
+    const body = await res.json();
+    row.transcript = body.transcript; row.status = res.status;
+    if (!res.ok) row.error = JSON.stringify(body).slice(0, 200);
+  } catch (e) { row.ms = Math.round(performance.now() - t0); row.networkError = true; row.error = e.message; }
+  results.stt.push(row);
+  $('sttTable').insertAdjacentHTML('beforeend', `<tr><td>${row.ms} ms</td><td class="${row.error ? 'bad' : 'ok'}">${row.error ? 'FAIL' : 'OK'}</td><td>${esc(row.error || row.transcript)}</td></tr>`);
+  $('sttState').textContent = 'Done. Record another if you like.'; $('recBtn').disabled = false; refreshSummary();
+}
+
+$('copy').onclick = async () => {
+  const text = $('summary').textContent + '\n\n' + JSON.stringify(results, null, 1);
+  try { await navigator.clipboard.writeText(text); $('copy').textContent = 'Copied'; } catch { alert('Copy failed; select the summary and copy it by hand.'); }
+};
+refreshSummary();
+</script>
+</body>
+</html>

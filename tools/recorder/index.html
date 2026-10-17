@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eval Recorder</title>
+<style>
+  :root {
+    --bg: #fafaf9; --fg: #1c1917; --muted: #78716c; --card: #ffffff;
+    --line: #e7e5e4; --accent: #0f766e; --danger: #b91c1c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1c1917; --fg: #fafaf9; --muted: #a8a29e; --card: #292524; --line: #44403c; --accent: #2dd4bf; --danger: #f87171; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  p.sub { color: var(--muted); margin: 0 0 20px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  label { display: block; font-size: .85rem; color: var(--muted); margin: 10px 0 4px; }
+  select, textarea, input { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font: inherit; }
+  textarea { min-height: 72px; resize: vertical; }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  button { font: inherit; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.rec { background: var(--danger); color: #fff; border-color: var(--danger); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  #timer { font-variant-numeric: tabular-nums; color: var(--muted); }
+  #status { margin-top: 10px; font-size: .9rem; min-height: 1.3em; }
+  #status.err { color: var(--danger); }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  td, th { text-align: left; padding: 4px 0; border-bottom: 1px solid var(--line); }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  audio { width: 100%; margin-top: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Eval recorder</h1>
+  <p class="sub">Records speech in the same format the app will send (browser microphone, WebM) and saves it with its transcript.</p>
+
+  <section>
+    <button id="pick" class="primary">1. Choose recordings folder</button>
+    <span id="folderName" style="margin-left:8px;color:var(--muted)"></span>
+    <p style="font-size:.85rem;color:var(--muted);margin:8px 0 0">Files and <code>transcripts.csv</code> are written straight into this folder. Needs Chrome or Edge.</p>
+  </section>
+
+  <section>
+    <div class="row">
+      <div>
+        <label for="type">Type</label>
+        <select id="type">
+          <option value="simple">Simple search</option>
+          <option value="brand">Brand name</option>
+          <option value="followup">Follow-up</option>
+          <option value="tricky">Out of scope / tricky</option>
+          <option value="noisy">Noisy background</option>
+        </select>
+      </div>
+      <div>
+        <label for="lang">Language</label>
+        <select id="lang">
+          <option value="hinglish">Hinglish</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+    <label for="note">Note (optional, e.g. "TV on", "fan running")</label>
+    <input id="note" type="text">
+
+    <div class="controls">
+      <button id="record" class="rec" disabled>2. Record</button>
+      <button id="stop" disabled>Stop</button>
+      <span id="timer">0.0 s</span>
+      <span style="color:var(--muted);font-size:.85rem">(stops by itself at 30 s)</span>
+    </div>
+    <audio id="player" controls hidden></audio>
+
+    <label for="said">What I said (type it exactly, including slips and the script you used)</label>
+    <textarea id="said" placeholder='e.g. white sneakers 2000 ke andar dikhao'></textarea>
+
+    <div class="controls">
+      <button id="save" class="primary" disabled>3. Save recording + transcript</button>
+      <button id="discard" disabled>Discard</button>
+    </div>
+    <div id="status"></div>
+  </section>
+
+  <section>
+    <strong>Progress</strong>
+    <table id="progress"></table>
+  </section>
+</main>
+
+<script>
+const TARGETS = { simple: 10, brand: 8, followup: 5, tricky: 4, noisy: 3 };
+const LABELS = { simple: 'Simple search', brand: 'Brand name', followup: 'Follow-up', tricky: 'Out of scope / tricky', noisy: 'Noisy background' };
+const HEADER = ['file', 'what_i_said', 'type', 'language', 'note', 'duration_s'];
+const MAX_SECONDS = 30;
+
+const $ = id => document.getElementById(id);
+let dir = null, rows = [], stream = null, rec = null, chunks = [], blob = null;
+let t0 = 0, tick = null, duration = 0, autoStop = null;
+
+function setStatus(msg, err) { const s = $('status'); s.textContent = msg; s.className = err ? 'err' : ''; }
+
+function csvEscape(v) { v = String(v ?? ''); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+function toCSV(list) { return [HEADER, ...list.map(r => HEADER.map(h => r[h]))].map(r => r.map(csvEscape).join(',')).join('\n') + '\n'; }
+function parseCSV(text) {
+  const out = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(cur); cur = ''; }
+    else if (c === '\n') { row.push(cur); out.push(row); row = []; cur = ''; }
+    else if (c !== '\r') cur += c;
+  }
+  if (cur || row.length) { row.push(cur); out.push(row); }
+  const [head, ...body] = out;
+  if (!head) return [];
+  return body.filter(r => r.length > 1).map(r => Object.fromEntries(head.map((h, i) => [h, r[i] ?? ''])));
+}
+
+function renderProgress() {
+  const counts = {}; rows.forEach(r => counts[r.type] = (counts[r.type] || 0) + 1);
+  $('progress').innerHTML = '<tr><th>Type</th><th class="n">Done</th><th class="n">Target</th></tr>' +
+    Object.keys(TARGETS).map(k => `<tr><td>${LABELS[k]}</td><td class="n">${counts[k] || 0}</td><td class="n">${TARGETS[k]}</td></tr>`).join('') +
+    `<tr><td><strong>Total</strong></td><td class="n"><strong>${rows.length}</strong></td><td class="n"><strong>30</strong></td></tr>`;
+}
+
+function refreshButtons() {
+  const recording = rec && rec.state === 'recording';
+  $('record').disabled = !dir || recording;
+  $('stop').disabled = !recording;
+  $('save').disabled = !(dir && blob && $('said').value.trim() && !recording);
+  $('discard').disabled = !blob || recording;
+}
+
+$('pick').onclick = async () => {
+  if (!window.showDirectoryPicker) { setStatus('This browser cannot write to folders. Use Chrome or Edge, opened via http://localhost.', true); return; }
+  try {
+    dir = await window.showDirectoryPicker({ mode: 'readwrite' });
+    $('folderName').textContent = dir.name;
+    try {
+      const f = await (await dir.getFileHandle('transcripts.csv')).getFile();
+      rows = parseCSV(await f.text());
+    } catch { rows = []; }
+    renderProgress(); refreshButtons();
+    setStatus(rows.length ? `Found ${rows.length} earlier recordings. New ones continue from q${String(rows.length + 1).padStart(2, '0')}.` : 'Folder ready.');
+  } catch (e) {
+    dir = null; $('folderName').textContent = ''; refreshButtons();
+    setStatus(e.name === 'AbortError'
+      ? 'No folder selected (the picker was closed, or the "edit files" permission was refused). Try again and click "Edit files" when Chrome asks.'
+      : 'Could not open the folder (' + e.name + '): ' + e.message, true);
+  }
+};
+
+$('record').onclick = async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) { setStatus('Microphone blocked: ' + e.message, true); return; }
+  const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : '';
+  rec = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+  chunks = []; blob = null; $('player').hidden = true;
+  rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  rec.onstop = () => {
+    clearInterval(tick); clearTimeout(autoStop);
+    stream.getTracks().forEach(t => t.stop());
+    duration = (performance.now() - t0) / 1000;
+    blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
+    $('player').src = URL.createObjectURL(blob); $('player').hidden = false;
+    $('timer').textContent = duration.toFixed(1) + ' s';
+    setStatus('Listen back, type what you said, then save.');
+    refreshButtons();
+  };
+  rec.start(); t0 = performance.now();
+  tick = setInterval(() => $('timer').textContent = ((performance.now() - t0) / 1000).toFixed(1) + ' s', 100);
+  autoStop = setTimeout(() => rec.state === 'recording' && rec.stop(), MAX_SECONDS * 1000);
+  setStatus('Recording...'); refreshButtons();
+};
+
+$('stop').onclick = () => { if (rec && rec.state === 'recording') rec.stop(); };
+$('said').oninput = refreshButtons;
+
+$('discard').onclick = () => { blob = null; $('player').hidden = true; $('timer').textContent = '0.0 s'; $('said').value = ''; setStatus('Discarded.'); refreshButtons(); };
+
+let saving = false;
+$('save').onclick = async () => {
+  // Take everything we need immediately, so a double click cannot save twice.
+  if (saving || !blob) return;
+  saving = true; $('save').disabled = true;
+  const data = blob, said = $('said').value.trim(), type = $('type').value, lang = $('lang').value;
+  const note = $('note').value.trim(), dur = duration.toFixed(1);
+  if (!said) { saving = false; refreshButtons(); return; }
+  blob = null;
+  try {
+    // Next number = highest number used so far + 1, and never reuse an existing file name.
+    let n = Math.max(0, ...rows.map(r => parseInt((r.file.match(/^q(\d+)/) || [0, 0])[1], 10))) + 1;
+    const exists = async f => { try { await dir.getFileHandle(f); return true; } catch { return false; } };
+    let file = `q${String(n).padStart(2, '0')}_${type}_${lang}.webm`;
+    while (await exists(file)) { n++; file = `q${String(n).padStart(2, '0')}_${type}_${lang}.webm`; }
+    const w = await (await dir.getFileHandle(file, { create: true })).createWritable();
+    await w.write(data); await w.close();
+    rows.push({ file, what_i_said: said, type, language: lang, note, duration_s: dur });
+    const c = await (await dir.getFileHandle('transcripts.csv', { create: true })).createWritable();
+    await c.write(toCSV(rows)); await c.close();
+    $('player').hidden = true; $('said').value = ''; $('timer').textContent = '0.0 s';
+    renderProgress();
+    setStatus(`Saved ${file}.`);
+  } catch (e) { blob = data; setStatus('Save failed: ' + e.message, true); }
+  saving = false; refreshButtons();
+};
+
+renderProgress(); refreshButtons();
+setStatus('Start with step 1: choose the recordings folder. Record stays greyed out until you do.');
+</script>
+</body>
+</html>

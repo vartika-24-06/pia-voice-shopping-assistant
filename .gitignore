@@ -1,0 +1,24 @@
+# Secrets: keys live in environment variables or the browser, never in files
+.env
+.env.*
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Personal voice recordings (audio). The transcripts file is kept; record your own clips with tools/recorder.
+recordings/*.webm
+recordings/_duplicates/
+recordings/*.bak*
+
+# Raw product data returned by the search API (third-party data), kept local only
+spike/raw/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

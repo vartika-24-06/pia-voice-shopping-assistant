@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pia, shopping assistant</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Pia</h1>
+    <span class="badge" title="Products come from live search on Myntra, Amazon and Nykaa">Live search</span>
+  </header>
+
+  <!-- Key screen -->
+  <section id="setup" class="card">
+    <h2>Shuru karne ke liye</h2>
+    <p class="muted">Pia Sarvam AI ki awaaz aur samajh use karti hai. Aapki Sarvam key sirf is browser tab mein rehti hai aur sirf api.sarvam.ai ko bheji jaati hai.</p>
+    <label for="key">Sarvam API key</label>
+    <input id="key" type="password" autocomplete="off" placeholder="Paste your Sarvam key">
+    <div class="two">
+      <div>
+        <label for="name">Aapka naam (optional)</label>
+        <input id="name" type="text" autocomplete="off" placeholder="e.g. Neha">
+      </div>
+      <div>
+        <label for="gender">Gender (optional)</label>
+        <select id="gender">
+          <option value="">Batana nahi chahte</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+        </select>
+      </div>
+    </div>
+    <label for="voice">Pia ki awaaz</label>
+    <select id="voice">
+      <option>simran_enhi_companion</option><option>simran_enhi_customer</option>
+      <option>ishita_enhi_companion</option><option>ishita_enhi_customer</option>
+      <option>shalini_enhi_companion</option><option>shalini_enhi_customer</option>
+    </select>
+    <div class="row">
+      <button id="start" class="primary">Shuru karein</button>
+      <a class="muted" href="#" id="demoLink" aria-disabled="true" title="Recorded demo comes later">Recorded demo dekhein (jaldi aa raha hai)</a>
+    </div>
+    <p id="setupError" class="error" role="alert"></p>
+  </section>
+
+  <!-- Main screen -->
+  <section id="main" hidden>
+    <div class="card talk">
+      <div id="chip" class="chip">Ready</div>
+      <button id="mic" class="mic" aria-label="Bolna shuru karein">
+        <span id="micLabel">Bolne ke liye tap karein</span>
+      </button>
+      <button id="stop" class="ghost" hidden>Pia ko roken</button>
+      <p id="hint" class="muted">Ek baar mein ek hi baat bolein. Pia bolti hai tab mic band rehta hai.</p>
+      <p id="error" class="error" role="alert"></p>
+    </div>
+
+    <div id="log" class="card log" aria-live="polite"></div>
+
+    <div id="cards" class="cards"></div>
+    <div class="row" id="moreRow" hidden><button id="more" class="ghost">Agle 3 dikhao</button></div>
+
+    <details class="card timings">
+      <summary>Speed (ms)</summary>
+      <table id="timings"></table>
+    </details>
+    <p class="muted"><a href="#" id="changeKey">Key badlein</a></p>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

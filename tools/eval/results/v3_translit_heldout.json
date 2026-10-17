@@ -1,0 +1,26 @@
+[
+ {
+  "file": "q41_tricky_hinglish.webm",
+  "type": "tricky",
+  "reference": "ferrari ke white sneakers 1500 ke andar",
+  "hypothesis": "Ferrari ke white sneakers fifteen hundred ke andar",
+  "status": 200,
+  "language_code": "hi-IN",
+  "seconds": 0.56,
+  "devanagari": false,
+  "wer": 0.2857142857142857,
+  "error": null
+ },
+ {
+  "file": "q42_tricky_hinglish.webm",
+  "type": "tricky",
+  "reference": "huda beauty ka concealer 100 rupaye ke andar",
+  "hypothesis": "Huda Beauty concealer Rs. 100 ke andar.",
+  "status": 200,
+  "language_code": "hi-IN",
+  "seconds": 0.39,
+  "devanagari": false,
+  "wer": 0.375,
+  "error": null
+ }
+]

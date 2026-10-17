@@ -1,0 +1,182 @@
+[
+ {
+  "heard": "A6 running gel shoes",
+  "meant": "Asics",
+  "status": 200,
+  "results": 50,
+  "first_match_rank": 1,
+  "matches": 50,
+  "top_brands": [
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "ASICS"
+  ]
+ },
+ {
+  "heard": "van and Hughes and West vest",
+  "meant": "Van Heusen",
+  "status": 200,
+  "results": 47,
+  "first_match_rank": 1,
+  "matches": 47,
+  "top_brands": [
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear",
+   "Van Heusen",
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear",
+   "Van Heusen Innerwear"
+  ]
+ },
+ {
+  "heard": "Table Line mascara",
+  "meant": "Maybelline",
+  "status": 200,
+  "results": 32,
+  "first_match_rank": 3,
+  "matches": 2,
+  "top_brands": [
+   "Pixi",
+   "Renee",
+   "Maybelline",
+   "Oriflame",
+   "everdiva",
+   "beautifulline",
+   "KISSCHARM",
+   "Blue Heaven",
+   "M.A.C",
+   "GlamFam"
+  ]
+ },
+ {
+  "heard": "Thorax hair mask",
+  "meant": "Schwarzkopf",
+  "status": 200,
+  "results": 32,
+  "first_match_rank": null,
+  "matches": 0,
+  "top_brands": [
+   "Attar Ayurveda",
+   "Streax",
+   "TRUNEXT",
+   "Attar Ayurveda",
+   "Nexxus",
+   "Atulya",
+   "TRICHUP",
+   "ARGATIN",
+   "PLIX THE PLANT FIX",
+   "Streax Professional"
+  ]
+ },
+ {
+  "heard": "Crab India Nehru jacket",
+  "meant": "Fabindia",
+  "status": 200,
+  "results": 46,
+  "first_match_rank": null,
+  "matches": 0,
+  "top_brands": [
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA",
+   "KRAFT INDIA"
+  ]
+ },
+ {
+  "heard": "harsh papis chappal",
+  "meant": "Hush Puppies",
+  "status": 200,
+  "results": 32,
+  "first_match_rank": null,
+  "matches": 0,
+  "top_brands": [
+   "Killer",
+   "Layasa",
+   "Killer",
+   "Killer",
+   "Killer",
+   "Killer",
+   "glitchez",
+   "Killer",
+   "Killer",
+   "Killer"
+  ]
+ },
+ {
+  "heard": "Honetsuka Snickers",
+  "meant": "Onitsuka Tiger",
+  "status": 200,
+  "results": 32,
+  "first_match_rank": null,
+  "matches": 0,
+  "top_brands": [
+   "ASICS",
+   "ASICS",
+   "OFF LIMITS",
+   "SYORA",
+   "ASICS",
+   "ASICS",
+   "ASICS",
+   "plae",
+   "ASICS",
+   "ASICS"
+  ]
+ },
+ {
+  "heard": "Rebuck shoes",
+  "meant": "Reebok",
+  "status": 200,
+  "results": 32,
+  "first_match_rank": null,
+  "matches": 0,
+  "top_brands": [
+   "ERIDANI",
+   "MICHAEL ANGELO",
+   "El Paso",
+   "DODA",
+   "El Paso",
+   "El Paso",
+   "El Paso",
+   "JOOTIYAPA",
+   "U.S. Polo Assn. Women",
+   "VALIOSAA"
+  ]
+ },
+ {
+  "heard": "K Beauty creamy lipstick",
+  "meant": "Kay Beauty",
+  "status": 200,
+  "results": 32,
+  "first_match_rank": null,
+  "matches": 0,
+  "top_brands": [
+   "MARS",
+   "MARS",
+   "KEA",
+   "MARS",
+   "KEA",
+   "KEA",
+   "VONGEE",
+   "Maybelline",
+   "KEA",
+   "Maybelline"
+  ]
+ }
+]
