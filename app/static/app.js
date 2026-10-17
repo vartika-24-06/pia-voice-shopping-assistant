@@ -417,7 +417,11 @@ function addCheck(reply, words, flags) {
 /* ---------------- language control and pronunciation ---------------- */
 // Roman spellings the voice says badly are swapped for Devanagari just before speaking (add more as testing finds them).
 const LEXICON = { dhoondh: 'ढूँढ', dhoondhne: 'ढूँढने', dhoondhna: 'ढूँढना', dhoondhti: 'ढूँढती', dhoondhta: 'ढूँढता', dhoondhein: 'ढूँढें' };
-function applyLexicon(text) { return text.replace(/\b(dhoondh\w*)\b/gi, w => LEXICON[w.toLowerCase()] || w); }
+const LEXICON_WORDS = { rating: 'रेटिंग', ratings: 'रेटिंग्स' };
+function applyLexicon(text) {
+  return text.replace(/\b(dhoondh\w*)\b/gi, w => LEXICON[w.toLowerCase()] || w)
+    .replace(/\b(ratings?)\b/gi, w => LEXICON_WORDS[w.toLowerCase()]);
+}
 
 const HI_WORDS = /\b(mujhe|nahi|kya|aap|hai|hain|kijiye|chahiye|dikhao|milega|mila|rahi|karein|bataiye|mein|liye|kuch|dekhna|chahenge)\b/gi;
 function wrongLanguage(r) {
