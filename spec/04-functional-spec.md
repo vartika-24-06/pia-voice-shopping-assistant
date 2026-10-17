@@ -70,7 +70,7 @@ The browser runs the conversation with Sarvam and calls these two tools on the b
 
 ## 7. Screens
 
-1. **Key screen:** Sarvam key (required), name and gender (optional, for greetings and grammar), note that nothing is stored outside the browser, and a link to the recorded demo.
+1. **Key screen:** language choice (English or Hinglish, shown first, switchable on both screens and remembered for the tab), Sarvam key (required), name and gender (optional, for greetings and grammar), note that nothing is stored outside the browser, and a link to the recorded demo.
 2. **Main screen:** a large press-to-talk mic button (disabled while Pia speaks), a visible state (listening, thinking, speaking), a stop button, three product cards (image, name, price per platform, rating, link), a DesiDime connect button, and an optional usage and cost line (Should).
 
 ## 8. Known limitations (to state in the app and the write-up)

@@ -7,7 +7,7 @@ const $ = id => document.getElementById(id);
 const MAX_RECORD_MS = 25000;
 
 const S = {
-  key: '', name: '', gender: '', voice: 'simran_enhi_companion',
+  key: '', name: '', gender: '', lang: 'hi', voice: 'simran_enhi_companion',
   messages: [], recording: false, busy: false, speaking: false,
   rec: null, stream: null, chunks: [], tStop: 0, autoStop: null, audio: null,
   last: null, // last search: { args, total, page }
@@ -23,18 +23,88 @@ const store = {
 const titleCase = s => String(s || '').replace(/\w\S*/g, w => w[0].toUpperCase() + w.slice(1));
 const rupees = n => '₹' + Math.round(n).toLocaleString('en-IN');
 
+/* ---------------- the two languages: English and Hinglish (Hindi in English letters) ---------------- */
+const I18N = {
+  en: {
+    setupTitle: 'Get started',
+    setupIntro: 'Pia uses Sarvam AI to hear and to speak. Your Sarvam key stays in this browser tab and is sent only to api.sarvam.ai.',
+    lblKey: 'Sarvam API key', phKey: 'Paste your Sarvam key',
+    lblName: 'Your name (optional)', phName: 'e.g. Neha',
+    lblGender: 'Gender (optional)', gNone: 'Prefer not to say', gFemale: 'Female', gMale: 'Male',
+    lblVoice: "Pia's voice", btnStart: 'Get started', demoLink: 'Watch the recorded demo (coming soon)',
+    needKey: 'Please paste your Sarvam key first.',
+    greeting: n => `Hello${n ? ' ' + n : ''}! Tell me what you are looking for. I can search Myntra, Amazon and Nykaa.`,
+    micIdle: 'Tap to speak', micRec: 'Done? Tap to stop', micSpeak: 'Pia is speaking...', micThink: 'Pia is thinking...',
+    chipReady: 'You can speak now', chipListen: 'Listening', chipThink: 'Thinking', chipSpeak: 'Pia is speaking',
+    btnStop: 'Stop Pia', hint: 'Say one thing at a time. The mic stays off while Pia speaks.',
+    btnMore: 'Show next 3', moreText: 'Show the next 3', speed: 'Speed (ms)', changeKey: 'Change key',
+    notRated: 'No ratings yet', viewOn: p => `View on ${p}`,
+    errKeyBad: 'The Sarvam key does not look right. Please try a different key.',
+    errCredits: 'Your Sarvam credits or rate limit seem to have run out. Please check the Sarvam dashboard.',
+    errServer: 'Sarvam is not responding right now. Please try again in a moment.',
+    errRejected: m => 'Sarvam did not accept the request' + (m ? ': ' + m : '.'),
+    errNet: 'Could not reach the internet or Sarvam.',
+    errSearchNet: 'Could not reach product search.',
+    errSearch: 'Product search had a problem. Please try again in a moment.',
+    errMic: 'Microphone permission was not given. Please allow the mic in your browser.',
+    errShort: 'That was too short. Please try again.',
+    noSpeech: 'I did not hear anything. Please try again.',
+    errGeneric: 'Something went wrong: ',
+    errPlay: 'The browser blocked the audio. Click on the page once and try again.',
+    fallback: 'Sorry, something went wrong. Could you say that again?',
+  },
+  hi: {
+    setupTitle: 'Shuru karne ke liye',
+    setupIntro: 'Pia sunne aur bolne ke liye Sarvam AI use karti hai. Aapki Sarvam key sirf is browser tab mein rehti hai aur sirf api.sarvam.ai ko bheji jaati hai.',
+    lblKey: 'Sarvam API key', phKey: 'Apni Sarvam key paste karein',
+    lblName: 'Aapka naam (optional)', phName: 'jaise Neha',
+    lblGender: 'Gender (optional)', gNone: 'Batana nahi chahte', gFemale: 'Female', gMale: 'Male',
+    lblVoice: 'Pia ki awaaz', btnStart: 'Shuru karein', demoLink: 'Recorded demo dekhein (jaldi aa raha hai)',
+    needKey: 'Pehle apni Sarvam key paste karein.',
+    greeting: n => `Namaste${n ? ' ' + n : ''}! Bolkar batayein aap kya dhoondh rahe hain. Main Myntra, Amazon aur Nykaa dekh sakti hoon.`,
+    micIdle: 'Bolne ke liye tap karein', micRec: 'Bol chuke? Rokne ke liye tap karein', micSpeak: 'Pia bol rahi hai...', micThink: 'Pia soch rahi hai...',
+    chipReady: 'Aap bol sakte hain', chipListen: 'Sun rahi hoon', chipThink: 'Soch rahi hoon', chipSpeak: 'Pia bol rahi hai',
+    btnStop: 'Pia ko roken', hint: 'Ek baar mein ek hi baat bolein. Pia bolti hai tab mic band rehta hai.',
+    btnMore: 'Agle 3 dikhao', moreText: 'Agle 3 dikhao', speed: 'Speed (ms)', changeKey: 'Key badlein',
+    notRated: 'Abhi ratings nahi hain', viewOn: p => `${p} par dekhein`,
+    errKeyBad: 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.',
+    errCredits: 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.',
+    errServer: 'Sarvam abhi jawab nahi de raha. Thodi der baad try karein.',
+    errRejected: m => 'Sarvam ne request nahi li' + (m ? ': ' + m : '.'),
+    errNet: 'Internet ya Sarvam se connection nahi ho paaya.',
+    errSearchNet: 'Product search se connection nahi ho paaya.',
+    errSearch: 'Product search mein dikkat aayi. Thodi der baad try karein.',
+    errMic: 'Microphone ki permission nahi mili. Browser mein mic allow karein.',
+    errShort: 'Bahut chhota tha. Dobara bolein.',
+    noSpeech: 'Mujhe kuch sunai nahi diya, kripya dobara bolein.',
+    errGeneric: 'Kuch gadbad ho gayi: ',
+    errPlay: 'Browser ne awaaz chalane se roka. Page par ek baar click karke dobara try karein.',
+    fallback: 'Maaf kijiye, kuch gadbad ho gayi. Kya aap dobara bol sakte hain?',
+  },
+};
+const t = (k, ...a) => { const v = (I18N[S.lang] || I18N.hi)[k]; return typeof v === 'function' ? v(...a) : v ?? k; };
+const speechLang = () => (S.lang === 'en' ? 'en-IN' : 'hi-IN');
+function applyLang() {
+  document.documentElement.lang = S.lang === 'en' ? 'en' : 'hi-Latn';
+  document.querySelectorAll('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); });
+  document.querySelectorAll('[data-ph]').forEach(el => { el.placeholder = t(el.dataset.ph); });
+  document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === S.lang)));
+  render();
+}
+function setLang(l) { S.lang = l; store.set('lang', l); applyLang(); }
+
 class ApiError extends Error {}
 function friendly(status, body) {
   const msg = body?.error?.message || '';
-  if (status === 401 || status === 403) return 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.';
-  if (status === 402 || status === 429) return 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.';
-  if (status >= 500) return 'Sarvam abhi jawab nahi de raha. Thodi der baad try karein.';
-  return 'Sarvam ne request nahi li' + (msg ? ': ' + msg.slice(0, 120) : '.');
+  if (status === 401 || status === 403) return t('errKeyBad');
+  if (status === 402 || status === 429) return t('errCredits');
+  if (status >= 500) return t('errServer');
+  return t('errRejected', msg ? msg.slice(0, 120) : '');
 }
 async function api(path, init) {
   let res;
   try { res = await fetch(BASE + path, init); }
-  catch { throw new ApiError('Internet ya Sarvam se connection nahi ho paaya.'); }
+  catch { throw new ApiError(t('errNet')); }
   let body = null;
   try { body = await res.json(); } catch { /* not json */ }
   if (!res.ok) throw new ApiError(friendly(res.status, body));
@@ -51,14 +121,13 @@ function render() {
   $('mic').disabled = !(idle || S.recording);
   $('mic').classList.toggle('recording', S.recording);
   $('mic').classList.toggle('ready', idle);
-  $('micLabel').textContent = S.recording ? 'Bol chuke? Rokne ke liye tap karein'
-    : S.speaking ? 'Pia bol rahi hai...' : S.busy ? 'Pia soch rahi hai...' : 'Bolne ke liye tap karein';
+  $('micLabel').textContent = S.recording ? t('micRec') : S.speaking ? t('micSpeak') : S.busy ? t('micThink') : t('micIdle');
   $('stop').hidden = !S.speaking;
   $('more').disabled = !idle;
-  if (S.recording) setChip('listening', 'Sun rahi hoon');
-  else if (S.busy) setChip('thinking', 'Soch rahi hoon');
-  else if (S.speaking) setChip('speaking', 'Pia bol rahi hai');
-  else setChip('', 'Aap bol sakte hain');
+  if (S.recording) setChip('listening', t('chipListen'));
+  else if (S.busy) setChip('thinking', t('chipThink'));
+  else if (S.speaking) setChip('speaking', t('chipSpeak'));
+  else setChip('', t('chipReady'));
 }
 function showError(text) { $('error').textContent = text || ''; }
 function addMsg(who, text, meta, flags) {
@@ -79,13 +148,13 @@ function addMsg(who, text, meta, flags) {
 function enterMain() {
   $('setup').hidden = true; $('main').hidden = false;
   $('log').textContent = '';
-  addMsg('pia', `Namaste${S.name ? ' ' + S.name : ''}! Bolkar batayein aap kya dhoondh rahe hain. Main Myntra, Amazon aur Nykaa dekh sakti hoon.`);
+  addMsg('pia', t('greeting', S.name));
   render();
   if (S.key) preloadCues();
 }
 $('start').onclick = () => {
   const key = $('key').value.trim();
-  if (!key) { $('setupError').textContent = 'Pehle apni Sarvam key paste karein.'; return; }
+  if (!key) { $('setupError').textContent = t('needKey'); return; }
   S.key = key; S.name = $('name').value.trim(); S.gender = $('gender').value; S.voice = $('voice').value;
   store.set('key', S.key); store.set('name', S.name); store.set('gender', S.gender); store.set('voice', S.voice);
   S.messages = []; enterMain();
@@ -118,7 +187,7 @@ function systemPrompt() {
   return `You are Pia, a friendly, semi-formal Indian shopping assistant who helps people find fashion and beauty products on Myntra, Amazon and Nykaa.
 
 Style:
-- Reply in the user's language: English if they spoke English, Hinglish if they spoke Hinglish. Write Hinglish in English letters (Roman script), never in Devanagari.
+- ${S.lang === 'en' ? 'Reply in simple English only.' : 'Reply in Hinglish: Hindi written in English letters (Roman script), mixed naturally with English words, never in Devanagari.'}
 - Address the user as "aap". Never use "tu" or "tum". You are female: use feminine forms for yourself ("dhoondh rahi hoon", "kar sakti hoon").
 - ${who} ${nm}
 - Be warm and calm, never pushy. Show options, then hand the decision to the customer ("aap pick kijiye").
@@ -144,8 +213,8 @@ async function realSearch(args) {
   let res;
   try {
     res = await fetch('/api/search', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(args) });
-  } catch { throw new ApiError('Product search se connection nahi ho paaya.'); }
-  if (!res.ok) throw new ApiError('Product search mein dikkat aayi. Thodi der baad try karein.');
+  } catch { throw new ApiError(t('errSearchNet')); }
+  if (!res.ok) throw new ApiError(t('errSearch'));
   const d = await res.json();
   // compact version for the model: only what Pia may speak about
   const llm = d.status === 'ok'
@@ -178,14 +247,14 @@ function renderCards(groups) {
       price.append(mrp, off);
     }
     const rating = document.createElement('span'); rating.className = 'muted';
-    rating.textContent = g.rating ? `★ ${g.rating.toFixed(1)} (${g.rating_count.toLocaleString('en-IN')})` : 'Abhi ratings nahi hain';
+    rating.textContent = g.rating ? `★ ${g.rating.toFixed(1)} (${g.rating_count.toLocaleString('en-IN')})` : t('notRated');
     info.append(rank, name, price, rating); top.append(info);
     const ul = document.createElement('ul');
     for (const l of g.listings) {
       const li = document.createElement('li');
       li.append(document.createTextNode(`${l.platform}: ${rupees(l.price)}`));
       const href = safeLink(l.link);
-      if (href) { const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = `${l.platform} par dekhein`; li.append(a); }
+      if (href) { const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = t('viewOn', l.platform); li.append(a); }
       ul.append(li);
     }
     el.append(top, ul); box.append(el);
@@ -259,7 +328,7 @@ async function runTurn(text, lang, sttMs, tStart) {
     const { msg, ms } = await chat([{ role: 'system', content: systemPrompt() }, ...S.messages.slice(-24)]);
     llmMs += ms;
     if (msg.tool_calls?.length) {
-      if (!cue) { cue = playCue(lang); if (cue) cueAt = performance.now() - tStart; }
+      if (!cue) { cue = playCue(S.lang); if (cue) cueAt = performance.now() - tStart; }
       S.messages.push({ role: 'assistant', content: msg.content || '', tool_calls: msg.tool_calls });
       for (const call of msg.tool_calls) {
         let args = {}; try { args = JSON.parse(call.function.arguments); } catch { /* keep {} */ }
@@ -275,12 +344,12 @@ async function runTurn(text, lang, sttMs, tStart) {
     }
     reply = (msg.content || '').trim();
   }
-  if (!reply) reply = 'Maaf kijiye, kuch gadbad ho gayi. Kya aap dobara bol sakte hain?';
+  if (!reply) reply = t('fallback');
   S.messages.push({ role: 'assistant', content: reply });
   const chk = checkReply(reply, grounding);
   addMsg('pia', reply, `${chk.words} words`, chk.flags);
 
-  const tts = await speak(reply, lang);
+  const tts = await speak(reply, speechLang());
   if (cue) await cue; // never talk over the searching line
   await play(tts.b64, tStart, [sttMs, llmMs, searchMs, tts.ms], cueAt);
 }
@@ -298,7 +367,7 @@ function play(b64, tStart, parts, cueAt) {
     const done = () => { logOnce(); S.speaking = false; S.audio = null; render(); resolve(); };
     audio.onended = done; audio.onerror = done;
     audio.play().catch(() => {
-      showError('Browser ne awaaz chalane se roka. Page par ek baar click karke dobara try karein.');
+      showError(t('errPlay'));
       done();
     });
   });
@@ -322,7 +391,7 @@ function addTimingRow([stt, llm, search, tts], cueAt, total) {
 async function guarded(fn) {
   showError(''); S.busy = true; render();
   try { await fn(); }
-  catch (e) { showError(e instanceof ApiError ? e.message : 'Kuch gadbad ho gayi: ' + e.message); }
+  catch (e) { showError(e instanceof ApiError ? e.message : t('errGeneric') + e.message); }
   finally { S.busy = false; render(); }
 }
 
@@ -332,7 +401,7 @@ $('mic').onclick = async () => {
   if (S.busy || S.speaking) return;
   showError('');
   try { S.stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
-  catch { showError('Microphone ki permission nahi mili. Browser mein mic allow karein.'); return; }
+  catch { showError(t('errMic')); return; }
   S.chunks = [];
   const rec = new MediaRecorder(S.stream); S.rec = rec;
   rec.ondataavailable = e => e.data.size && S.chunks.push(e.data);
@@ -341,11 +410,11 @@ $('mic').onclick = async () => {
     // Sarvam accepts plain "audio/webm", not "audio/webm;codecs=opus".
     const blob = new Blob(S.chunks, { type: 'audio/webm' });
     const tStart = S.tStop;
-    if (performance.now() - S.startedAt < 500) { showError('Bahut chhota tha. Dobara bolein.'); S.recording = false; render(); return; }
+    if (performance.now() - S.startedAt < 500) { showError(t('errShort')); S.recording = false; render(); return; }
     S.recording = false;
     guarded(async () => {
       const stt = await transcribe(blob);
-      if (!stt.text) { addMsg('pia', 'Mujhe kuch sunai nahi diya, kripya dobara bolein.'); return; }
+      if (!stt.text) { addMsg('pia', t('noSpeech')); return; }
       await runTurn(stt.text, stt.lang, stt.ms, tStart);
     });
   };
@@ -354,11 +423,14 @@ $('mic').onclick = async () => {
 };
 function stopRecording() { clearTimeout(S.autoStop); S.tStop = performance.now(); S.rec.stop(); }
 
-$('more').onclick = () => guarded(() => runTurn('Agle 3 dikhao', 'hi-IN', 0, performance.now()));
+$('more').onclick = () => guarded(() => runTurn(t('moreText'), speechLang(), 0, performance.now()));
 
 /* ---------------- start ---------------- */
 (function init() {
+  S.lang = store.get('lang') || 'hi';
+  document.querySelectorAll('[data-lang]').forEach(b => { b.onclick = () => setLang(b.dataset.lang); });
   S.key = store.get('key'); S.name = store.get('name'); S.gender = store.get('gender'); S.voice = store.get('voice') || S.voice;
   $('name').value = S.name; $('gender').value = S.gender; $('voice').value = S.voice;
+  applyLang();
   if (S.key) enterMain();
 })();

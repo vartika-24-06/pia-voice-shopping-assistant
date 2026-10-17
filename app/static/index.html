@@ -10,38 +10,44 @@
 <main>
   <header>
     <h1>Pia</h1>
-    <span class="badge" title="Products come from live search on Myntra, Amazon and Nykaa">Live search</span>
+    <div class="head-right">
+      <div class="seg" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="false">English</button>
+        <button type="button" data-lang="hi" aria-pressed="true">Hinglish</button>
+      </div>
+      <span class="badge" title="Products come from live search on Myntra, Amazon and Nykaa">Live search</span>
+    </div>
   </header>
 
   <!-- Key screen -->
   <section id="setup" class="card">
-    <h2>Shuru karne ke liye</h2>
-    <p class="muted">Pia Sarvam AI ki awaaz aur samajh use karti hai. Aapki Sarvam key sirf is browser tab mein rehti hai aur sirf api.sarvam.ai ko bheji jaati hai.</p>
-    <label for="key">Sarvam API key</label>
-    <input id="key" type="password" autocomplete="off" placeholder="Paste your Sarvam key">
+    <h2 data-i="setupTitle">Shuru karne ke liye</h2>
+    <p class="muted" data-i="setupIntro"></p>
+    <label for="key" data-i="lblKey">Sarvam API key</label>
+    <input id="key" type="password" autocomplete="off" data-ph="phKey">
     <div class="two">
       <div>
-        <label for="name">Aapka naam (optional)</label>
-        <input id="name" type="text" autocomplete="off" placeholder="e.g. Neha">
+        <label for="name" data-i="lblName">Aapka naam (optional)</label>
+        <input id="name" type="text" autocomplete="off" data-ph="phName">
       </div>
       <div>
-        <label for="gender">Gender (optional)</label>
+        <label for="gender" data-i="lblGender">Gender (optional)</label>
         <select id="gender">
-          <option value="">Batana nahi chahte</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
+          <option value="" data-i="gNone">Batana nahi chahte</option>
+          <option value="female" data-i="gFemale">Female</option>
+          <option value="male" data-i="gMale">Male</option>
         </select>
       </div>
     </div>
-    <label for="voice">Pia ki awaaz</label>
+    <label for="voice" data-i="lblVoice">Pia ki awaaz</label>
     <select id="voice">
       <option>simran_enhi_companion</option><option>simran_enhi_customer</option>
       <option>ishita_enhi_companion</option><option>ishita_enhi_customer</option>
       <option>shalini_enhi_companion</option><option>shalini_enhi_customer</option>
     </select>
     <div class="row">
-      <button id="start" class="primary">Shuru karein</button>
-      <a class="muted" href="#" id="demoLink" aria-disabled="true" title="Recorded demo comes later">Recorded demo dekhein (jaldi aa raha hai)</a>
+      <button id="start" class="primary" data-i="btnStart">Shuru karein</button>
+      <a class="muted" href="#" id="demoLink" aria-disabled="true" data-i="demoLink">Recorded demo dekhein</a>
     </div>
     <p id="setupError" class="error" role="alert"></p>
   </section>
@@ -50,24 +56,24 @@
   <section id="main" hidden>
     <div class="card talk">
       <div id="chip" class="chip">Ready</div>
-      <button id="mic" class="mic" aria-label="Bolna shuru karein">
-        <span id="micLabel">Bolne ke liye tap karein</span>
+      <button id="mic" class="mic" aria-label="Record">
+        <span id="micLabel"></span>
       </button>
-      <button id="stop" class="ghost" hidden>Pia ko roken</button>
-      <p id="hint" class="muted">Ek baar mein ek hi baat bolein. Pia bolti hai tab mic band rehta hai.</p>
+      <button id="stop" class="ghost" hidden data-i="btnStop">Pia ko roken</button>
+      <p id="hint" class="muted" data-i="hint"></p>
       <p id="error" class="error" role="alert"></p>
     </div>
 
     <div id="log" class="card log" aria-live="polite"></div>
 
     <div id="cards" class="cards"></div>
-    <div class="row" id="moreRow" hidden><button id="more" class="ghost">Agle 3 dikhao</button></div>
+    <div class="row" id="moreRow" hidden><button id="more" class="ghost" data-i="btnMore">Agle 3 dikhao</button></div>
 
     <details class="card timings">
-      <summary>Speed (ms)</summary>
+      <summary data-i="speed">Speed (ms)</summary>
       <table id="timings"></table>
     </details>
-    <p class="muted"><a href="#" id="changeKey">Key badlein</a></p>
+    <p class="muted"><a href="#" id="changeKey" data-i="changeKey">Key badlein</a></p>
   </section>
 </main>
 <script src="app.js"></script>
