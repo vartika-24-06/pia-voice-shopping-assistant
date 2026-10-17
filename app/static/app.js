@@ -33,6 +33,7 @@ const ICON = {
 /* ---------------- the two languages: English and Hinglish (Hindi in English letters) ---------------- */
 const I18N = {
   en: {
+    resultsTitle: 'Results',
     heroTitle: 'Tell Pia what you want. She finds the best price.',
     heroSub: 'Say it in English or Hinglish. Pia checks Myntra, Amazon and Nykaa and shows you the three lowest prices.',
     howTitle: 'How it works',
@@ -73,6 +74,7 @@ const I18N = {
     fallback: 'Sorry, something went wrong. Could you say that again?',
   },
   hi: {
+    resultsTitle: 'Results',
     heroTitle: 'Pia ko bataiye aap kya chahte hain. Sabse achha price woh nikaal degi.',
     heroSub: 'English ya Hinglish mein bolein. Pia Myntra, Amazon aur Nykaa dekhkar sabse kam daam ke teen options dikhati hai.',
     howTitle: 'Yeh kaise kaam karta hai',
@@ -252,10 +254,10 @@ const TOOLS = [{ type: 'function', function: {
   name: 'search_products',
   description: 'Search fashion and beauty products on Myntra, Amazon and Nykaa. Returns up to 3 results per page.',
   parameters: { type: 'object', properties: {
-    query: { type: 'string', description: 'What to search for, in English letters, e.g. "purple saree blouse". Include a colour if the user said one.' },
+    query: { type: 'string', description: 'What to search for, in English letters, e.g. "purple saree blouse". Include a colour if the user said one. Do NOT put a brand name here: use the brand field.' },
     category: { type: 'string', enum: ['clothing', 'footwear', 'accessories', 'jewellery', 'beauty'] },
     max_price: { type: 'number', description: 'Maximum price in rupees. Only if the user gave one.' },
-    brand: { type: 'string', description: 'Brand name. Only if the user named one.' },
+    brand: { type: 'string', description: 'Brand name, whenever the user names or confirms one (for example Kay Beauty). Never leave a brand inside query.' },
     platform: { type: 'string', enum: ['Myntra', 'Amazon', 'Nykaa'], description: 'Only if the user asked for one platform.' },
     sort: { type: 'string', enum: ['lowest_price', 'highest_rating', 'highest_price'], description: 'Default lowest_price.' },
     page: { type: 'number', description: '1 for the first 3 results, 2 for the next 3, and so on.' } },
@@ -307,6 +309,7 @@ Rules:
 - If the user says something vague like "isse accha kuch", do not guess: call show_choices with kind refine (the screen then shows buttons: higher rated, higher priced, new search) and ask in one short sentence which they would like. When they pick, search again with sort highest_rating or highest_price, or start a new search.
 - When the user starts looking for a different item, start a fresh search: do not carry over the price limit, brand or platform from earlier searches. Carry them over only when they are refining the same search. If they ask for all platforms again after choosing one, search again without a platform.
 - If status is confirm_brand, do not search yet: ask ONE short question naming the candidates. The screen shows them as buttons.
+- When the user confirms a brand ("I mean Kay Beauty", "Mujhe Kay Beauty chahiye") or rejects one of the candidates ("not Korean beauty"), take the other candidate as the answer and call search_products with that brand in the brand field. Never drop a brand the user asked for and show other brands instead; if nothing is found for that brand, say so.
 - If a brand name sounds misheard or could mean two things, ask once to confirm it before searching.
 - For anything that is not shopping for fashion or beauty (recipes, weather, general questions, whether an outfit suits them), politely say in one sentence that you can only help with finding fashion and beauty products. Do not call a tool.
 - If the user is rude, stay polite and steer back to shopping once.

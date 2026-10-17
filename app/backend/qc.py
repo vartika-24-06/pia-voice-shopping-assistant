@@ -80,3 +80,16 @@ def fetch(platform, query):
         _cache[ck] = {"at": time.time(), "products": products}
     left = r.headers.get("X-Credits-Remaining")
     return {"products": products, "cached": False, "credits_remaining": int(left) if left and left.isdigit() else None}
+
+
+def seed_brands_from_list(path):
+    """Add well-known brand names (comma separated) so common brands are recognised before any search."""
+    from search import norm_brand
+    try:
+        for b in Path(path).read_text(encoding="utf-8").replace("\n", " ").split(","):
+            b = b.strip()
+            n = norm_brand(b)
+            if len(n) >= 3 and n not in BRANDS:
+                BRANDS[n] = b
+    except OSError:
+        pass

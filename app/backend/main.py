@@ -15,11 +15,12 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 import qc
-from search import find_ambiguous, repair_query, resolve_brand, run_pipeline, tokens
+from search import norm_brand, detect_brand_in_query, find_ambiguous, repair_query, resolve_brand, run_pipeline, tokens
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = ROOT / "static"
 qc.seed_brands_from_files(ROOT.parent / "spike" / "raw")
+qc.seed_brands_from_list(Path(__file__).resolve().parent / "seed_brands.txt")
 
 app = FastAPI(title="Voice shopping assistant")
 
@@ -93,11 +94,15 @@ def do_search(req: SearchRequest):
         if res["action"] == "accept" and res["brand"] != brand:
             fixes.append({"heard": brand, "brand": res["brand"], "score": None})
             brand = res["brand"]
+    if not brand:
+        brand = detect_brand_in_query(query, qc.BRANDS)  # e.g. "Kay Beauty lipstick" typed into the query by the model
+    # A brand search must send the brand to the store too, or the store's generic top results may not contain it
+    search_q = query if (not brand or norm_brand(brand) in norm_brand(query)) else f"{brand} {query}"
     platforms = route(req.category, req.platform)
 
     raw, failed, notes, credits, cached_all = {}, [], [], None, True
     with ThreadPoolExecutor(max_workers=3) as pool:
-        futures = {p: pool.submit(qc.fetch, p, query) for p in platforms}
+        futures = {p: pool.submit(qc.fetch, p, search_q) for p in platforms}
         for p, fut in futures.items():
             try:
                 r = fut.result()
@@ -111,9 +116,9 @@ def do_search(req: SearchRequest):
     # Beauty: Nykaa as a second source, with a reworded query if the plain one finds nothing
     if req.category == "beauty" and not req.platform and "Myntra" in raw:
         try:
-            r = qc.fetch("Nykaa", query)
+            r = qc.fetch("Nykaa", search_q)
             if not r["products"]:
-                alt = reword_from(raw["Myntra"], query)
+                alt = reword_from(raw["Myntra"], search_q)
                 if alt:
                     r = qc.fetch("Nykaa", alt)
                     notes.append(f"Nykaa searched as '{alt}'")
@@ -135,7 +140,7 @@ def do_search(req: SearchRequest):
         raw_other = {}
         for p in others:
             try:
-                raw_other[p] = qc.fetch(p, query)["products"]
+                raw_other[p] = qc.fetch(p, search_q)["products"]
             except qc.SearchError:
                 pass
         alt = run_pipeline(raw_other, query, max_price=req.max_price, brand=brand, sort=req.sort)

@@ -133,3 +133,9 @@ dialog h3 { font-size: .85rem; color: var(--muted); margin: 14px 0 6px; font-wei
 .pchips button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: .82rem; color: var(--fg); cursor: pointer; }
 .pchips button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
 .linklike { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; font: inherit; cursor: pointer; }
+
+.rhead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rtitle { font-weight: 600; font-size: .95rem; }
+.next { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 7px 14px; font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer; }
+.next svg { width: 16px; height: 16px; }
+.next:disabled { background: #d6d3d1; cursor: not-allowed; }

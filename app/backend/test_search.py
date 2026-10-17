@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 import qc
-from search import run_pipeline, repair_query, resolve_brand, find_ambiguous
+from search import run_pipeline, repair_query, resolve_brand, find_ambiguous, detect_brand_in_query
 
 RAW = Path(__file__).resolve().parents[2] / "spike" / "raw"
 
@@ -68,4 +68,12 @@ for q in ["asics ke running shoes", "Crab India ki Nehru jacket", "Table line ma
 # 8. Regression: a common word must not be swapped for a longer brand ("beauty" -> "Kay Beauty")
 fixed, fixes = repair_query("huda beauty concealer", qc.BRANDS)
 assert fixed == "huda beauty concealer" and not fixes, (fixed, fixes)
+# 10. A brand left inside the query is found and enforced (the Kay Beauty / Swiss Beauty bug)
+qc.seed_brands_from_list(Path(__file__).resolve().parent / "seed_brands.txt")
+assert detect_brand_in_query("Kay Beauty lipstick", qc.BRANDS) == "Kay Beauty"
+assert detect_brand_in_query("lipstick under 500 on Nykaa", qc.BRANDS) is None
+lip = {"Myntra": load("Myntra__lipstick.json")}
+g = run_pipeline(lip, "lipstick", brand="Lakme")
+assert g and all("lakme" in (x["brand"] + x["display_name"]).lower() for x in g), "brand filter must only keep Lakme"
+assert run_pipeline(lip, "Kay Beauty lipstick", brand="Kay Beauty") == [] or all("kay" in x["brand"].lower() for x in run_pipeline(lip, "Kay Beauty lipstick", brand="Kay Beauty"))
 print("\nall assertions passed")

@@ -63,11 +63,11 @@ def collapse_same_platform(listings):
     return list(best.values())
 
 
-def is_relevant(l, query, wants_kids):
+def is_relevant(l, query, wants_kids, skip=frozenset()):
     words = set(tokens(l["name"] + " " + l["brand"]))
     if not wants_kids and words & KIDS:
         return False
-    need = [t for t in tokens(query) if t not in STOP and t not in COLOURS and not t.isdigit()]
+    need = [t for t in tokens(query) if t not in STOP and t not in COLOURS and t not in skip and not t.isdigit()]
     if not need:
         return True
 
@@ -145,11 +145,12 @@ def rank(groups, sort="lowest_price"):
 def run_pipeline(raw_by_platform, query, max_price=None, brand=None, sort="lowest_price"):
     """raw_by_platform: {platform: [raw product dicts]} -> ranked product groups (all pages)."""
     wants_kids = bool(set(tokens(query)) & KIDS)
+    skip = set(tokens(brand)) if brand else set()  # brand words are enforced by the brand filter instead
     listings = []
     for platform, products in raw_by_platform.items():
         for p in products:
             l = normalise(p, platform)
-            if l and is_relevant(l, query, wants_kids) and brand_matches(l, brand):
+            if l and is_relevant(l, query, wants_kids, skip) and brand_matches(l, brand):
                 listings.append(l)
     listings = collapse_same_platform(listings)
     if max_price:
@@ -230,3 +231,20 @@ def resolve_brand(text, brands, accept=0.8, confirm=0.62):
     if near:
         return {"action": "confirm", "candidates": near}
     return {"action": "none"}
+
+
+PLATFORM_WORDS = {"myntra", "amazon", "nykaa"}
+
+
+def detect_brand_in_query(query, brands):
+    """If the query contains a known brand (the model sometimes leaves it in the query), return its display name."""
+    toks = re.findall(r"[A-Za-z0-9&']+", query)
+    for n in (3, 2, 1):
+        for i in range(len(toks) - n + 1):
+            parts = [t.lower() for t in toks[i:i + n]]
+            if any(t in STOP or t in HINDI_FUNCTION or t in PLATFORM_WORDS for t in parts):
+                continue
+            w = norm_brand(" ".join(parts))
+            if len(w) >= 5 and w in brands and w not in PLATFORM_WORDS:
+                return brands[w]
+    return None
