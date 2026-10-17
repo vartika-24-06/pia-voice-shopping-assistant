@@ -55,6 +55,8 @@ const I18N = {
     earlier: n => `Earlier (${n})`, replay: 'Play this reply', stopPlay: 'Stop',
     btnMore: 'Show next 3', moreText: 'Show the next 3', changeKey: 'Change key',
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
+    refine: [{ label: 'Higher rated', send: 'Show higher rated ones' }, { label: 'Higher priced', send: 'Show higher priced ones' }, { label: 'New search', send: 'I want to start a new search' }],
+    confirmSend: c => `I mean ${c}`, platformOnly: p => `Show only ${p}`, platformAll: 'All platforms', platformAllSend: 'Show all platforms',
     notRated: 'No ratings yet', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'The Sarvam key does not look right. Please try a different key.',
     errCredits: 'Your Sarvam credits or rate limit seem to have run out. Please check the Sarvam dashboard.',
@@ -93,6 +95,8 @@ const I18N = {
     earlier: n => `Pehle ki baatein (${n})`, replay: 'Yeh jawab sunein', stopPlay: 'Roken',
     btnMore: 'Agle 3 dikhao', moreText: 'Agle 3 dikhao', changeKey: 'Key badlein',
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
+    refine: [{ label: 'Zyada rating wale', send: 'Zyada rating wale dikhao' }, { label: 'Zyada price wale', send: 'Zyada price wale dikhao' }, { label: 'Naya search', send: 'Mujhe naya search karna hai' }],
+    confirmSend: c => `Mujhe ${c} chahiye`, platformOnly: p => `${p} par hi dikhao`, platformAll: 'Sab platforms', platformAllSend: 'Sab platforms dikhao',
     notRated: 'Abhi ratings nahi hain', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.',
     errCredits: 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.',
@@ -137,7 +141,7 @@ async function api(path, init) {
   catch { throw new ApiError(t('errNet')); }
   let body = null;
   try { body = await res.json(); } catch { /* not json */ }
-  if (!res.ok) throw new ApiError(friendly(res.status, body));
+  if (!res.ok) { const err = new ApiError(friendly(res.status, body)); err.keyProblem = res.status === 401 || res.status === 403; throw err; }
   return body;
 }
 const headers = extra => ({ 'api-subscription-key': S.key, ...extra });
@@ -153,7 +157,10 @@ function render() {
   $('more').disabled = !idle;
   document.querySelectorAll('#chips button').forEach(b => { b.disabled = !idle; });
 }
-function showError(text) { $('error').textContent = text || ''; }
+function showError(text, keyProblem) {
+  const box = $('error'); box.textContent = text || '';
+  if (text && keyProblem) { const b = el('button', 'linklike', t('changeKey')); b.type = 'button'; b.onclick = leaveMain; box.append(' ', b); }
+}
 
 /* ---------------- conversation bubbles: only the latest exchange stays open ---------------- */
 function shiftLatest() {
@@ -168,7 +175,7 @@ function updateEarlier() {
 }
 function scrollIntoViewSoft(node) { try { node.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch { /* ignore */ } }
 function addUser(text) {
-  shiftLatest(); $('chips').hidden = true;
+  shiftLatest(); $('chips').hidden = true; S.chipMode = 'none';
   const row = el('div', 'row-me'); row.append(el('div', 'bubble me', text));
   $('latest').append(row); scrollIntoViewSoft(row);
 }
@@ -184,22 +191,40 @@ function addPia(text) {
   $('latest').append(row); scrollIntoViewSoft(row);
   return row;
 }
-function renderChips() {
-  const box = $('chips'); box.textContent = '';
-  const list = t('chips');
-  if (!Array.isArray(list)) return;
-  for (const text of list) {
-    const b = el('button', null, text); b.type = 'button';
-    b.onclick = () => guarded(() => runTurn(text, speechLang(), 0, performance.now()));
+function showChipList(items, mode) {
+  const box = $('chips'); box.textContent = ''; box.hidden = false; S.chipMode = mode;
+  for (const c of items) {
+    const b = el('button', null, c.label); b.type = 'button';
+    b.onclick = () => guarded(() => runTurn(c.send, speechLang(), 0, performance.now()));
     box.append(b);
   }
+  render();
+}
+function renderChips() {
+  if (S.chipMode !== 'starter') return;
+  const list = t('chips');
+  if (Array.isArray(list)) showChipList(list.map(text => ({ label: text, send: text })), 'starter');
+}
+function showChoices(items) { showChipList(items, 'choices'); }
+function renderPlatformChips(category, active) {
+  const box = $('platformChips'); box.textContent = '';
+  const stores = category === 'beauty' ? ['Myntra', 'Nykaa'] : ['Myntra', 'Amazon'];
+  const all = el('button', null, t('platformAll')); all.type = 'button'; all.setAttribute('aria-pressed', String(!active));
+  all.onclick = () => guarded(() => runTurn(t('platformAllSend'), speechLang(), 0, performance.now()));
+  box.append(all);
+  for (const p of stores) {
+    const b = el('button', null, p); b.type = 'button'; b.setAttribute('aria-pressed', String(active === p));
+    b.onclick = () => guarded(() => runTurn(t('platformOnly', p), speechLang(), 0, performance.now()));
+    box.append(b);
+  }
+  box.hidden = false;
 }
 
 /* ---------------- intro and entering the app ---------------- */
 function enterMain() {
   $('intro').hidden = true; $('app').hidden = false; $('detailsBtn').hidden = false;
   $('latest').textContent = ''; $('earlierList').textContent = ''; $('cards').textContent = '';
-  $('results').hidden = true; $('chips').hidden = false;
+  $('results').hidden = true; $('platformChips').textContent = ''; S.chipMode = 'starter';
   const row = addPia(t('greeting', S.name)); row.btn.hidden = true;
   updateEarlier(); renderChips(); render();
   if (S.key) preloadCues();
@@ -234,7 +259,11 @@ const TOOLS = [{ type: 'function', function: {
     platform: { type: 'string', enum: ['Myntra', 'Amazon', 'Nykaa'], description: 'Only if the user asked for one platform.' },
     sort: { type: 'string', enum: ['lowest_price', 'highest_rating', 'highest_price'], description: 'Default lowest_price.' },
     page: { type: 'number', description: '1 for the first 3 results, 2 for the next 3, and so on.' } },
-    required: ['query', 'category'] } } }];
+    required: ['query', 'category'] } } },
+  { type: 'function', function: {
+    name: 'show_choices',
+    description: 'Show tappable buttons on screen when the user is vague, for example "isse accha kuch". kind refine shows: higher rated, higher priced, new search.',
+    parameters: { type: 'object', properties: { kind: { type: 'string', enum: ['refine'] } }, required: ['kind'] } } }];
 
 function wording() {
   if (S.lang === 'en') return `Use these sentence patterns and fill in the gaps. Do not invent other forms.
@@ -242,13 +271,15 @@ function wording() {
 - No match: "Sorry, I could not find anything for '{searched_for}'. Would you like to change the colour or the budget?"
 - Nothing on the chosen platform: "I found nothing on {platform}, but there are results on {platforms}. Shall I show them?"
 - Vague request: "Would you like higher rated, higher priced, or a new search?"
-- Not shopping: "I can only help with finding fashion and beauty products. What would you like to look for?"`;
+- Not shopping: "I can only help with finding fashion and beauty products. What would you like to look for?"
+- Brand check: "Did you mean {candidates}?"`;
   return `Use these sentence patterns and fill in the gaps. Do not invent other forms, and never use the word "dhoondh"; say "search" or "dekh".
 - Results: "Sabse kam daam {short_name} ka hai, {price} rupaye mein {platform} par, rating {rating}. Aap pick kijiye ya aur dekhein?"
 - No match: "Sorry, mujhe '{searched_for}' ke liye kuch nahi mila. Kya aap rang ya budget badalna chahenge?"
 - Nothing on the chosen platform: "{platform} par yeh nahi mila, lekin {platforms} par mila hai. Kya main dikhaun?"
 - Vague request: "Aap kya chahenge: zyada rating wale, zyada price wale, ya naya search?"
 - Not shopping: "Main sirf fashion aur beauty products search karne mein madad kar sakti hoon. Aap kya dekhna chahenge?"
+- Brand check: "Aap {candidates} mein se kaunsa keh rahe hain?"
 Grammar: Pia is female and speaks about herself in feminine forms. Pia never offers to do something herself that she cannot do, such as trying another product or brand on her own. Address the user with neutral polite forms like "chahenge" and "dekhein".`;
 }
 
@@ -273,7 +304,9 @@ Rules:
 - If status is no_match, say sorry, that you found nothing for what was searched (repeat it), and ask whether they would like to change the colour or the budget. If available_elsewhere is present, instead say there is nothing on the platform they asked for, but there are results on the platforms listed there, and ask if they want to see them.
 - The only platforms are Myntra, Amazon and Nykaa. If the user says a word that sounds like a platform name followed by "par" or "pe" (for example "Nike par", "Naika pe", "Mintra par"), treat it as that platform, not as a brand.
 - If the user wants more results, call search_products again with the same details and page + 1.
-- If the user says something vague like "isse accha kuch", do not guess: offer three choices, higher rated, higher priced, or a new search. If they pick one, search again with sort highest_rating or highest_price.
+- If the user says something vague like "isse accha kuch", do not guess: call show_choices with kind refine (the screen then shows buttons: higher rated, higher priced, new search) and ask in one short sentence which they would like. When they pick, search again with sort highest_rating or highest_price, or start a new search.
+- When the user starts looking for a different item, start a fresh search: do not carry over the price limit, brand or platform from earlier searches. Carry them over only when they are refining the same search. If they ask for all platforms again after choosing one, search again without a platform.
+- If status is confirm_brand, do not search yet: ask ONE short question naming the candidates. The screen shows them as buttons.
 - If a brand name sounds misheard or could mean two things, ask once to confirm it before searching.
 - For anything that is not shopping for fashion or beauty (recipes, weather, general questions, whether an outfit suits them), politely say in one sentence that you can only help with finding fashion and beauty products. Do not call a tool.
 - If the user is rude, stay polite and steer back to shopping once.
@@ -291,6 +324,10 @@ async function realSearch(args) {
   } catch { throw new ApiError(t('errSearchNet')); }
   if (!res.ok) throw new ApiError(t('errSearch'));
   const d = await res.json();
+  if (d.status === 'confirm_brand') {
+    return { groups: [], llm: { status: 'confirm_brand', heard: d.heard, candidates: d.candidates }, total: 0, page: 1,
+      confirm: d.candidates.map(c => ({ label: c, send: t('confirmSend', c) })) };
+  }
   // compact version for the model: only what Pia may speak about
   const llm = d.status === 'ok'
     ? { status: 'ok', page: d.page, total_matches: d.total_matches, platforms_failed: d.platforms_failed,
@@ -455,11 +492,20 @@ async function runTurn(text, lang, sttMs, tStart) {
       S.messages.push({ role: 'assistant', content: msg.content || '', tool_calls: msg.tool_calls });
       for (const call of msg.tool_calls) {
         let args = {}; try { args = JSON.parse(call.function.arguments); } catch { /* keep {} */ }
+        if (call.function.name === 'show_choices') {
+          showChoices(t('refine'));
+          S.messages.push({ role: 'tool', tool_call_id: call.id, name: call.function.name, content: JSON.stringify({ status: 'shown', buttons: ['higher rated', 'higher priced', 'new search'] }) });
+          continue;
+        }
         const t1 = performance.now();
         const out = await realSearch(args);
         searchMs += performance.now() - t1;
-        S.last = { args, total: out.total, page: out.page };
-        renderCards(out.groups);
+        if (out.confirm) showChoices(out.confirm);
+        else {
+          S.last = { args, total: out.total, page: out.page };
+          renderCards(out.groups);
+          if (out.groups.length) renderPlatformChips(args.category, args.platform); else $('platformChips').hidden = true;
+        }
         grounding += ' ' + JSON.stringify(out.llm);
         S.messages.push({ role: 'tool', tool_call_id: call.id, name: call.function.name, content: JSON.stringify(out.llm) });
       }
@@ -504,7 +550,7 @@ function addTimingRow([stt, llm, search, tts], cueAt, total) {
 async function guarded(fn) {
   showError(''); S.busy = true; render();
   try { await fn(); }
-  catch (e) { showError(e instanceof ApiError ? e.message : t('errGeneric') + e.message); }
+  catch (e) { showError(e instanceof ApiError ? e.message : t('errGeneric') + e.message, !!e.keyProblem); }
   finally { S.busy = false; render(); }
 }
 
@@ -527,7 +573,10 @@ $('mic').onclick = async () => {
     if (performance.now() - S.startedAt < 500) { showError(t('errShort')); render(); return; }
     guarded(async () => {
       const stt = await transcribe(blob);
-      if (!stt.text) { addPia(t('noSpeech')).btn.hidden = true; return; }
+      if (!stt.text) {
+        const row = addPia(t('noSpeech')); const tts = await speak(t('noSpeech'), speechLang());
+        row.b64 = tts.b64; row.btn.disabled = !tts.b64; await playBubble(row, tts.b64); return;
+      }
       await runTurn(stt.text, stt.lang, stt.ms, tStart);
     });
   };

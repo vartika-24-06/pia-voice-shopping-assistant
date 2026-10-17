@@ -22,7 +22,7 @@ Routing is decided by the LLM when it calls the search tool (it passes a categor
 | `search_products` | `query`, `category`, optional filters: `max_price`, `brand`, `platform`, `sort` (`lowest_price` by default, or `highest_rating` / `highest_price` for the "isse accha kuch" presets), and `page` (1 = top 3, 2 = next 3, and so on; later pages come from the already-fetched, cached results and cost no extra credits) | Up to 3 product groups, ranked (section 4), each with listings per platform | 1 credit per platform searched |
 | `find_offers` | `product_group_id` (the one the user tapped) | Applicable offers (coupon codes, bank offers, price-drop note) from DesiDime, or a status: `not_connected`, `rate_limited`, `none_found` | DesiDime rate limit |
 
-The browser runs the conversation with Sarvam and calls these two tools on the backend. The Sarvam key stays in the browser.
+The browser runs the conversation with Sarvam and calls these two tools on the backend. A third tool, `show_choices` (kind `refine`), runs in the browser only: it shows the "higher rated / higher priced / new search" buttons when a request is vague. Platform buttons ("All", "Myntra", "Amazon" or "Nykaa") under the results re-run the search through the same conversation. The Sarvam key stays in the browser.
 
 ## 3. Data model
 
@@ -52,6 +52,7 @@ The browser runs the conversation with Sarvam and calls these two tools on the b
 - **Aliases:** each time a user confirms a correction ("Crab India" means Fabindia), the pair is stored as an alias for the session's list, the way portals learn from search logs.
 - **Normalisation:** brand fields vary ("PUMA Motorsport", "Puma"). Map them to one parent brand name where possible.
 - **Not used:** scraping retailer websites directly. Their terms prohibit it and the search API already returns brands.
+- **Three bands (built in step 4):** exact or very close to one known brand (similarity at least 0.8): accept and search; moderately close (0.62 to 0.8) or a known ambiguous spelling ("K Beauty", "Honetsuka"): no search, the screen shows the candidates as buttons and Pia asks once; nothing close: search as heard (the brand list is incomplete, so an unknown brand is not proof of a mishearing). Confirmations cost no search credits.
 - **Screen confirmation:** when a brand needs confirming, the candidates show as tappable chips with name and logo (logos from product images if available), so Pia need not spend another voice turn.
 
 ## 5. Offers flow (DesiDime)

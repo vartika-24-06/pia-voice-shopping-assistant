@@ -15,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 import qc
-from search import repair_query, run_pipeline, tokens
+from search import find_ambiguous, repair_query, resolve_brand, run_pipeline, tokens
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = ROOT / "static"
@@ -72,13 +72,27 @@ def card(rank, g):
     }
 
 
+def confirm_response(heard, candidates, query):
+    return {"status": "confirm_brand", "heard": heard, "candidates": candidates, "page": 1, "total_matches": 0,
+            "searched_for": query, "corrections": [], "platforms_searched": [], "platforms_failed": [], "notes": [],
+            "results": [], "available_elsewhere": None, "from_cache": True, "credits_remaining": None, "ms": 0}
+
+
 def do_search(req: SearchRequest):
     t0 = time.time()
+    # Brands that could mean two things: ask the user instead of guessing (no search credits spent)
+    amb = find_ambiguous(req.query) or (find_ambiguous(req.brand) if req.brand else None)
+    if amb:
+        return confirm_response(amb[0], amb[1], req.query)
     query, fixes = repair_query(req.query, qc.BRANDS)
     brand = req.brand
     if brand:
-        brand, bfix = repair_query(brand, qc.BRANDS)
-        fixes += bfix
+        res = resolve_brand(brand, qc.BRANDS)
+        if res["action"] == "confirm":
+            return confirm_response(brand, res["candidates"], req.query)
+        if res["action"] == "accept" and res["brand"] != brand:
+            fixes.append({"heard": brand, "brand": res["brand"], "score": None})
+            brand = res["brand"]
     platforms = route(req.category, req.platform)
 
     raw, failed, notes, credits, cached_all = {}, [], [], None, True

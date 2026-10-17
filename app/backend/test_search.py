@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 import qc
-from search import run_pipeline, repair_query
+from search import run_pipeline, repair_query, resolve_brand, find_ambiguous
 
 RAW = Path(__file__).resolve().parents[2] / "spike" / "raw"
 

@@ -184,3 +184,49 @@ def repair_query(query, brands, threshold=0.8):
     for f in fixes:
         new = re.sub(re.escape(f["heard"]), f["brand"], new, count=1, flags=re.I)
     return new, fixes
+
+
+# ---------- brand confirmation (spec 03 and 06: accept / confirm / none) ----------
+# Heard spellings that could mean more than one thing. The user is asked to pick.
+AMBIGUOUS = {
+    "kbeauty": ["Kay Beauty", "Korean beauty"],
+    "honetsuka": ["Onitsuka Tiger"],
+}
+
+
+def find_ambiguous(text):
+    """If the text contains a known ambiguous word, return (heard, candidates), else None."""
+    toks = re.findall(r"[A-Za-z0-9&']+", text)
+    for n in (2, 1):
+        for i in range(len(toks) - n + 1):
+            w = norm_brand(" ".join(toks[i:i + n]))
+            if w in AMBIGUOUS:
+                return " ".join(toks[i:i + n]), AMBIGUOUS[w]
+    return None
+
+
+def resolve_brand(text, brands, accept=0.8, confirm=0.62):
+    """Three bands for a brand name that the speech recogniser may have misheard.
+
+    accept:  exact or very close to one known brand  -> {'action': 'accept', 'brand': display}
+    confirm: moderately close, or ambiguous           -> {'action': 'confirm', 'candidates': [...]}
+    none:    nothing close (searched as heard)        -> {'action': 'none'}
+    """
+    n = norm_brand(text)
+    if not n:
+        return {"action": "none"}
+    if n in AMBIGUOUS:
+        return {"action": "confirm", "candidates": AMBIGUOUS[n]}
+    if n in brands:
+        return {"action": "accept", "brand": brands[n]}
+    for nb, display in brands.items():
+        if len(n) >= 4 and len(nb) >= 4 and (n in nb or nb in n):
+            return {"action": "accept", "brand": display}
+    scored = sorted(((SequenceMatcher(None, n, nb).ratio(), disp) for nb, disp in brands.items()
+                     if len(nb) >= 4 and min(len(n), len(nb)) / max(len(n), len(nb)) >= 0.7), reverse=True)
+    if scored and scored[0][0] >= accept:
+        return {"action": "accept", "brand": scored[0][1]}
+    near = [d for r, d in scored if r >= confirm][:3]
+    if near:
+        return {"action": "confirm", "candidates": near}
+    return {"action": "none"}
