@@ -1,0 +1,17 @@
+# Render blueprint: a free web service that runs the backend and serves the page.
+# Set QCAPI_KEY in the Render dashboard (it is not stored in this file).
+services:
+  - type: web
+    name: pia-voice-shopping-assistant
+    runtime: python
+    plan: free
+    buildCommand: pip install -r app/requirements.txt
+    startCommand: cd app/backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: QCAPI_KEY
+        sync: false
+      - key: DAILY_SEARCH_LIMIT
+        value: "60"

@@ -46,6 +46,19 @@ Open http://localhost:8000 in Chrome or Edge. Search results are cached in memor
 
 Offline checks (no credits used): `python test_search.py` in `app/backend`, which needs saved sample responses in `spike/raw/` (not included).
 
+## Deploy (free, about 10 minutes)
+The repository includes a Render blueprint (`render.yaml`). Free-tier terms change, so check Render's current terms first.
+1. Create a Render account and choose **New, Blueprint**, then connect this GitHub repository.
+2. When asked, set **`QCAPI_KEY`** (your product-search key). It is stored in Render, never in the code. Everything else is preset.
+3. Deploy, open the address Render gives you, and check `/api/health` returns `ok: true` and `search_key_configured: true`.
+4. Put the live address in this README and, when you have recorded it, link the demo video on the intro page.
+
+Things to know:
+- **Visitors bring their own Sarvam key,** so your cost is only the product search. `DAILY_SEARCH_LIMIT` (default 60) caps live store searches per day, one credit each; cached repeats are free. When the cap is hit the page says so and points to the demo video.
+- **A free service sleeps when idle,** so the first visit can take up to a minute. Link the demo video next to the live link.
+- **The search cache lives in memory,** so a restart or sleep clears it and the next searches cost credits again.
+- Search credits expire about 30 days after purchase.
+
 ## Repository layout
 - `spec/`: the six specs
 - `app/`: the backend (`backend/`) and the page (`static/`)
@@ -58,7 +71,7 @@ Offline checks (no credits used): `python test_search.py` in `app/backend`, whic
 - Colour is not verified in results (the data has no colour field).
 - Many items have no ratings; unrated items appear only when too few rated ones qualify.
 - Indian-pronounced brand names are the main speech-recognition error.
-- The speech evaluation uses one speaker (the author) with background noise from a fan, so its accuracy figures are an estimate for one voice, not for all users.
+- The speech evaluation uses one speaker (the author), with a fan running for 41 clips and a quiet room for 15, so its accuracy figures are an estimate for one voice, not for all users.
 - No pincode or delivery check.
 - Prices come from a third-party search API and can change.
 

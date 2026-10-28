@@ -2,6 +2,7 @@
 
 The API key is read from the QCAPI_KEY environment variable and never leaves the server.
 """
+import datetime
 import json
 import os
 import threading
@@ -21,10 +22,26 @@ _lock = threading.Lock()
 BRANDS = {}  # normalised brand -> display name, grown from every result
 
 
+DAILY_LIMIT = int(os.environ.get("DAILY_SEARCH_LIMIT", "60"))  # live store searches (one credit each) per day
+_spent = {"day": None, "n": 0}
+
+
 class SearchError(Exception):
-    def __init__(self, message, status=None):
+    def __init__(self, message, status=None, limit=False):
         super().__init__(message)
         self.status = status
+        self.limit = limit
+
+
+def _spend():
+    """Count one live search against today's limit. Cached results are free and never reach here."""
+    today = datetime.date.today().isoformat()
+    with _lock:
+        if _spent["day"] != today:
+            _spent["day"], _spent["n"] = today, 0
+        if _spent["n"] >= DAILY_LIMIT:
+            raise SearchError("The demo's daily search limit has been reached.", 429, limit=True)
+        _spent["n"] += 1
 
 
 def get_key():
@@ -67,6 +84,7 @@ def fetch(platform, query):
     key = get_key()
     if not key:
         raise SearchError("Search key is not configured on the server.")
+    _spend()
     try:
         r = requests.get(f"{BASE}/v1/search", headers={"X-API-Key": key}, timeout=TIMEOUT,
                          params={"q": query, "lat": LAT, "lon": LON, "platform": platform})

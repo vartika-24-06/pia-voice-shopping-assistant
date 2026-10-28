@@ -275,7 +275,7 @@ def score_clip(clip, hyp):
         price_ok = clip["price"] in H
     wrong_script = bool(DEV.search(hyp["hypothesis"]))
     return {
-        "file": clip["file"], "language": clip["language"], "type": clip["type"], "heldout": clip["heldout"], "round2": clip["round2"], "extra_noise": clip["extra_noise"],
+        "file": clip["file"], "language": clip["language"], "type": clip["type"], "heldout": clip["heldout"], "round2": clip["round2"], "note": clip["note"], "extra_noise": clip["extra_noise"],
         "said": clip["said"], "heard": hyp["hypothesis"], "seconds": hyp.get("seconds"), "detected_language": hyp.get("language_code"),
         "exact": [stem(x) for x in R] == [stem(x) for x in H], "ref_words": len(R),
         "word_errors": edit_distance([stem(x) for x in R], [stem(x) for x in H]),
@@ -324,7 +324,7 @@ def write_report(config, rows):
          f"Run on {date.today().isoformat()} with {len(rows)} clips ({held['clips']} held-out). Setup: `{json.dumps(stt_check.CONFIGS[config])}`.",
          "Scoring rules: agreed spelling variants count as correct (`brand_variants.json`); hesitations in what was said are ignored; "
          "numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).",
-         "**Limitation:** all clips are one speaker (the PM) with a fan running; the figures describe one voice and one accent, not all users.", "",
+         "**Limitation:** all clips are one speaker (the PM): 41 recorded with a fan running, 15 in a quiet room. The figures describe one voice and one accent, not all users.", "",
          "## Summary", "", "| Measure | All clips | Held-out only | Round 2 only (q43 onwards) |", "|---|---|---|---|",
          f"| Brand accuracy (exact or agreed variant) | {brand_rate(allx)} | {brand_rate(held)} | {brand_rate(r2)} |",
          f"| Brands: exact / variant / needs confirm / missed | {allx['brand_exact']} / {allx['brand_variant']} / {allx['brand_confirm']} / {allx['brand_miss']} | {held['brand_exact']} / {held['brand_variant']} / {held['brand_confirm']} / {held['brand_miss']} | {r2['brand_exact']} / {r2['brand_variant']} / {r2['brand_confirm']} / {r2['brand_miss']} |",
@@ -338,7 +338,7 @@ def write_report(config, rows):
     for k in sorted(set(allx["events"]) | set(held["events"]) | set(r2["events"])):
         L.append(f"| {k} | {allx['events'].get(k, 0)} | {held['events'].get(k, 0)} | {r2['events'].get(k, 0)} |")
     L += ["", "*Accepted variants are not errors; they are listed so you can see them.*", ""]
-    for title, f in (("language", lambda r: r["language"]), ("clip type", lambda r: r["type"]), ("extra background noise", lambda r: "extra noise" if r["extra_noise"] else "fan only")):
+    for title, f in (("language", lambda r: r["language"]), ("clip type", lambda r: r["type"]), ("background noise", lambda r: "quiet room" if "quiet" in r["note"].lower() else "extra noise (tv, motor, reels)" if r["extra_noise"] else "fan running")):
         L += [f"## By {title}", "", "| Group | Clips | Brand accuracy | Terms heard | Clips exact | Word error rate |", "|---|---|---|---|---|---|"]
         for k, v in by(f).items():
             L.append(f"| {k} | {v['clips']} | {brand_rate(v)} | {pct(v['terms_hit'], v['terms'])} | {pct(v['exact_clips'], v['clips'])} | {v['wer_micro']:.2f} |")

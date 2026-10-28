@@ -91,3 +91,15 @@ assert fixed.startswith("Libas"), fixed
 fixed, fx = repair_query("Mama's ka face wash dikhao", qc.BRANDS)
 assert fixed == "Mama's ka face wash dikhao" and not fx, (fixed, fx)
 print("round 2 brand repair checks ok")
+
+# 14. The daily cap stops a live search before any request is made
+qc._spent.update(day=None, n=0)
+old_limit, qc.DAILY_LIMIT = qc.DAILY_LIMIT, 0
+try:
+    qc.fetch("Myntra", "limit test query that is not cached")
+    raise AssertionError("expected the daily limit to stop the search")
+except qc.SearchError as e:
+    assert e.limit and e.status == 429
+finally:
+    qc.DAILY_LIMIT = old_limit
+print("daily limit check ok")

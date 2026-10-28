@@ -101,6 +101,7 @@ def do_search(req: SearchRequest):
     platforms = route(req.category, req.platform)
 
     raw, failed, notes, credits, cached_all = {}, [], [], None, True
+    limit_hit = False
     with ThreadPoolExecutor(max_workers=3) as pool:
         futures = {p: pool.submit(qc.fetch, p, search_q) for p in platforms}
         for p, fut in futures.items():
@@ -112,6 +113,12 @@ def do_search(req: SearchRequest):
             except qc.SearchError as e:
                 failed.append(p)
                 notes.append(str(e))
+                limit_hit = limit_hit or e.limit
+
+    if limit_hit and not any(raw.values()):
+        return {"status": "limit", "page": 1, "total_matches": 0, "searched_for": query, "corrections": [], "platforms_searched": [],
+                "platforms_failed": failed, "notes": notes, "results": [], "available_elsewhere": None, "from_cache": False,
+                "credits_remaining": None, "ms": round((time.time() - t0) * 1000)}
 
     # Beauty: Nykaa as a second source, with a reworded query if the plain one finds nothing
     if req.category == "beauty" and not req.platform and "Myntra" in raw:

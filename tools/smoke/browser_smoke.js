@@ -22,6 +22,7 @@
   window.fetch = async (url, opts) => {
     if (url === '/api/ambiguity') return realFetch(url, opts);
     if (url === '/api/search') {
+      if (mode === 'limit') return new Response(JSON.stringify({ status: 'limit', results: [] }), { status: 200 });
       const a = JSON.parse(opts.body); searches.push(a);
       const page = a.page || 1;
       return new Response(JSON.stringify({ status: 'ok', page, total_matches: 6, platforms_failed: [], searched_for: a.query,
@@ -99,6 +100,11 @@
 
   // pronunciation list
   check('rating spoken in Devanagari', /रेटिंग/.test(applyLexicon('rating 4.3')) && /ढूँढ/.test(applyLexicon('dhoondh rahi hoon')), applyLexicon('rating dhoondh'));
+
+  // the demo's daily search cap shows a clear message
+  mode = 'limit'; await guarded(() => runTurn('sneakers dikhao', 'hi-IN', 0, performance.now()));
+  check('daily search limit is explained', /search limit/.test($('error').textContent), $('error').textContent);
+  mode = 'normal';
 
   // bad key shows a Change key action
   mode = 'badkey'; await guarded(() => runTurn('kuch aur', 'hi-IN', 0, performance.now()));

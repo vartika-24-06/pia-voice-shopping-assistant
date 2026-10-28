@@ -68,6 +68,7 @@ const I18N = {
     errRejected: m => 'Sarvam did not accept the request' + (m ? ': ' + m : '.'),
     errNet: 'Could not reach the internet or Sarvam.',
     errSearchNet: 'Could not reach product search.',
+    errLimit: "The demo's daily search limit has been reached. Please try again tomorrow, or watch the recorded demo.",
     errSearch: 'Product search had a problem. Please try again in a moment.',
     errMic: 'Microphone permission was not given. Please allow the mic in your browser.',
     errShort: 'That was too short. Please try again.',
@@ -111,6 +112,7 @@ const I18N = {
     errRejected: m => 'Sarvam ne request accept nahi ki' + (m ? ': ' + m : '.'),
     errNet: 'Internet ya Sarvam se connect nahi ho paaya.',
     errSearchNet: 'Product search se connect nahi ho paaya.',
+    errLimit: 'Demo ki aaj ki search limit khatam ho gayi hai. Kal try karein ya recorded demo dekhein.',
     errSearch: 'Product search mein problem aayi. Thodi der baad try karein.',
     errMic: 'Mic ki permission nahi mili. Browser mein mic allow karein.',
     errShort: 'Awaaz bahut chhoti thi. Dobara boliye.',
@@ -346,6 +348,7 @@ async function realSearch(args) {
   } catch { throw new ApiError(t('errSearchNet')); }
   if (!res.ok) throw new ApiError(t('errSearch'));
   const d = await res.json();
+  if (d.status === 'limit') throw new ApiError(t('errLimit'));
   if (d.status === 'confirm_brand') {
     return { groups: [], llm: { status: 'confirm_brand', heard: d.heard, candidates: d.candidates }, total: 0, page: 1,
       confirm: d.candidates.map(c => ({ label: c, send: t('confirmSend', c) })) };

@@ -2,7 +2,7 @@
 
 Run on 2026-10-28 with 56 clips (13 held-out). Setup: `{"model": "saaras:v3", "mode": "translit", "language_code": "unknown"}`.
 Scoring rules: agreed spelling variants count as correct (`brand_variants.json`); hesitations in what was said are ignored; numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).
-**Limitation:** all clips are one speaker (the PM) with a fan running; the figures describe one voice and one accent, not all users.
+**Limitation:** all clips are one speaker (the PM): 41 recorded with a fan running, 15 in a quiet room. The figures describe one voice and one accent, not all users.
 
 ## Summary
 
@@ -49,12 +49,13 @@ Scoring rules: agreed spelling variants count as correct (`brand_variants.json`)
 | simple | 19 | 50% (2/4) | 90% (28/31) | 63% (12/19) | 0.09 |
 | tricky | 6 | 100% (2/2) | 82% (9/11) | 67% (4/6) | 0.07 |
 
-## By extra background noise
+## By background noise
 
 | Group | Clips | Brand accuracy | Terms heard | Clips exact | Word error rate |
 |---|---|---|---|---|---|
-| extra noise | 3 | 100% (1/1) | 100% (4/4) | 67% (2/3) | 0.05 |
-| fan only | 53 | 63% (19/30) | 91% (73/80) | 57% (30/53) | 0.12 |
+| extra noise (tv, motor, reels) | 3 | 100% (1/1) | 100% (4/4) | 67% (2/3) | 0.05 |
+| fan running | 38 | 65% (17/26) | 90% (55/61) | 55% (21/38) | 0.12 |
+| quiet room | 15 | 50% (2/4) | 95% (18/19) | 60% (9/15) | 0.10 |
 
 ## Every brand mention
 

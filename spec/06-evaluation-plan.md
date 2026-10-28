@@ -176,7 +176,7 @@ Reading: the production setup is clearly the best for a Roman-letter search. Bra
 
 ## 10. Known limitations of this evaluation
 
-1. **Single speaker.** All 56 clips are one person's voice (the PM's), with a fan running in the background. No other speaker, accent or microphone was available. Every speech figure (brand accuracy 67%, product words 91%, and the pipeline results on recognised text) therefore describes one voice and one accent. Differences between speakers, accents, microphones and noise are not measured, and the real error rate for the target users is likely higher. *(Recorded 2026-10-28; first fix: record two or more other speakers.)*
+1. **Single speaker.** All 56 clips are one person's voice (the PM's): 41 recorded with a fan running in the background and 15 in a quiet room. No other speaker, accent or microphone was available. Every speech figure (brand accuracy 67%, product words 91%, and the pipeline results on recognised text) therefore describes one voice and one accent. Differences between speakers, accents, microphones and noise are not measured, and the real error rate for the target users is likely higher. *(Recorded 2026-10-28; first fix: record two or more other speakers.)*
 2. **Clips were chosen by the PM,** including the brands, so the brand set is not a random sample of what shoppers ask for.
 3. **Small sample:** 41 clips and 27 brand mentions. A difference of a few points is within noise; treat each figure as an estimate, not a measurement.
 4. **Dropped and inserted words are still thinly tested:** three dropped words appeared in 56 clips (one a product word), which shows the problem exists but is far too few to estimate a rate.
