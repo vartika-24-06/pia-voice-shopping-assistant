@@ -50,6 +50,11 @@ def route(category, platform):
     return ["Myntra"] if category == "beauty" else ["Myntra", "Amazon"]
 
 
+def stores_for(category):
+    """Every store that can answer this kind of request (used to say where results exist)."""
+    return ["Myntra", "Nykaa"] if category == "beauty" else ["Myntra", "Amazon"]
+
+
 def reword_from(products, query):
     """Second-source query for Nykaa: add the most common extra word seen in Myntra's top results."""
     have = set(tokens(query))
@@ -143,7 +148,7 @@ def do_search(req: SearchRequest):
     # so Pia can say so instead of just "no results" (usually free: the other searches are cached).
     elsewhere = None
     if not shown and req.platform:
-        others = [p for p in route(req.category, None) if p != req.platform]
+        others = [p for p in stores_for(req.category) if p != req.platform]
         raw_other = {}
         for p in others:
             try:

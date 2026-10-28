@@ -103,3 +103,16 @@ except qc.SearchError as e:
 finally:
     qc.DAILY_LIMIT = old_limit
 print("daily limit check ok")
+
+# 15. The Myntra tab for a beauty brand that only Nykaa sells: nothing on Myntra, but Nykaa is named as having results
+import main
+_nykaa = [{"id": str(i), "name": f"Kay Beauty Matte Drama Lipstick {i}", "brand": "Kay Beauty", "available": True, "mrp": 999, "offer_price": 699 + i,
+           "rating": 4.3, "rating_count": 500, "images": [], "deeplink": "https://www.nykaa.com/"} for i in range(4)]
+_real_fetch = qc.fetch
+qc.fetch = lambda platform, query: {"products": _nykaa if platform == "Nykaa" else load("Myntra__lipstick.json"), "cached": True, "credits_remaining": None}
+try:
+    r = main.do_search(main.SearchRequest(query="lipstick", category="beauty", brand="Kay Beauty", platform="Myntra"))
+    assert r["status"] == "no_match" and r["available_elsewhere"]["platforms"] == ["Nykaa"], r["available_elsewhere"]
+finally:
+    qc.fetch = _real_fetch
+print("beauty platform fallback check ok")

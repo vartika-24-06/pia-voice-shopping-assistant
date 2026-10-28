@@ -16,7 +16,7 @@
     play() { setTimeout(() => { this.onplaying && this.onplaying(); setTimeout(() => this.onended && this.onended(), 20); }, 10); return Promise.resolve(); }
     pause() {} };
   const realFetch = window.fetch.bind(window);
-  let mode = 'normal'; const searches = []; const forced = [];
+  let mode = 'normal'; const searches = []; const forced = []; let chatCalls = 0, ttsCalls = 0;
   const product = (i, brand) => ({ rank: i, name: `${brand} Item ${i}`, brand, image_url: null, mrp: 1000, discount_pct: 30, rating: 4.2, rating_count: 100,
     best: { platform: 'Myntra', price: 700, link: 'https://www.myntra.com/' }, listings: [{ platform: 'Myntra', price: 700, link: 'https://www.myntra.com/' }] });
   window.fetch = async (url, opts) => {
@@ -24,11 +24,13 @@
     if (url === '/api/search') {
       if (mode === 'limit') return new Response(JSON.stringify({ status: 'limit', results: [] }), { status: 200 });
       const a = JSON.parse(opts.body); searches.push(a);
+      if (a.platform === 'Amazon') return new Response(JSON.stringify({ status: 'no_match', page: 1, total_matches: 0, searched_for: a.query, platforms_failed: [], results: [], available_elsewhere: { platforms: ['Myntra'], count: 3 } }), { status: 200 });
       const page = a.page || 1;
       return new Response(JSON.stringify({ status: 'ok', page, total_matches: 6, platforms_failed: [], searched_for: a.query,
         results: [1, 2, 3].map(i => product((page - 1) * 3 + i, a.brand || 'Puma')) }), { status: 200 });
     }
     if (url.endsWith('/v1/chat/completions')) {
+      chatCalls++;
       if (mode === 'badkey') return new Response(JSON.stringify({ error: { message: 'bad' } }), { status: 403 });
       const body = JSON.parse(opts.body), last = body.messages[body.messages.length - 1];
       if (typeof body.tool_choice === 'object') forced.push(last.content.slice(0, 60));
@@ -42,6 +44,7 @@
       if (/Mujhe Kay Beauty/.test(last.content)) return say('Aap Kay Beauty ya Korean beauty mein se kaunsa keh rahe hain?');
       return call('search_products', { query: 'sneakers', category: 'footwear' });
     }
+    if (url.endsWith('/text-to-speech')) { ttsCalls++; }
     if (url.endsWith('/text-to-speech')) return new Response(JSON.stringify({ audios: [wav] }), { status: 200 });
     return new Response('{}', { status: 200 });
   };
@@ -61,6 +64,14 @@
   check('pia bubble with name and avatar', !!document.querySelector('.row-pia .avatar') && /Pia/.test(document.querySelector('.row-pia .pname').textContent), 0);
   check('next 3 visible in header', !$('more').hidden && !!$('more').closest('.rhead'), 0);
   check('platform chips', document.querySelectorAll('#platformChips button').length === 3, 0);
+  const tab = name => [...document.querySelectorAll('#platformChips button')].find(b => b.textContent === name);
+  const c0 = chatCalls, v0 = ttsCalls, s0 = searches.length;
+  tab('Myntra').click(); await wait(500);
+  check('platform tab searches without the model or the voice', searches.length === s0 + 1 && searches.at(-1).platform === 'Myntra' && chatCalls === c0 && ttsCalls === v0, { searches: searches.length - s0, chat: chatCalls - c0, tts: ttsCalls - v0 });
+  tab('Amazon').click(); await wait(500);
+  check('empty tab says where results are', !$('resultNote').hidden && /Myntra/.test($('resultNote').textContent) && document.querySelectorAll('.pcard').length === 0, $('resultNote').textContent);
+  tab('Sab platforms').click(); await wait(500);
+  check('all platforms brings results back', document.querySelectorAll('.pcard').length === 3 && $('resultNote').hidden, document.querySelectorAll('.pcard').length);
   $('more').click(); await wait(700);
   check('next 3 searches page 2', searches.at(-1).page === 2 && document.querySelector('.pcard .prank').textContent === '#4', searches.at(-1));
   check('earlier fold counts', /\(2\)|\(3\)|\(4\)/.test($('earlierSum').textContent), $('earlierSum').textContent);

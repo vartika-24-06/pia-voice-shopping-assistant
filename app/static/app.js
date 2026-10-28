@@ -67,6 +67,7 @@ const I18N = {
     errServer: 'Sarvam is not responding right now. Please try again in a moment.',
     errRejected: m => 'Sarvam did not accept the request' + (m ? ': ' + m : '.'),
     errNet: 'Could not reach the internet or Sarvam.',
+    noneOnPlatform: (p, o) => `Nothing found${p ? ' on ' + p : ''}${o ? ', but ' + o + ' has results' : ''}.`,
     errSearchNet: 'Could not reach product search.',
     errLimit: "The demo's daily search limit has been reached. Please try again tomorrow, or watch the recorded demo.",
     errSearch: 'Product search had a problem. Please try again in a moment.',
@@ -111,6 +112,7 @@ const I18N = {
     errServer: 'Sarvam abhi respond nahi kar raha. Thodi der baad try karein.',
     errRejected: m => 'Sarvam ne request accept nahi ki' + (m ? ': ' + m : '.'),
     errNet: 'Internet ya Sarvam se connect nahi ho paaya.',
+    noneOnPlatform: (p, o) => `${p ? p + ' par' : 'Is search par'} kuch nahi mila${o ? ', lekin ' + o + ' par available hai' : ''}.`,
     errSearchNet: 'Product search se connect nahi ho paaya.',
     errLimit: 'Demo ki aaj ki search limit khatam ho gayi hai. Kal try karein ya recorded demo dekhein.',
     errSearch: 'Product search mein problem aayi. Thodi der baad try karein.',
@@ -225,15 +227,37 @@ function renderChips() {
   if (Array.isArray(list)) showChipList(list.map(text => ({ label: text, send: text })), 'starter');
 }
 function showChoices(items) { showChipList(items, 'choices'); }
+// A platform tab only re-runs the last search for that store: no model call and no voice.
+async function applyPlatform(p) {
+  if (!S.last || S.busy || S.recording || S.speaking) return;
+  const args = { ...S.last.args, page: 1 };
+  if (p) args.platform = p; else delete args.platform;
+  S.busy = true; render(); showError('');
+  try {
+    const out = await realSearch(args);
+    S.last = { args, total: out.total, page: out.page };
+    renderCards(out.groups);
+    $('results').hidden = false;
+    const note = $('resultNote');
+    if (out.groups.length) note.hidden = true;
+    else { note.textContent = t('noneOnPlatform', p, out.elsewhere ? out.elsewhere.platforms.join(', ') : ''); note.hidden = false; }
+    renderPlatformChips(args.category, args.platform);
+    // keep the conversation memory in step, so a later "aur dikhao" continues from this tab
+    const id = 'plat_' + Date.now();
+    S.messages.push({ role: 'assistant', content: '', tool_calls: [{ id, type: 'function', function: { name: 'search_products', arguments: JSON.stringify(args) } }] },
+      { role: 'tool', tool_call_id: id, name: 'search_products', content: JSON.stringify(out.llm) });
+  } catch (e) { showError(e instanceof ApiError ? e.message : t('errGeneric') + e.message, !!e.keyProblem); }
+  finally { S.busy = false; render(); }
+}
 function renderPlatformChips(category, active) {
   const box = $('platformChips'); box.textContent = '';
   const stores = category === 'beauty' ? ['Myntra', 'Nykaa'] : ['Myntra', 'Amazon'];
   const all = el('button', null, t('platformAll')); all.type = 'button'; all.setAttribute('aria-pressed', String(!active));
-  all.onclick = () => guarded(() => runTurn(t('platformAllSend'), speechLang(), 0, performance.now()));
+  all.onclick = () => applyPlatform('');
   box.append(all);
   for (const p of stores) {
     const b = el('button', null, p); b.type = 'button'; b.setAttribute('aria-pressed', String(active === p));
-    b.onclick = () => guarded(() => runTurn(t('platformOnly', p), speechLang(), 0, performance.now()));
+    b.onclick = () => applyPlatform(p);
     box.append(b);
   }
   box.hidden = false;
@@ -359,9 +383,9 @@ async function realSearch(args) {
         results: d.results.map(r => ({ rank: r.rank, short_name: shortName(r.name), lowest_price_rupees: r.best.price, lowest_price_platform: r.best.platform,
           mrp_rupees: r.mrp, discount_percent: r.discount_pct, rating: r.rating, rating_count: r.rating_count,
           also_on: r.listings.filter(l => l.platform !== r.best.platform).map(l => ({ platform: l.platform, price_rupees: l.price })) })) }
-    : { status: 'no_match', searched_for: [d.searched_for, args.max_price ? 'under ' + args.max_price + ' rupees' : '', args.platform].filter(Boolean).join(', '),
+    : { status: 'no_match', searched_for: [d.searched_for, args.brand && !String(d.searched_for).toLowerCase().includes(String(args.brand).toLowerCase()) ? args.brand : '', args.max_price ? 'under ' + args.max_price + ' rupees' : '', args.platform].filter(Boolean).join(', '),
         platforms_failed: d.platforms_failed, available_elsewhere: d.available_elsewhere || undefined };
-  return { groups: d.results, llm, total: d.total_matches, page: d.page };
+  return { groups: d.results, llm, total: d.total_matches, page: d.page, elsewhere: d.available_elsewhere || null };
 }
 
 /* ---------------- product cards ---------------- */
@@ -388,6 +412,7 @@ function renderCards(groups) {
     card.append(top, stores); box.append(card);
   }
   $('results').hidden = groups.length === 0;
+  if (groups.length) $('resultNote').hidden = true;
   $('more').hidden = !(groups.length && S.last && S.last.total > S.last.page * 3);
 }
 
