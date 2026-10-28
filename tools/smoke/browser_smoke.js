@@ -1,6 +1,6 @@
 /* Browser smoke test for the Pia page, with a simulated Sarvam (no key, no voice, no search credits).
-   How to run: open http://localhost:8000 with the backend running, then paste this whole file into the
-   browser console (or run it with a browser-automation tool). It prints one line per check and a summary.
+   How to run: `python tools/smoke/run_smoke.py` (starts the server if needed, runs this file in headless Chrome and
+   prints one line per check), or paste this whole file into the browser console on http://localhost:8000.
    Run it before every commit that touches app/static. */
 (async () => {
   const results = [];
@@ -11,6 +11,10 @@
     v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true); let s = ''; new Uint8Array(b).forEach(x => s += String.fromCharCode(x)); return btoa(s); })();
 
   sessionStorage.clear();
+  // A pretend audio player: sound is not what is being tested, and headless browsers have no audio device.
+  window.Audio = class { constructor(src) { this.src = src; }
+    play() { setTimeout(() => { this.onplaying && this.onplaying(); setTimeout(() => this.onended && this.onended(), 20); }, 10); return Promise.resolve(); }
+    pause() {} };
   const realFetch = window.fetch.bind(window);
   let mode = 'normal'; const searches = []; const forced = [];
   const product = (i, brand) => ({ rank: i, name: `${brand} Item ${i}`, brand, image_url: null, mrp: 1000, discount_pct: 30, rating: 4.2, rating_count: 100,
@@ -72,6 +76,20 @@
   check('answer forces a search with the brand', searches.at(-1).brand === 'Kay Beauty' && forced.length >= 1, searches.at(-1));
   check('no second question', ![...document.querySelectorAll('#latest .bubble.pia')].some(b => /kaunsa keh rahe/.test(b.textContent)), 0);
 
+  // type instead of speaking, and fixing what was heard
+  $('typeToggle').click();
+  check('type box opens', !$('typebar').hidden, 0);
+  const n0 = searches.length;
+  $('typeInput').value = 'white sneakers dikhao'; $('typebar').dispatchEvent(new Event('submit', { cancelable: true })); await wait(900);
+  check('typed request runs a search', searches.length > n0 && S.typed === 1, { searches: searches.length - n0, typed: S.typed });
+  await runTurn('Ke koti ka kajal chahiye', 'hi-IN', 0, performance.now(), { spoken: true });
+  const pencil = document.querySelector('#latest .row-me .edit');
+  check('spoken bubble has a fix pencil', !!pencil, 0);
+  pencil.click();
+  check('pencil opens the box with the heard text', !$('typebar').hidden && $('typeInput').value === 'Ke koti ka kajal chahiye', $('typeInput').value);
+  $('typeInput').value = 'Kay Beauty ka kajal chahiye'; $('typebar').dispatchEvent(new Event('submit', { cancelable: true })); await wait(900);
+  check('correction is counted', S.edited === 1, S.edited);
+
   // English mode: a Hinglish reply is rewritten
   setLang('en'); mode = 'wronglang';
   await runTurn('white sneakers under 2000', 'en-IN', 0, performance.now());
@@ -90,5 +108,7 @@
   console.log(results.map(r => (r.pass ? 'PASS ' : 'FAIL ') + r.name + (r.detail ? ' ' + r.detail : '')).join('\n'));
   console.log(`${results.length - failed.length}/${results.length} checks passed`);
   window.__smoke = { results, failed };
+  const out = document.getElementById('smokeResult');   // lets a headless run read the result from the page
+  if (out) out.textContent = JSON.stringify({ passed: results.length - failed.length, total: results.length, lines: results.map(r => (r.pass ? 'PASS ' : 'FAIL ') + r.name + (r.detail ? ' ' + r.detail : '')) });
   return { passed: results.length - failed.length, total: results.length, failed };
 })();

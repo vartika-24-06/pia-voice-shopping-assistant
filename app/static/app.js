@@ -12,7 +12,7 @@ const S = {
   rec: null, stream: null, chunks: [], tStop: 0, startedAt: 0, autoStop: null,
   audio: null, cueAudio: null, playingEl: null, cues: {},
   last: null, // last search: { args, total, page }
-  turn: 0,
+  turn: 0, typed: 0, edited: 0, correcting: false,
 };
 
 /* ---------------- small helpers ---------------- */
@@ -26,6 +26,7 @@ const rupees = n => '₹' + Math.round(n).toLocaleString('en-IN');
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
 const ICON = {
+  pencil: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="M13.5 6.5l4 4"/></svg>',
   speaker: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12"/></svg>',
   stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>',
 };
@@ -58,6 +59,8 @@ const I18N = {
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
     refine: [{ label: 'Higher rated', send: 'Show higher rated ones' }, { label: 'Higher priced', send: 'Show higher priced ones' }, { label: 'New search', send: 'I want to start a new search' }],
     confirmSend: c => `I mean ${c}`, confirmOriginal: o => `(My original request was: "${o}")`, platformOnly: p => `Show only ${p}`, platformAll: 'All platforms', platformAllSend: 'Show all platforms',
+    details: 'Details', typePh: 'Type your request', typeSend: 'Send', typeToggle: 'Type instead', editHeard: 'Fix what I heard',
+    usageTitle: 'Typing instead of speaking', usageLine: (a, b) => `Typed: ${a} · Corrected after speaking: ${b}`,
     notRated: 'No ratings yet', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'The Sarvam key does not look right. Please try a different key.',
     errCredits: 'Your Sarvam credits or rate limit seem to have run out. Please check the Sarvam dashboard.',
@@ -99,6 +102,8 @@ const I18N = {
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
     refine: [{ label: 'Zyada rating wale', send: 'Zyada rating wale dikhao' }, { label: 'Zyada price wale', send: 'Zyada price wale dikhao' }, { label: 'Naya search', send: 'Mujhe naya search karna hai' }],
     confirmSend: c => `Mujhe ${c} chahiye`, confirmOriginal: o => `(Meri pehli request thi: "${o}")`, platformOnly: p => `${p} par hi dikhao`, platformAll: 'Sab platforms', platformAllSend: 'Sab platforms dikhao',
+    details: 'Details', typePh: 'Apni request type karein', typeSend: 'Bhejein', typeToggle: 'Type karein', editHeard: 'Jo suna use theek karein',
+    usageTitle: 'Bolne ki jagah type karna', usageLine: (a, b) => `Type kiya: ${a} · Bolne ke baad theek kiya: ${b}`,
     notRated: 'Abhi ratings nahi hain', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
     errKeyBad: 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.',
     errCredits: 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.',
@@ -122,6 +127,9 @@ function applyLang() {
   document.documentElement.lang = S.lang === 'en' ? 'en' : 'hi-Latn';
   document.querySelectorAll('[data-i]').forEach(e => { e.textContent = t(e.dataset.i); });
   document.querySelectorAll('[data-ph]').forEach(e => { e.placeholder = t(e.dataset.ph); });
+  document.querySelectorAll('[data-aria]').forEach(e => { e.setAttribute('aria-label', t(e.dataset.aria)); });
+  document.querySelectorAll('.row-me .edit').forEach(b => { b.setAttribute('aria-label', t('editHeard')); });
+  updateUsage();
   document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === S.lang)));
   document.querySelectorAll('.row-pia .spk').forEach(b => { b.setAttribute('aria-label', t('replay')); });
   renderChips(); updateEarlier(); render();
@@ -157,6 +165,8 @@ function render() {
   $('waveR').classList.toggle('on', S.recording);
   $('status').textContent = S.recording ? t('statusListen') : S.speaking ? t('statusSpeak') : S.busy ? t('statusThink') : t('statusReady');
   $('more').disabled = !idle;
+  $('typeInput').disabled = !idle;
+  $('typebar').querySelector('button').disabled = !idle;
   document.querySelectorAll('#chips button').forEach(b => { b.disabled = !idle; });
 }
 function showError(text, keyProblem) {
@@ -176,9 +186,14 @@ function updateEarlier() {
   $('earlierSum').textContent = t('earlier', n);
 }
 function scrollIntoViewSoft(node) { try { node.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch { /* ignore */ } }
-function addUser(text) {
+function addUser(text, spoken) {
   shiftLatest(); $('chips').hidden = true; S.chipMode = 'none';
-  const row = el('div', 'row-me'); row.append(el('div', 'bubble me', text));
+  const row = el('div', 'row-me');
+  if (spoken) {
+    const edit = el('button', 'edit'); edit.type = 'button'; edit.innerHTML = ICON.pencil; edit.setAttribute('aria-label', t('editHeard'));
+    edit.onclick = () => openTypebar(text, true); row.append(edit);
+  }
+  row.append(el('div', 'bubble me', text));
   $('latest').append(row); scrollIntoViewSoft(row);
 }
 function addPia(text) {
@@ -508,7 +523,7 @@ async function runTurn(text, lang, sttMs, tStart, opts = {}) {
   let modelText = text;
   if (answers) { dropConfirmations(); modelText = `${text}. ${t('confirmOriginal', pend.original)}`; }
   S.messages.push({ role: 'user', content: modelText });
-  addUser(text);
+  addUser(text, opts.spoken);
   // A spelling that could mean two things ("K Beauty") is checked before the model can rewrite it into one meaning.
   const amb = await checkAmbiguity(text);
   if (amb) {
@@ -592,6 +607,23 @@ async function guarded(fn) {
   finally { S.busy = false; render(); }
 }
 
+/* ---------------- typing instead of speaking (for when the speech recogniser mishears) ---------------- */
+function updateUsage() { $('usage').textContent = t('usageLine', S.typed, S.edited); }
+function openTypebar(prefill, correcting) {
+  const bar = $('typebar'); bar.hidden = false; S.correcting = !!correcting;
+  $('typeInput').value = prefill || ''; $('typeInput').focus();
+}
+$('typeToggle').onclick = () => { if ($('typebar').hidden) openTypebar('', false); else $('typebar').hidden = true; };
+$('typebar').onsubmit = e => {
+  e.preventDefault();
+  const text = $('typeInput').value.trim();
+  if (!text || S.recording || S.busy || S.speaking) return;
+  if (S.correcting) S.edited += 1; else S.typed += 1;
+  S.correcting = false; updateUsage();
+  $('typeInput').value = ''; $('typebar').hidden = true;
+  guarded(() => runTurn(text, speechLang(), 0, performance.now()));
+};
+
 /* ---------------- microphone ---------------- */
 $('mic').onclick = async () => {
   if (S.recording) return stopRecording();
@@ -615,7 +647,7 @@ $('mic').onclick = async () => {
         const row = addPia(t('noSpeech')); const tts = await speak(t('noSpeech'), speechLang());
         row.b64 = tts.b64; row.btn.disabled = !tts.b64; await playBubble(row, tts.b64); return;
       }
-      await runTurn(stt.text, stt.lang, stt.ms, tStart);
+      await runTurn(stt.text, stt.lang, stt.ms, tStart, { spoken: true });
     });
   };
   rec.start(); S.startedAt = performance.now(); S.recording = true; render();

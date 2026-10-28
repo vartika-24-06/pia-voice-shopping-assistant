@@ -93,4 +93,5 @@ Category scope (decided): clothing, footwear, fashion accessories, jewellery and
 | 2026-10-17 | Public write-up is a Must (lightweight) | It is the deliverable a hiring manager reads |
 | 2026-10-17 | DesiDime offers on the picked product only, one at a time | Rate limit and scope |
 | 2026-10-17 | Fallback for BYOK and DesiDime is a recorded demo | PM decision |
+| 2026-10-28 | A type-instead box and a fix-what-I-heard pencil were added | Brand names are the main speech-recognition failure (baseline 67%); a user must always be able to recover without repeating themselves |
 | 2026-10-17 | **DesiDime offers descoped.** Moved from Must to a non-goal; the time goes to a speech-evaluation harness | The learning goal is voice AI and how it is evaluated, and the biggest lessons so far came from recognition and pronunciation, not offers. DesiDime also needed per-user sign-in, token handling and an unresolved terms question |

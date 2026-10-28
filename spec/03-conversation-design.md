@@ -70,7 +70,7 @@ This keeps the PM's decision (price first, rating second) and protects the user 
 | # | What goes wrong | Behaviour | Status |
 |---|---|---|---|
 | 1 | The user speaks while Pia is talking | Not heard (no barge-in in v1). The mic is disabled while Pia speaks, with a visible state. When Pia finishes, the screen prompts the user to speak. A **stop button** lets the user skip a long reply | Agreed |
-| 2 | Misheard speech ("rani saadi ke liye blause chahiye"; "rani" is also a pink shade) | If the request is unclear or returns nothing, Pia repeats back what she understood and asks once: "Maine suna: rani rang ki saree ke liye blouse. Sahi hai?" She does not keep guessing | Agreed |
+| 2 | Misheard speech ("rani saadi ke liye blause chahiye"; "rani" is also a pink shade; or "Kay Beauty" heard as "Ke koti"). The user can always tap the pencil on their bubble to fix the words, or type instead | If the request is unclear or returns nothing, Pia repeats back what she understood and asks once: "Maine suna: rani rang ki saree ke liye blouse. Sahi hai?" She does not keep guessing | Agreed |
 | 3 | Pia uses "tu/tum" or abusive language | Prevented three ways: the system prompt requires "aap"; an automatic check flags "tu/tum" and abusive words in every reply; register tests in the eval set | Agreed |
 | 3b | The user is abusive | Polite redirect, once: Pia stays respectful and steers back to shopping | Agreed |
 | 4 | Silence or empty recording | "Mujhe kuch sunai nahi diya, kripya dobara bolein." (neutral wording, with no gendered form for the user) | Proposed |

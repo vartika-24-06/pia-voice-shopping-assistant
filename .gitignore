@@ -22,3 +22,6 @@ spike/raw/
 Thumbs.db
 .vscode/
 .idea/
+
+# Local tooling settings
+.claude/
