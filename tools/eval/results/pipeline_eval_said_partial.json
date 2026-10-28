@@ -1,0 +1,725 @@
+[
+ {
+  "id": "c11#1",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "kay beauty ki creamy wali lipstick milegi",
+    "text": "kay beauty ki creamy wali lipstick milegi",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty creamy lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 2551,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c17#1",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "ferrari ke white sneakers 1500 ke andar",
+    "text": "ferrari ke white sneakers 1500 ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear",
+      "max_price": 1500
+     },
+     "query_has": [
+      "ferrari",
+      "sneaker"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'white sneakers, Ferrari, under 1500 rupees' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4073,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c18#1",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "huda beauty ka concealer 100 rupaye ke andar",
+    "text": "huda beauty ka concealer 100 rupaye ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty",
+      "max_price": 100
+     },
+     "query_has": [
+      "concealer"
+     ],
+     "brand": [
+      "huda"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'Huda Beauty concealer under 100 rupees' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4346,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c21#1",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "K Beauty ki lipstick chahiye",
+    "text": "K Beauty ki lipstick chahiye",
+    "expect": {
+     "tool": "confirm"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aapka matlab kaunsa hai: Kay Beauty ya Korean beauty?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 1953,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   },
+   {
+    "said": "Mujhe Kay Beauty chahiye",
+    "text": "Mujhe Kay Beauty chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 4227,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c11#2",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "kay beauty ki creamy wali lipstick milegi",
+    "text": "kay beauty ki creamy wali lipstick milegi",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty creamy lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4236,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c17#2",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "ferrari ke white sneakers 1500 ke andar",
+    "text": "ferrari ke white sneakers 1500 ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear",
+      "max_price": 1500
+     },
+     "query_has": [
+      "ferrari",
+      "sneaker"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'white sneakers, Ferrari, under 1500 rupees' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4284,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c18#2",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "huda beauty ka concealer 100 rupaye ke andar",
+    "text": "huda beauty ka concealer 100 rupaye ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty",
+      "max_price": 100
+     },
+     "query_has": [
+      "concealer"
+     ],
+     "brand": [
+      "huda"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'huda beauty concealer under 100 rupees' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4155,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c21#2",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "K Beauty ki lipstick chahiye",
+    "text": "K Beauty ki lipstick chahiye",
+    "expect": {
+     "tool": "confirm"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aapka matlab kaunsa hai: Kay Beauty ya Korean beauty?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 1980,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   },
+   {
+    "said": "Mujhe Kay Beauty chahiye",
+    "text": "Mujhe Kay Beauty chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 4869,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c11#3",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "kay beauty ki creamy wali lipstick milegi",
+    "text": "kay beauty ki creamy wali lipstick milegi",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty creamy lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4254,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c17#3",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "ferrari ke white sneakers 1500 ke andar",
+    "text": "ferrari ke white sneakers 1500 ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear",
+      "max_price": 1500
+     },
+     "query_has": [
+      "ferrari",
+      "sneaker"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'ferrari white sneakers 1500 ke andar' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4180,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c18#3",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "huda beauty ka concealer 100 rupaye ke andar",
+    "text": "huda beauty ka concealer 100 rupaye ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty",
+      "max_price": 100
+     },
+     "query_has": [
+      "concealer"
+     ],
+     "brand": [
+      "huda"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'Huda Beauty concealer, under 100 rupees' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4371,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c21#3",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "K Beauty ki lipstick chahiye",
+    "text": "K Beauty ki lipstick chahiye",
+    "expect": {
+     "tool": "confirm"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aapka matlab kaunsa hai: Kay Beauty ya Korean beauty?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 1996,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   },
+   {
+    "said": "Mujhe Kay Beauty chahiye",
+    "text": "Mujhe Kay Beauty chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 4401,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ }
+]
