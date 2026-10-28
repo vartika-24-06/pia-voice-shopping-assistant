@@ -204,8 +204,9 @@ function scoreTurn(expect, log, state) {
   L.push('', '## Replies', '', '| Conversation | Reply |', '|---|---|');
   for (const t of all) L.push(`| ${t.id} | ${t.reply.replace(/\|/g, '/')} |`);
   fs.mkdirSync(RESULTS, { recursive: true });
-  fs.writeFileSync(path.join(RESULTS, `pipeline_report_${MODE}.md`), L.join('\n') + '\n');
-  fs.writeFileSync(path.join(RESULTS, `pipeline_eval_${MODE}.json`), JSON.stringify(out, null, 1));
+  const tag = ONLY ? '_partial' : ''; // a run of a few conversations must not overwrite the full baseline
+  fs.writeFileSync(path.join(RESULTS, `pipeline_report_${MODE}${tag}.md`), L.join('\n') + '\n');
+  fs.writeFileSync(path.join(RESULTS, `pipeline_eval_${MODE}${tag}.json`), JSON.stringify(out, null, 1));
   console.log(`\nturns fully correct: ${rate(t => t.pass)}`);
   if (server) server.kill();
   process.exit(0);
