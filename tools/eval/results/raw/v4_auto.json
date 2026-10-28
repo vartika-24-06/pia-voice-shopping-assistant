@@ -1,0 +1,248 @@
+{
+ "q01_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "लाइम ग्रीन साड़ी का पेटीकोट चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.48
+ },
+ "q03_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "ए सिक्स के रनिंग वाले जेल वाले शूज चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.76
+ },
+ "q04_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a Marks and Spencer's navy blue spaghetti.",
+  "language_code": "en-IN",
+  "seconds": 0.53
+ },
+ "q05_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a van and Hughes and West.",
+  "language_code": "en-IN",
+  "seconds": 0.55
+ },
+ "q06_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a Moxi shampoo.",
+  "language_code": "en-IN",
+  "seconds": 0.77
+ },
+ "q07_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a Garmin Forerunner 245.",
+  "language_code": "en-IN",
+  "seconds": 0.44
+ },
+ "q08_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "आज डिनर में क्या बनाऊँ?",
+  "language_code": "hi-IN",
+  "seconds": 0.49
+ },
+ "q09_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "How many Amanoshrims should be kept together?",
+  "language_code": "en-IN",
+  "seconds": 0.44
+ },
+ "q10_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "हाउ मेनी टाइम्स पान में कितनी बार पानी देना चाहिए?",
+  "language_code": "hi-IN",
+  "seconds": 0.44
+ },
+ "q12_noisy_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "मुझे पर्पल साड़ी का ब्लाउज चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.65
+ },
+ "q13_noisy_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "हुडा ब्यूटी का कंसीलर मिलेगा?",
+  "language_code": "hi-IN",
+  "seconds": 0.45
+ },
+ "q14_noisy_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Where can I find a black Labrador puppy?",
+  "language_code": "en-IN",
+  "seconds": 1.0
+ },
+ "q15_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "इनमें से मुझे कोई पसंद नहीं।",
+  "language_code": "hi-IN",
+  "seconds": 1.74
+ },
+ "q16_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "पर्पल के अलावा ग्रीन नहीं चलेगा इस पर।",
+  "language_code": "hi-IN",
+  "seconds": 0.44
+ },
+ "q17_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "शोमी इससे अच्छा कुछ।",
+  "language_code": "hi-IN",
+  "seconds": 0.34
+ },
+ "q18_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "इसके अलावा वाइट में नहीं मिलेगा कुछ।",
+  "language_code": "hi-IN",
+  "seconds": 0.51
+ },
+ "q19_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "और दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 9.16
+ },
+ "q20_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "कोस्कॉर्फ का हेयर मास्क दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.36
+ },
+ "q21_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "I need francy nice flowy dresses from H&M.",
+  "language_code": "en-IN",
+  "seconds": 0.9
+ },
+ "q22_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "ज़ारा जैसे कपड़े चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.36
+ },
+ "q23_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "के ब्यूटी की क्रीमी वाली लिपस्टिक मिलेगी?",
+  "language_code": "hi-IN",
+  "seconds": 0.5
+ },
+ "q24_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Table Line ka mascara dikhao.",
+  "language_code": "en-IN",
+  "seconds": 2.19
+ },
+ "q25_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "रीबक के जूते दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.38
+ },
+ "q27_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "I need a pair of nice jeans.",
+  "language_code": "en-IN",
+  "seconds": 0.37
+ },
+ "q29_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "Strip T-shirt, please.",
+  "language_code": "en-IN",
+  "seconds": 0.37
+ },
+ "q30_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "What will go with a brown skirt?",
+  "language_code": "en-IN",
+  "seconds": 0.58
+ },
+ "q28_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "White linen shirt.",
+  "language_code": "en-IN",
+  "seconds": 0.7
+ },
+ "q29_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Calvin Klein women's jacket.",
+  "language_code": "en-IN",
+  "seconds": 0.71
+ },
+ "q30_tricky_en.webm": {
+  "status": 200,
+  "hypothesis": "Why is the sky so blue?",
+  "language_code": "en-IN",
+  "seconds": 0.32
+ },
+ "q31_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "I need Biba's kurta sets for Rakshabandhan.",
+  "language_code": "en-IN",
+  "seconds": 1.17
+ },
+ "q32_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "क्लब इंडिया की नेहरू जैकेट चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.43
+ },
+ "q33_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "पूमा के पजामे मिलेंगे मेरे लिए?",
+  "language_code": "hi-IN",
+  "seconds": 0.43
+ },
+ "q34_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "आईका से वोंडरलास्ट का चेरी ब्लॉसम वाला शावर जेल।",
+  "language_code": "hi-IN",
+  "seconds": 0.43
+ },
+ "q35_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Underwear ki green linen shirt.",
+  "language_code": "en-IN",
+  "seconds": 0.6
+ },
+ "q36_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Revlon Kajal.",
+  "language_code": "en-IN",
+  "seconds": 0.68
+ },
+ "q37_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Benefit Cosmetics The Brow Pencil.",
+  "language_code": "en-IN",
+  "seconds": 0.64
+ },
+ "q38_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Blush from Fenty Beauty or Rare Beauty.",
+  "language_code": "en-IN",
+  "seconds": 0.68
+ },
+ "q39_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Onitsuka sneakers.",
+  "language_code": "en-IN",
+  "seconds": 0.69
+ },
+ "q40_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "मेरी मम्मी ने हर्ष पापीस की चप्पल।",
+  "language_code": "hi-IN",
+  "seconds": 0.65
+ },
+ "q41_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "फेरारी के वाइट स्नीकर्स 1500 के अंदर।",
+  "language_code": "hi-IN",
+  "seconds": 1.27
+ },
+ "q42_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "हुडा ब्यूटी कंसीलर 100 रुपये के अंदर।",
+  "language_code": "hi-IN",
+  "seconds": 0.6
+ }
+}

@@ -127,6 +127,19 @@ Note on the files: the earlier clip "casual tshirts to go with jeans" was overwr
 ## 7. Results so far (speech layer, 2026-10-17)
 See `tools/eval/STT_FINDINGS.md`. In short: translit gives Roman text; brands recovered about two thirds of the time; brand biasing hurt on held-out clips; layered repair is planned.
 
+**Baseline with the harness (2026-10-28, 41 clips, `tools/eval/speech_eval.py`; full reports in `tools/eval/results/`):**
+
+| Measure | v3 translit (production) | v4 auto | v3 codemix |
+|---|---|---|---|
+| Brand accuracy, all clips | 67% (18/27) | 48% | 63% |
+| Brand accuracy, held-out clips | 69% (9/13) | 69% | 69% |
+| Product and colour words heard | 91% | 45% | 72% |
+| Clips heard exactly | 56% | 27% | 27% |
+| Clips in the wrong script | 0 | 21 | 22 |
+| Word error rate (reported only) | 0.12 | 0.59 | 0.46 |
+
+Reading: the production setup is clearly the best for a Roman-letter search. Brand names are the weak point in every setup (floor in spec 01 is 70%; the baseline is 67%, held-out 69%). Misses cluster on Indian-pronounced brands (Asics, Van Heusen, Schwarzkopf, Maybelline, Fabindia, Hush Puppies, Nykaa); two more (Kay Beauty, Onitsuka) need a confirmation question. Dropped words are rare in this set (one in 41 clips), so the clip set does not yet test dropped words well: more clips with short words at the start and end are needed.
+
 ## 8. Report template for the write-up
 1. What I built and for whom (spec 01).
 2. How I evaluated it (layers, sets, rules).

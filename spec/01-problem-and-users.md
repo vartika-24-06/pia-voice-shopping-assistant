@@ -87,6 +87,7 @@ These are v0 targets. After the first baseline run on the eval set, each target 
 | 2026-10-17 | Web app only | Scope |
 | 2026-10-17 | Sarvam key is BYOK; DesiDime offers via the user's own account (backend OAuth) | Cost control and privacy |
 | 2026-10-17 | DesiDime offers descoped (spec 02); the discount-correctness metric goes with it | Time goes to the speech evaluation |
+| 2026-10-28 | Speech baseline measured with the harness: brand accuracy 67% (held-out 69%), below the 70% floor; product words 91% | The floor stays; the gap is handled by confirmation questions and a type-instead fallback, and the result is reported honestly |
 | 2026-10-17 | Core search: multi-platform through QuickCommerceAPI; deals are an add-on on the top 3 | Scope |
 | 2026-10-17 | Persona: Neha, 27, Raipur | Drafted by Claude at PM's request; to be validated |
 | 2026-10-17 | Replies in the user's language | PM decision |

@@ -1,0 +1,248 @@
+{
+ "q01_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Lime green saree ka petticoat chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.76
+ },
+ "q03_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "A6 ke running wale gel wale shoes chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.58
+ },
+ "q04_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a Marks and Spencers navy blue spaghetti.",
+  "language_code": "en-IN",
+  "seconds": 0.36
+ },
+ "q05_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a van and Hughes and West.",
+  "language_code": "en-IN",
+  "seconds": 0.53
+ },
+ "q06_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a moxy shampoo",
+  "language_code": "en-IN",
+  "seconds": 1.1
+ },
+ "q07_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "I need a Garmin Forerunner 245.",
+  "language_code": "en-IN",
+  "seconds": 0.35
+ },
+ "q08_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Aaj dinner mein kya banaun",
+  "language_code": "hi-IN",
+  "seconds": 0.47
+ },
+ "q09_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "How many Amanush shrim should be kept together?",
+  "language_code": "en-IN",
+  "seconds": 1.01
+ },
+ "q10_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "How many times paan mein kitni baar paani dena chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.57
+ },
+ "q12_noisy_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Mujhe purple saree ka blouse chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.39
+ },
+ "q13_noisy_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Huda Beauty ka concealer milega",
+  "language_code": "hi-IN",
+  "seconds": 1.76
+ },
+ "q14_noisy_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Where can I find a black Labrador puppy?",
+  "language_code": "en-IN",
+  "seconds": 0.43
+ },
+ "q15_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Inmein se mujhe koi pasand nahi",
+  "language_code": "hi-IN",
+  "seconds": 0.41
+ },
+ "q16_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Purple ke alawa green nahi chalega is par",
+  "language_code": "hi-IN",
+  "seconds": 0.95
+ },
+ "q17_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Show me isse achha kuchh",
+  "language_code": "hi-IN",
+  "seconds": 0.48
+ },
+ "q18_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Iske alava white mein nahi milega kuch",
+  "language_code": "hi-IN",
+  "seconds": 0.5
+ },
+ "q19_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Aur dikhao",
+  "language_code": "hi-IN",
+  "seconds": 0.36
+ },
+ "q20_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Thorax ka hair mass dikhao.",
+  "language_code": "hi-IN",
+  "seconds": 0.39
+ },
+ "q21_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "I need floral nice flowy dresses from H&M.",
+  "language_code": "en-IN",
+  "seconds": 0.64
+ },
+ "q22_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Zara jaise kapde chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.45
+ },
+ "q23_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "K Beauty ki creamy vali lipstick milegi?",
+  "language_code": "hi-IN",
+  "seconds": 0.95
+ },
+ "q24_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Table line ka mascara dikhao.",
+  "language_code": "hi-IN",
+  "seconds": 2.48
+ },
+ "q25_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Rebuck ke joote dikhao",
+  "language_code": "hi-IN",
+  "seconds": 0.33
+ },
+ "q27_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "I need a pair of nice jeans.",
+  "language_code": "en-IN",
+  "seconds": 0.38
+ },
+ "q29_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "Stripe T-shirt please.",
+  "language_code": "en-IN",
+  "seconds": 0.4
+ },
+ "q30_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "What will go with a brown skirt?",
+  "language_code": "en-IN",
+  "seconds": 0.46
+ },
+ "q28_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "White linen sir. White linen shirt.",
+  "language_code": "en-IN",
+  "seconds": 0.65
+ },
+ "q29_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Calvin Klein women's jacket.",
+  "language_code": "en-IN",
+  "seconds": 0.5
+ },
+ "q30_tricky_en.webm": {
+  "status": 200,
+  "hypothesis": "Why is the sky so blue?",
+  "language_code": "en-IN",
+  "seconds": 0.33
+ },
+ "q31_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "I need Biba's kurta sets for Rakshabandhan.",
+  "language_code": "en-IN",
+  "seconds": 0.49
+ },
+ "q32_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Crab India ki Nehru jacket chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.46
+ },
+ "q33_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Puma ke pajame milenge mere liye",
+  "language_code": "hi-IN",
+  "seconds": 2.55
+ },
+ "q34_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Ika se Wonderlust ka Cherry Blossom wala shower gel.",
+  "language_code": "hi-IN",
+  "seconds": 0.68
+ },
+ "q35_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Andaman ki green linen shirt",
+  "language_code": "en-IN",
+  "seconds": 0.51
+ },
+ "q36_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Revlon Kajal.",
+  "language_code": "en-IN",
+  "seconds": 0.43
+ },
+ "q37_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Benefit Cosmetics the brow pencil.",
+  "language_code": "en-IN",
+  "seconds": 0.47
+ },
+ "q38_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Blush from Fenty Beauty or Rare Beauty",
+  "language_code": "en-IN",
+  "seconds": 0.48
+ },
+ "q39_brand_en.webm": {
+  "status": 200,
+  "hypothesis": "Honetsuka Snickers",
+  "language_code": "en-IN",
+  "seconds": 0.36
+ },
+ "q40_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Meri mummy ne harsh papis ki chappal",
+  "language_code": "hi-IN",
+  "seconds": 2.34
+ },
+ "q41_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Ferrari ke white sneakers fifteen hundred ke andar",
+  "language_code": "hi-IN",
+  "seconds": 0.63
+ },
+ "q42_tricky_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Huda Beauty concealer Rs. 100 ke andar.",
+  "language_code": "hi-IN",
+  "seconds": 0.47
+ }
+}
