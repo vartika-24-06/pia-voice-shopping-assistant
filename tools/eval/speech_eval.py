@@ -47,6 +47,8 @@ SPELLING = {"nai": "nahi", "nahin": "nahi", "achha": "accha", "acha": "accha", "
 SPLITS = {"inmein": ["in", "mein"]}
 SMALL = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split())}
 SMALL.update({"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90})
+HI_UNITS = {"ek": 1, "do": 2, "teen": 3, "char": 4, "chaar": 4, "paanch": 5, "panch": 5, "chhe": 6, "saat": 7, "aath": 8, "nau": 9, "das": 10}
+MULTIPLIERS = {"hundred": 100, "sau": 100, "thousand": 1000, "hazaar": 1000, "hazar": 1000}
 DEV = re.compile(r"[ऀ-ॿ]")
 
 
@@ -56,9 +58,11 @@ def number_words(seq):
     for w in seq:
         if w in SMALL:
             cur += SMALL[w]
-        elif w == "hundred":
+        elif w in HI_UNITS:
+            cur += HI_UNITS[w]
+        elif MULTIPLIERS.get(w) == 100:
             cur = max(cur, 1) * 100
-        elif w == "thousand":
+        elif MULTIPLIERS.get(w) == 1000:
             total += max(cur, 1) * 1000
             cur = 0
         else:
@@ -80,9 +84,12 @@ def normalise(text):
     out, i = [], 0
     while i < len(toks):  # "fifteen hundred" -> "1500"
         j = i
-        while j < len(toks) and (toks[j] in SMALL or toks[j] in ("hundred", "thousand")):
+        while j < len(toks) and (toks[j] in SMALL or toks[j] in HI_UNITS or toks[j] in MULTIPLIERS):
             j += 1
-        if j > i and (j - i > 1 or toks[i] in ("hundred", "thousand")) and number_words(toks[i:j]) is not None:
+        run = toks[i:j]
+        # Hindi units alone ("ek", "do") are ordinary words; they only count as a number with "sau" or "hazaar"
+        hindi_only_unit = any(w in HI_UNITS and w not in SMALL for w in run) and not any(w in MULTIPLIERS for w in run)
+        if j > i and not hindi_only_unit and (j - i > 1 or toks[i] in MULTIPLIERS) and number_words(run) is not None:
             out.append(str(number_words(toks[i:j])))
             i = j
         else:
@@ -110,10 +117,14 @@ def squash(s):
 # ---------------------------------------------------------------- the data
 def load_clips():
     terms = {r["file"]: r for r in csv.DictReader(open(HERE / "key_terms.csv", encoding="utf-8"))}
+    by_text = {}
+    if (HERE / "key_terms_by_text.csv").exists():
+        for r in csv.DictReader(open(HERE / "key_terms_by_text.csv", encoding="utf-8")):
+            by_text[" ".join(normalise(r["said"]))] = r
     held = {l.strip() for l in open(HERE / "heldout.txt", encoding="utf-8") if l.strip()}
     clips = []
     for r in csv.DictReader(open(REC / "transcripts.csv", encoding="utf-8")):
-        k = terms.get(r["file"], {})
+        k = terms.get(r["file"]) or by_text.get(" ".join(normalise(r["what_i_said"]))) or {}
         clips.append({
             "file": r["file"], "said": r["what_i_said"], "type": r["type"], "language": r["language"], "note": r["note"],
             "extra_noise": bool(re.search(r"tv|motor|reels|street", r["note"].lower())), "heldout": r["file"] in held,

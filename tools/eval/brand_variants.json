@@ -1,29 +1,197 @@
 {
   "_note": "Accepted spelling and sound variants per brand (PM rules, spec 06 section 4.1). 'accept' counts as correct; 'confirm' means the heard text could mean two things, so the correct behaviour is for Pia to ask. Anything else is a miss. Forms are lower case, without punctuation.",
-  "Asics": {"accept": ["asics"]},
-  "Marks & Spencer": {"accept": ["marks and spencer", "marks and spencers", "mark and spencer", "m and s"]},
-  "Van Heusen": {"accept": ["van heusen", "vanheusen", "van and heusen"]},
-  "Moxie": {"accept": ["moxie", "moxy"]},
-  "Garmin": {"accept": ["garmin"]},
-  "Huda Beauty": {"accept": ["huda beauty", "hudabeauty"]},
-  "Schwarzkopf": {"accept": ["schwarzkopf", "schwarzkopf", "schwazkorf"]},
-  "H&M": {"accept": ["h and m", "hm"]},
-  "Zara": {"accept": ["zara"]},
-  "Kay Beauty": {"accept": ["kay beauty"], "confirm": ["k beauty", "kbeauty"]},
-  "Maybelline": {"accept": ["maybelline", "maybeline"]},
-  "Reebok": {"accept": ["reebok", "rebuck", "reebuk", "रीबक"]},
-  "Calvin Klein": {"accept": ["calvin klein", "calvin kline", "calvin klien"]},
-  "Biba": {"accept": ["biba", "bibas"]},
-  "Fabindia": {"accept": ["fabindia", "fab india"]},
-  "Puma": {"accept": ["puma", "pooma", "पूमा", "पुमा"]},
-  "Nykaa": {"accept": ["nykaa", "nayka", "नायका", "नाइका"]},
-  "Wanderlust": {"accept": ["wanderlust", "wonderlust", "वोंडरलास्ट"]},
-  "Andamen": {"accept": ["andamen", "andaman"]},
-  "Revlon": {"accept": ["revlon", "revolon"]},
-  "Benefit Cosmetics": {"accept": ["benefit cosmetics", "benefit"]},
-  "Fenty Beauty": {"accept": ["fenty beauty", "fenty"]},
-  "Rare Beauty": {"accept": ["rare beauty"]},
-  "Onitsuka Tiger": {"accept": ["onitsuka"], "confirm": ["honetsuka"]},
-  "Hush Puppies": {"accept": ["hush puppies", "hush puppy"]},
-  "Ferrari": {"accept": ["ferrari"]}
+  "Asics": {
+    "accept": [
+      "asics"
+    ]
+  },
+  "Marks & Spencer": {
+    "accept": [
+      "marks and spencer",
+      "marks and spencers",
+      "mark and spencer",
+      "m and s"
+    ]
+  },
+  "Van Heusen": {
+    "accept": [
+      "van heusen",
+      "vanheusen",
+      "van and heusen"
+    ]
+  },
+  "Moxie": {
+    "accept": [
+      "moxie",
+      "moxy"
+    ]
+  },
+  "Garmin": {
+    "accept": [
+      "garmin"
+    ]
+  },
+  "Huda Beauty": {
+    "accept": [
+      "huda beauty",
+      "hudabeauty"
+    ]
+  },
+  "Schwarzkopf": {
+    "accept": [
+      "schwarzkopf",
+      "schwarzkopf",
+      "schwazkorf"
+    ]
+  },
+  "H&M": {
+    "accept": [
+      "h and m",
+      "hm"
+    ]
+  },
+  "Zara": {
+    "accept": [
+      "zara"
+    ]
+  },
+  "Kay Beauty": {
+    "accept": [
+      "kay beauty"
+    ],
+    "confirm": [
+      "k beauty",
+      "kbeauty"
+    ]
+  },
+  "Maybelline": {
+    "accept": [
+      "maybelline",
+      "maybeline"
+    ]
+  },
+  "Reebok": {
+    "accept": [
+      "reebok",
+      "rebuck",
+      "reebuk",
+      "रीबक"
+    ]
+  },
+  "Calvin Klein": {
+    "accept": [
+      "calvin klein",
+      "calvin kline",
+      "calvin klien"
+    ]
+  },
+  "Biba": {
+    "accept": [
+      "biba",
+      "bibas"
+    ]
+  },
+  "Fabindia": {
+    "accept": [
+      "fabindia",
+      "fab india"
+    ]
+  },
+  "Puma": {
+    "accept": [
+      "puma",
+      "pooma",
+      "पूमा",
+      "पुमा"
+    ]
+  },
+  "Nykaa": {
+    "accept": [
+      "nykaa",
+      "nayka",
+      "नायका",
+      "नाइका"
+    ]
+  },
+  "Wanderlust": {
+    "accept": [
+      "wanderlust",
+      "wonderlust",
+      "वोंडरलास्ट"
+    ]
+  },
+  "Andamen": {
+    "accept": [
+      "andamen",
+      "andaman"
+    ]
+  },
+  "Revlon": {
+    "accept": [
+      "revlon",
+      "revolon"
+    ]
+  },
+  "Benefit Cosmetics": {
+    "accept": [
+      "benefit cosmetics",
+      "benefit"
+    ]
+  },
+  "Fenty Beauty": {
+    "accept": [
+      "fenty beauty",
+      "fenty"
+    ]
+  },
+  "Rare Beauty": {
+    "accept": [
+      "rare beauty"
+    ]
+  },
+  "Onitsuka Tiger": {
+    "accept": [
+      "onitsuka"
+    ],
+    "confirm": [
+      "honetsuka"
+    ]
+  },
+  "Hush Puppies": {
+    "accept": [
+      "hush puppies",
+      "hush puppy"
+    ]
+  },
+  "Ferrari": {
+    "accept": [
+      "ferrari"
+    ]
+  },
+  "Libas": {
+    "accept": [
+      "libas",
+      "libaas"
+    ]
+  },
+  "Allen Solly": {
+    "accept": [
+      "allen solly",
+      "allen solley",
+      "alan solly"
+    ]
+  },
+  "Lakme": {
+    "accept": [
+      "lakme",
+      "lakmé",
+      "lakmay"
+    ]
+  },
+  "Mamaearth": {
+    "accept": [
+      "mamaearth",
+      "mama earth"
+    ]
+  }
 }
