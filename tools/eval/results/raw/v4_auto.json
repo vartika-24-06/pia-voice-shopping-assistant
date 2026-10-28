@@ -244,5 +244,95 @@
   "hypothesis": "हुडा ब्यूटी कंसीलर 100 रुपये के अंदर।",
   "language_code": "hi-IN",
   "seconds": 0.6
+ },
+ "q43_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "एक ब्लैक चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.53
+ },
+ "q44_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "और एक पिंक दुपट्टा दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.66
+ },
+ "q45_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "मेरे लिए सैंडल दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.48
+ },
+ "q46_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "या फिर रेड वाला दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.47
+ },
+ "q47_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "दो हज़ार के नीचे स्नीकर्स।",
+  "language_code": "hi-IN",
+  "seconds": 0.43
+ },
+ "q48_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "या फिर रेड वाला।",
+  "language_code": "hi-IN",
+  "seconds": 0.6
+ },
+ "q49_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "लिबस का कुर्ता सेट चाहिए।",
+  "language_code": "hi-IN",
+  "seconds": 0.31
+ },
+ "q50_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "एलन सोली की शर्ट दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.32
+ },
+ "q51_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "लक्मे का काजल मिलेगा।",
+  "language_code": "hi-IN",
+  "seconds": 0.31
+ },
+ "q52_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "मम्मा का फेस वॉश दिखाओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.51
+ },
+ "q53_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "300 के अंदर शर्ट।",
+  "language_code": "hi-IN",
+  "seconds": 0.53
+ },
+ "q54_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "1200 के नीचे जींस।",
+  "language_code": "hi-IN",
+  "seconds": 0.47
+ },
+ "q55_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "500 under lipstick.",
+  "language_code": "en-IN",
+  "seconds": 0.53
+ },
+ "q56_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "भैया, एक गुड रनिंग शूज़ बताओ।",
+  "language_code": "hi-IN",
+  "seconds": 0.62
+ },
+ "q57_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Something for a wedding, saree or lehenga?",
+  "language_code": "en-IN",
+  "seconds": 0.42
  }
 }

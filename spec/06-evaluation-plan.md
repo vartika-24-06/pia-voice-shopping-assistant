@@ -138,7 +138,9 @@ See `tools/eval/STT_FINDINGS.md`. In short: translit gives Roman text; brands re
 | Clips in the wrong script | 0 | 21 | 22 |
 | Word error rate (reported only) | 0.12 | 0.59 | 0.46 |
 
-Reading: the production setup is clearly the best for a Roman-letter search. Brand names are the weak point in every setup (floor in spec 01 is 70%; the baseline is 67%, held-out 69%). Misses cluster on Indian-pronounced brands (Asics, Van Heusen, Schwarzkopf, Maybelline, Fabindia, Hush Puppies, Nykaa); two more (Kay Beauty, Onitsuka) need a confirmation question. Dropped words are rare in this set (one in 41 clips), so the clip set does not yet test dropped words well: more clips with short words at the start and end are needed.
+Reading: the production setup is clearly the best for a Roman-letter search. Brand names are the weak point in every setup (floor in spec 01 is 70%; the baseline is 67%, held-out 69%). Misses cluster on Indian-pronounced brands (Asics, Van Heusen, Schwarzkopf, Maybelline, Fabindia, Hush Puppies, Nykaa); two more (Kay Beauty, Onitsuka) need a confirmation question. Dropped words were rare in the first 41 clips, so a second round of 15 short clips was recorded (same speaker).
+
+**Round 2 (15 clips, 2026-10-28):** 60% of clips heard exactly (word error rate 0.10). Prices spoken in Hindi were read correctly as digits ("do hajaar" heard as 2000, "teen sau" as 300; 4 of 4). Four brand mentions: Lakme correct, Allen Solly correct as a variant ("Alan Solly"), Libas missed ("Libus"), Mamaearth missed ("Mama's", spoken as "Mumma earth"). **Dropped words now appear:** in "ik black kurta chaiyye" the product word *kurta* was lost ("Ek black chahiye"), and in "ya phir red wala dikhao" the last word was lost on one of two recordings of the same sentence (the other recording was heard fully), so the recogniser is not repeatable on identical speech. "rupees" was heard as "is" ("500 is under lipstick"). All 56 clips together: brand accuracy 65% (20 of 31), product and colour words 92%, clips heard exactly 57%. The backend's brand check would repair "Libus" to Libas (similarity 0.8) but not "Mama's".
 
 ## 8. Report template for the write-up
 1. What I built and for whom (spec 01).
@@ -174,10 +176,10 @@ Reading: the production setup is clearly the best for a Roman-letter search. Bra
 
 ## 10. Known limitations of this evaluation
 
-1. **Single speaker.** All 41 clips are one person's voice (the PM's), with a fan running in the background. No other speaker, accent or microphone was available. Every speech figure (brand accuracy 67%, product words 91%, and the pipeline results on recognised text) therefore describes one voice and one accent. Differences between speakers, accents, microphones and noise are not measured, and the real error rate for the target users is likely higher. *(Recorded 2026-10-28; first fix: record two or more other speakers.)*
+1. **Single speaker.** All 56 clips are one person's voice (the PM's), with a fan running in the background. No other speaker, accent or microphone was available. Every speech figure (brand accuracy 67%, product words 91%, and the pipeline results on recognised text) therefore describes one voice and one accent. Differences between speakers, accents, microphones and noise are not measured, and the real error rate for the target users is likely higher. *(Recorded 2026-10-28; first fix: record two or more other speakers.)*
 2. **Clips were chosen by the PM,** including the brands, so the brand set is not a random sample of what shoppers ask for.
 3. **Small sample:** 41 clips and 27 brand mentions. A difference of a few points is within noise; treat each figure as an estimate, not a measurement.
-4. **Dropped and inserted words are barely tested:** only one dropped word appeared in 41 clips, so no conclusion about dropped words is possible yet.
+4. **Dropped and inserted words are still thinly tested:** three dropped words appeared in 56 clips (one a product word), which shows the problem exists but is far too few to estimate a rate.
 5. **The model is not deterministic:** the pipeline results are reported over repeated runs where possible, and a single run can differ.
 6. **The test search and voice are simulated** in the pipeline harness (no live search, no real speech output), so it measures understanding and replies, not search quality or how Pia sounds.
 

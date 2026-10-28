@@ -1,32 +1,34 @@
 # Speech evaluation: v3_translit
 
-Run on 2026-10-28 with 41 clips (13 held-out). Setup: `{"model": "saaras:v3", "mode": "translit", "language_code": "unknown"}`.
+Run on 2026-10-28 with 56 clips (13 held-out). Setup: `{"model": "saaras:v3", "mode": "translit", "language_code": "unknown"}`.
 Scoring rules: agreed spelling variants count as correct (`brand_variants.json`); hesitations in what was said are ignored; numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).
 **Limitation:** all clips are one speaker (the PM) with a fan running; the figures describe one voice and one accent, not all users.
 
 ## Summary
 
-| Measure | All clips | Held-out only |
-|---|---|---|
-| Brand accuracy (exact or agreed variant) | 67% (18/27) | 69% (9/13) |
-| Brands: exact / variant / needs confirm / missed | 13 / 5 / 2 / 7 | 6 / 3 / 1 / 3 |
-| Product and colour words heard | 91% (59/65) | 95% (18/19) |
-| Prices heard correctly | 100% (2/2) | n/a |
-| Clips heard exactly (after normalising) | 56% (23/41) | 38% (5/13) |
-| Word error rate (reported only) | 0.12 | 0.20 |
-| Clips returned in the wrong script (Devanagari) | 0 | 0 |
-| Time per clip (mean / p90, seconds) | 0.70 / 1.10 | 0.79 / 0.68 |
+| Measure | All clips | Held-out only | Round 2 only (q43 onwards) |
+|---|---|---|---|
+| Brand accuracy (exact or agreed variant) | 65% (20/31) | 69% (9/13) | 50% (2/4) |
+| Brands: exact / variant / needs confirm / missed | 14 / 6 / 2 / 9 | 6 / 3 / 1 / 3 | 1 / 1 / 0 / 2 |
+| Product and colour words heard | 92% (77/84) | 95% (18/19) | 95% (18/19) |
+| Prices heard correctly | 100% (6/6) | n/a | 100% (4/4) |
+| Clips heard exactly (after normalising) | 57% (32/56) | 38% (5/13) | 60% (9/15) |
+| Word error rate (reported only) | 0.11 | 0.20 | 0.10 |
+| Clips returned in the wrong script (Devanagari) | 0 | 0 | 0 |
+| Time per clip (mean / p90, seconds) | 0.64 / 0.95 | 0.79 / 0.68 | 0.47 / 0.53 |
 
 ## Error types
 
-| Type | Count (all) | Count (held-out) |
-|---|---|---|
-| brand_confirm_needed | 2 | 1 |
-| brand_misheard | 7 | 3 |
-| brand_variant_accepted | 6 | 4 |
-| term_misheard | 3 | 0 |
-| word_dropped_middle | 1 | 0 |
-| word_inserted | 1 | 1 |
+| Type | Count (all) | Count (held-out) | Count (round 2) |
+|---|---|---|---|
+| brand_confirm_needed | 2 | 1 | 0 |
+| brand_misheard | 9 | 3 | 2 |
+| brand_variant_accepted | 7 | 4 | 1 |
+| term_dropped | 1 | 0 | 1 |
+| term_misheard | 3 | 0 | 0 |
+| word_dropped_end | 1 | 0 | 1 |
+| word_dropped_middle | 1 | 0 | 0 |
+| word_inserted | 2 | 1 | 1 |
 
 *Accepted variants are not errors; they are listed so you can see them.*
 
@@ -34,17 +36,17 @@ Scoring rules: agreed spelling variants count as correct (`brand_variants.json`)
 
 | Group | Clips | Brand accuracy | Terms heard | Clips exact | Word error rate |
 |---|---|---|---|---|---|
-| en | 11 | 86% (6/7) | 88% (15/17) | 64% (7/11) | 0.08 |
-| hinglish | 30 | 60% (12/20) | 92% (44/48) | 53% (16/30) | 0.13 |
+| en | 12 | 86% (6/7) | 89% (16/18) | 58% (7/12) | 0.09 |
+| hinglish | 44 | 58% (14/24) | 92% (61/66) | 57% (25/44) | 0.12 |
 
 ## By clip type
 
 | Group | Clips | Brand accuracy | Terms heard | Clips exact | Word error rate |
 |---|---|---|---|---|---|
-| brand | 18 | 65% (13/20) | 92% (22/24) | 39% (7/18) | 0.19 |
-| followup | 5 | n/a | 100% (6/6) | 100% (5/5) | 0.00 |
+| brand | 22 | 62% (15/24) | 93% (26/28) | 36% (8/22) | 0.19 |
+| followup | 6 | n/a | 100% (7/7) | 83% (5/6) | 0.03 |
 | noisy | 3 | 100% (1/1) | 100% (7/7) | 100% (3/3) | 0.00 |
-| simple | 9 | 50% (2/4) | 88% (15/17) | 44% (4/9) | 0.12 |
+| simple | 19 | 50% (2/4) | 90% (28/31) | 63% (12/19) | 0.09 |
 | tricky | 6 | 100% (2/2) | 82% (9/11) | 67% (4/6) | 0.07 |
 
 ## By extra background noise
@@ -52,7 +54,7 @@ Scoring rules: agreed spelling variants count as correct (`brand_variants.json`)
 | Group | Clips | Brand accuracy | Terms heard | Clips exact | Word error rate |
 |---|---|---|---|---|---|
 | extra noise | 3 | 100% (1/1) | 100% (4/4) | 67% (2/3) | 0.05 |
-| fan only | 38 | 65% (17/26) | 90% (55/61) | 55% (21/38) | 0.12 |
+| fan only | 53 | 63% (19/30) | 91% (73/80) | 57% (30/53) | 0.12 |
 
 ## Every brand mention
 
@@ -85,6 +87,10 @@ Scoring rules: agreed spelling variants count as correct (`brand_variants.json`)
 | q40_brand_hinglish (held-out) | Hush Puppies | hush puppies | (dropped) | MISSED |
 | q41_tricky_hinglish | Ferrari | ferrari | ferrari | correct |
 | q42_tricky_hinglish | Huda Beauty | huda beauty | huda beauty | correct |
+| q49_brand_hinglish | Libas | libas | libus | MISSED |
+| q50_brand_hinglish | Allen Solly | allen solly | alan solly | correct (variant) |
+| q51_brand_hinglish | Lakme | lakme | lakme | correct |
+| q52_brand_hinglish | Mamaearth | mumma earth | mamas | MISSED |
 
 ## Every clip
 
@@ -131,3 +137,18 @@ Scoring rules: agreed spelling variants count as correct (`brand_variants.json`)
 | q40_brand_hinglish | meri mummy ke liye hush puppies ki chappal | Meri mummy ne harsh papis ki chappal | brand_misheard |
 | q41_tricky_hinglish | ferrari ke white sneakers 1500 ke andar | Ferrari ke white sneakers fifteen hundred ke andar | (none) |
 | q42_tricky_hinglish | huda beauty ka concealer 100 rupaye ke andar | Huda Beauty concealer Rs. 100 ke andar. | word_dropped_middle |
+| q43_simple_hinglish | ik black kurta chaiyye | Ek black chahiye. | term_dropped |
+| q44_simple_hinglish | aur ek pink dupatta dikhao | Aur ek pink dupatta dikhao | (none) |
+| q45_simple_hinglish | mere liye sandal dikhao | Mere liye sandal dikhao. | (none) |
+| q46_simple_hinglish | ya phir red wala dikhao | Ya phir red wala dikhao. | (none) |
+| q47_simple_hinglish | do hajaar ke neeche sneakers | 2000 ke neeche sneakers | (none) |
+| q48_followup_hinglish | ya phir red wala dikhao | Ya phir red wala | word_dropped_end |
+| q49_brand_hinglish | libas ka kurta set chahiye | Libus ka kurta set chahiye | brand_misheard |
+| q50_brand_hinglish | allen solly ki shirt dikhao | Alan Solly ki shirt dikhao. | (variants only) |
+| q51_brand_hinglish | lakme ka kajal milega | Lakme ka kajal milega? | (none) |
+| q52_brand_hinglish | Mumma earth ka face wash dikhao | Mama's ka face wash dikhao | brand_misheard |
+| q53_simple_hinglish | teen sau ke andar shirt | 300 ke andar shirt | (none) |
+| q54_simple_hinglish | 1200 ke neeche jeans | 1200 ke neeche jeans. | (none) |
+| q55_simple_en | five hundred rupees under lipstick | 500 is under lipstick. | word_inserted |
+| q56_simple_hinglish | bhaiya, ek good running shoes batao | Bhaiya, ek good running shoes batao. | (none) |
+| q57_simple_hinglish | something for a wedding, ummm saree ya lehenga | Something for a wedding, um saree ya lehenga. | (none) |

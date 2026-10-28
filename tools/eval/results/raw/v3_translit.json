@@ -244,5 +244,95 @@
   "hypothesis": "Huda Beauty concealer Rs. 100 ke andar.",
   "language_code": "hi-IN",
   "seconds": 0.47
+ },
+ "q43_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Ek black chahiye.",
+  "language_code": "hi-IN",
+  "seconds": 0.51
+ },
+ "q44_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Aur ek pink dupatta dikhao",
+  "language_code": "hi-IN",
+  "seconds": 0.33
+ },
+ "q45_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Mere liye sandal dikhao.",
+  "language_code": "hi-IN",
+  "seconds": 0.33
+ },
+ "q46_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Ya phir red wala dikhao.",
+  "language_code": "hi-IN",
+  "seconds": 0.53
+ },
+ "q47_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "2000 ke neeche sneakers",
+  "language_code": "hi-IN",
+  "seconds": 0.41
+ },
+ "q48_followup_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Ya phir red wala",
+  "language_code": "hi-IN",
+  "seconds": 0.43
+ },
+ "q49_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Libus ka kurta set chahiye",
+  "language_code": "hi-IN",
+  "seconds": 0.37
+ },
+ "q50_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Alan Solly ki shirt dikhao.",
+  "language_code": "hi-IN",
+  "seconds": 0.49
+ },
+ "q51_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Lakme ka kajal milega?",
+  "language_code": "hi-IN",
+  "seconds": 0.32
+ },
+ "q52_brand_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Mama's ka face wash dikhao",
+  "language_code": "hi-IN",
+  "seconds": 0.36
+ },
+ "q53_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "300 ke andar shirt",
+  "language_code": "hi-IN",
+  "seconds": 0.48
+ },
+ "q54_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "1200 ke neeche jeans.",
+  "language_code": "hi-IN",
+  "seconds": 0.32
+ },
+ "q55_simple_en.webm": {
+  "status": 200,
+  "hypothesis": "500 is under lipstick.",
+  "language_code": "en-IN",
+  "seconds": 0.91
+ },
+ "q56_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Bhaiya, ek good running shoes batao.",
+  "language_code": "en-IN",
+  "seconds": 0.93
+ },
+ "q57_simple_hinglish.webm": {
+  "status": 200,
+  "hypothesis": "Something for a wedding, um saree ya lehenga.",
+  "language_code": "en-IN",
+  "seconds": 0.39
  }
 }

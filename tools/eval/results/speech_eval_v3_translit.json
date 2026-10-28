@@ -4,6 +4,7 @@
   "language": "hinglish",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "lime green saree ka petticoat chahiye",
   "heard": "Lime green saree ka petticoat chahiye",
@@ -48,6 +49,7 @@
   "language": "hinglish",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "asics ke running wale gel wale shoes chahiye",
   "heard": "A6 ke running wale gel wale shoes chahiye",
@@ -110,6 +112,7 @@
   "language": "hinglish",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "i need a marks & spencers navy blue spaghetti",
   "heard": "I need a Marks and Spencers navy blue spaghetti.",
@@ -158,6 +161,7 @@
   "language": "hinglish",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "i need a van & heusen vest",
   "heard": "I need a van and Hughes and West.",
@@ -204,6 +208,7 @@
   "language": "hinglish",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "i need a moxie shampoo",
   "heard": "I need a moxy shampoo",
@@ -250,6 +255,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "i need a garmin forerunner 245",
   "heard": "I need a Garmin Forerunner 245.",
@@ -298,6 +304,7 @@
   "language": "hinglish",
   "type": "tricky",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "aaj dinner mein kya banaoon",
   "heard": "Aaj dinner mein kya banaun",
@@ -334,6 +341,7 @@
   "language": "hinglish",
   "type": "tricky",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "how many amano shrimps should be kept together",
   "heard": "How many Amanush shrim should be kept together?",
@@ -376,6 +384,7 @@
   "language": "hinglish",
   "type": "tricky",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "how many times paan mein kitni baar paani dena chahiye",
   "heard": "How many times paan mein kitni baar paani dena chahiye",
@@ -412,6 +421,7 @@
   "language": "hinglish",
   "type": "noisy",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "mujhe purple saree ka blouse chahiye",
   "heard": "Mujhe purple saree ka blouse chahiye",
@@ -456,6 +466,7 @@
   "language": "hinglish",
   "type": "noisy",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "huda beauty ka concealer milega",
   "heard": "Huda Beauty ka concealer milega",
@@ -496,6 +507,7 @@
   "language": "hinglish",
   "type": "noisy",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "where can i find a black labrador puppy",
   "heard": "Where can I find a black Labrador puppy?",
@@ -540,6 +552,7 @@
   "language": "hinglish",
   "type": "followup",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "in mein se mujhe koi pasand nahi",
   "heard": "Inmein se mujhe koi pasand nahi",
@@ -568,6 +581,7 @@
   "language": "hinglish",
   "type": "followup",
   "heldout": false,
+  "round2": false,
   "extra_noise": true,
   "said": "purple ke alawa green nai chalega iss par",
   "heard": "Purple ke alawa green nahi chalega is par",
@@ -604,6 +618,7 @@
   "language": "hinglish",
   "type": "followup",
   "heldout": false,
+  "round2": false,
   "extra_noise": true,
   "said": "show me isse accha kuch",
   "heard": "Show me isse achha kuchh",
@@ -632,6 +647,7 @@
   "language": "hinglish",
   "type": "followup",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "iske alawa white mein nai milega kuch",
   "heard": "Iske alava white mein nahi milega kuch",
@@ -660,6 +676,7 @@
   "language": "hinglish",
   "type": "followup",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "aur dikhao",
   "heard": "Aur dikhao",
@@ -688,6 +705,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "schwazkorf ka hair mask dikhao",
   "heard": "Thorax ka hair mass dikhao.",
@@ -739,6 +757,7 @@
   "language": "en",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "i need floral nice flowy dresses from h&m",
   "heard": "I need floral nice flowy dresses from H&M.",
@@ -787,6 +806,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "zara jaise kapde chahiye",
   "heard": "Zara jaise kapde chahiye",
@@ -827,6 +847,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "kay beauty ki creamy wali lipstick milegi",
   "heard": "K Beauty ki creamy vali lipstick milegi?",
@@ -873,6 +894,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "maybelline ka mascara dikhao",
   "heard": "Table line ka mascara dikhao.",
@@ -919,6 +941,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "reebuk ke joote dikhao",
   "heard": "Rebuck ke joote dikhao",
@@ -965,6 +988,7 @@
   "language": "en",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "i need a pair of nice jeans",
   "heard": "I need a pair of nice jeans.",
@@ -993,6 +1017,7 @@
   "language": "en",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "striped tshirt please",
   "heard": "Stripe T-shirt please.",
@@ -1035,6 +1060,7 @@
   "language": "en",
   "type": "simple",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "what will go with a brown skirt",
   "heard": "What will go with a brown skirt?",
@@ -1071,6 +1097,7 @@
   "language": "en",
   "type": "simple",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "white linen srr white linen shirt",
   "heard": "White linen sir. White linen shirt.",
@@ -1113,6 +1140,7 @@
   "language": "en",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "cla calvin clean aaa women's jacket",
   "heard": "Calvin Klein women's jacket.",
@@ -1159,6 +1187,7 @@
   "language": "en",
   "type": "tricky",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "why is the sky so blue",
   "heard": "Why is the sky so blue?",
@@ -1195,6 +1224,7 @@
   "language": "en",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "i need aaa biba's kurta sets for rakshabandhan",
   "heard": "I need Biba's kurta sets for Rakshabandhan.",
@@ -1243,6 +1273,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "fabindia ki nehru jacket chahiye",
   "heard": "Crab India ki Nehru jacket chahiye",
@@ -1289,6 +1320,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "pooma ke pajame milenge mere liye",
   "heard": "Puma ke pajame milenge mere liye",
@@ -1335,6 +1367,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "nykaa se wanderlust ka cherry blossom wala shower gel",
   "heard": "Ika se Wonderlust ka Cherry Blossom wala shower gel.",
@@ -1405,6 +1438,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "andamen ki green linen shirt",
   "heard": "Andaman ki green linen shirt",
@@ -1467,6 +1501,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "revlon kajal",
   "heard": "Revlon Kajal.",
@@ -1507,6 +1542,7 @@
   "language": "en",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "benefit cosmetics the brow pencil",
   "heard": "Benefit Cosmetics the brow pencil.",
@@ -1547,6 +1583,7 @@
   "language": "en",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "blush from fenty beauty or rare beauty",
   "heard": "Blush from Fenty Beauty or Rare Beauty",
@@ -1598,6 +1635,7 @@
   "language": "en",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "onitsuka sneakers",
   "heard": "Honetsuka Snickers",
@@ -1644,6 +1682,7 @@
   "language": "hinglish",
   "type": "brand",
   "heldout": true,
+  "round2": false,
   "extra_noise": false,
   "said": "meri mummy ke liye hush puppies ki chappal",
   "heard": "Meri mummy ne harsh papis ki chappal",
@@ -1690,6 +1729,7 @@
   "language": "hinglish",
   "type": "tricky",
   "heldout": false,
+  "round2": false,
   "extra_noise": false,
   "said": "ferrari ke white sneakers 1500 ke andar",
   "heard": "Ferrari ke white sneakers fifteen hundred ke andar",
@@ -1738,6 +1778,7 @@
   "language": "hinglish",
   "type": "tricky",
   "heldout": false,
+  "round2": false,
   "extra_noise": true,
   "said": "huda beauty ka concealer 100 rupaye ke andar",
   "heard": "Huda Beauty concealer Rs. 100 ke andar.",
@@ -1778,5 +1819,556 @@
     "heard": ""
    }
   ]
+ },
+ {
+  "file": "q43_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "ik black kurta chaiyye",
+  "heard": "Ek black chahiye.",
+  "seconds": 0.51,
+  "detected_language": "hi-IN",
+  "exact": false,
+  "ref_words": 4,
+  "word_errors": 1,
+  "brands": [],
+  "terms": [
+   {
+    "term": "kurta",
+    "span": [
+     2,
+     3
+    ],
+    "hit": false
+   },
+   {
+    "term": "black",
+    "span": [
+     1,
+     2
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": [
+   {
+    "kind": "term_dropped",
+    "said": "kurta",
+    "heard": ""
+   }
+  ]
+ },
+ {
+  "file": "q44_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "aur ek pink dupatta dikhao",
+  "heard": "Aur ek pink dupatta dikhao",
+  "seconds": 0.33,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 5,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "dupatta",
+    "span": [
+     3,
+     4
+    ],
+    "hit": true
+   },
+   {
+    "term": "pink",
+    "span": [
+     2,
+     3
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q45_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "mere liye sandal dikhao",
+  "heard": "Mere liye sandal dikhao.",
+  "seconds": 0.33,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 4,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "sandal",
+    "span": [
+     2,
+     3
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q46_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "ya phir red wala dikhao",
+  "heard": "Ya phir red wala dikhao.",
+  "seconds": 0.53,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 5,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "red",
+    "span": [
+     2,
+     3
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q47_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "do hajaar ke neeche sneakers",
+  "heard": "2000 ke neeche sneakers",
+  "seconds": 0.41,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 4,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "sneakers",
+    "span": [
+     3,
+     4
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": true,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q48_followup_hinglish.webm",
+  "language": "hinglish",
+  "type": "followup",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "ya phir red wala dikhao",
+  "heard": "Ya phir red wala",
+  "seconds": 0.43,
+  "detected_language": "hi-IN",
+  "exact": false,
+  "ref_words": 5,
+  "word_errors": 1,
+  "brands": [],
+  "terms": [
+   {
+    "term": "red",
+    "span": [
+     2,
+     3
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": [
+   {
+    "kind": "word_dropped_end",
+    "said": "dikhao",
+    "heard": ""
+   }
+  ]
+ },
+ {
+  "file": "q49_brand_hinglish.webm",
+  "language": "hinglish",
+  "type": "brand",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "libas ka kurta set chahiye",
+  "heard": "Libus ka kurta set chahiye",
+  "seconds": 0.37,
+  "detected_language": "hi-IN",
+  "exact": false,
+  "ref_words": 5,
+  "word_errors": 1,
+  "brands": [
+   {
+    "brand": "Libas",
+    "spoken": "libas",
+    "span": [
+     0,
+     1
+    ],
+    "verdict": "miss",
+    "how": "libas",
+    "heard_as": "libus"
+   }
+  ],
+  "terms": [
+   {
+    "term": "kurta set",
+    "span": [
+     2,
+     4
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": [
+   {
+    "kind": "brand_misheard",
+    "said": "libas",
+    "heard": "libus"
+   }
+  ]
+ },
+ {
+  "file": "q50_brand_hinglish.webm",
+  "language": "hinglish",
+  "type": "brand",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "allen solly ki shirt dikhao",
+  "heard": "Alan Solly ki shirt dikhao.",
+  "seconds": 0.49,
+  "detected_language": "hi-IN",
+  "exact": false,
+  "ref_words": 5,
+  "word_errors": 1,
+  "brands": [
+   {
+    "brand": "Allen Solly",
+    "spoken": "allen solly",
+    "span": [
+     0,
+     2
+    ],
+    "verdict": "hit",
+    "how": "variant",
+    "heard_as": "alan solly"
+   }
+  ],
+  "terms": [
+   {
+    "term": "shirt",
+    "span": [
+     3,
+     4
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": [
+   {
+    "kind": "brand_variant_accepted",
+    "said": "allen",
+    "heard": "alan"
+   }
+  ]
+ },
+ {
+  "file": "q51_brand_hinglish.webm",
+  "language": "hinglish",
+  "type": "brand",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "lakme ka kajal milega",
+  "heard": "Lakme ka kajal milega?",
+  "seconds": 0.32,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 4,
+  "word_errors": 0,
+  "brands": [
+   {
+    "brand": "Lakme",
+    "spoken": "lakme",
+    "span": [
+     0,
+     1
+    ],
+    "verdict": "hit",
+    "how": "exact",
+    "heard_as": "lakme"
+   }
+  ],
+  "terms": [
+   {
+    "term": "kajal",
+    "span": [
+     2,
+     3
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q52_brand_hinglish.webm",
+  "language": "hinglish",
+  "type": "brand",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "Mumma earth ka face wash dikhao",
+  "heard": "Mama's ka face wash dikhao",
+  "seconds": 0.36,
+  "detected_language": "hi-IN",
+  "exact": false,
+  "ref_words": 6,
+  "word_errors": 2,
+  "brands": [
+   {
+    "brand": "Mamaearth",
+    "spoken": "mumma earth",
+    "span": [
+     0,
+     2
+    ],
+    "verdict": "miss",
+    "how": "mamaearth",
+    "heard_as": "mamas"
+   }
+  ],
+  "terms": [
+   {
+    "term": "face wash",
+    "span": [
+     3,
+     5
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": [
+   {
+    "kind": "brand_misheard",
+    "said": "mumma earth",
+    "heard": "mamas"
+   }
+  ]
+ },
+ {
+  "file": "q53_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "teen sau ke andar shirt",
+  "heard": "300 ke andar shirt",
+  "seconds": 0.48,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 4,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "shirt",
+    "span": [
+     3,
+     4
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": true,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q54_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "1200 ke neeche jeans",
+  "heard": "1200 ke neeche jeans.",
+  "seconds": 0.32,
+  "detected_language": "hi-IN",
+  "exact": true,
+  "ref_words": 4,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "jeans",
+    "span": [
+     3,
+     4
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": true,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q55_simple_en.webm",
+  "language": "en",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "five hundred rupees under lipstick",
+  "heard": "500 is under lipstick.",
+  "seconds": 0.91,
+  "detected_language": "en-IN",
+  "exact": false,
+  "ref_words": 3,
+  "word_errors": 1,
+  "brands": [],
+  "terms": [
+   {
+    "term": "lipstick",
+    "span": [
+     2,
+     3
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": true,
+  "wrong_script": false,
+  "events": [
+   {
+    "kind": "word_inserted",
+    "said": "",
+    "heard": "is"
+   }
+  ]
+ },
+ {
+  "file": "q56_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "bhaiya, ek good running shoes batao",
+  "heard": "Bhaiya, ek good running shoes batao.",
+  "seconds": 0.93,
+  "detected_language": "en-IN",
+  "exact": true,
+  "ref_words": 6,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "running shoes",
+    "span": [
+     3,
+     5
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": []
+ },
+ {
+  "file": "q57_simple_hinglish.webm",
+  "language": "hinglish",
+  "type": "simple",
+  "heldout": false,
+  "round2": true,
+  "extra_noise": false,
+  "said": "something for a wedding, ummm saree ya lehenga",
+  "heard": "Something for a wedding, um saree ya lehenga.",
+  "seconds": 0.39,
+  "detected_language": "en-IN",
+  "exact": true,
+  "ref_words": 7,
+  "word_errors": 0,
+  "brands": [],
+  "terms": [
+   {
+    "term": "wedding",
+    "span": [
+     3,
+     4
+    ],
+    "hit": true
+   },
+   {
+    "term": "saree",
+    "span": [
+     4,
+     5
+    ],
+    "hit": true
+   },
+   {
+    "term": "lehenga",
+    "span": [
+     6,
+     7
+    ],
+    "hit": true
+   }
+  ],
+  "price_ok": null,
+  "wrong_script": false,
+  "events": []
  }
 ]

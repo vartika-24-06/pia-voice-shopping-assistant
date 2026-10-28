@@ -87,6 +87,7 @@ These are v0 targets. After the first baseline run on the eval set, each target 
 | 2026-10-17 | Web app only | Scope |
 | 2026-10-17 | Sarvam key is BYOK; DesiDime offers via the user's own account (backend OAuth) | Cost control and privacy |
 | 2026-10-17 | DesiDime offers descoped (spec 02); the discount-correctness metric goes with it | Time goes to the speech evaluation |
+| 2026-10-28 | Second recording round (15 clips): overall brand accuracy 65% (20/31), product words 92%; dropped words observed for the first time (one product word) | Still one speaker; the floor of 70% on brands is still not met |
 | 2026-10-28 | **Known limitation:** the speech test set has a single speaker (the PM) with a fan running in the background; no second speaker was available | Accuracy figures describe one voice and one accent and must not be read as the target users' average. A second and third speaker is the first fix when someone is available |
 | 2026-10-28 | Speech baseline measured with the harness: brand accuracy 67% (held-out 69%), below the 70% floor; product words 91% | The floor stays; the gap is handled by confirmation questions and a type-instead fallback, and the result is reported honestly |
 | 2026-10-17 | Core search: multi-platform through QuickCommerceAPI; deals are an add-on on the top 3 | Scope |

@@ -40,10 +40,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 qc.seed_brands_from_list(ROOT / "app" / "backend" / "seed_brands.txt")
 KNOWN_BRANDS = set(qc.BRANDS)
 
-FILLERS = {"aaa", "srr", "cla", "um", "umm", "uh", "hmm", "aa"}      # hesitations in the reference: not words to recognise
+FILLERS = {"aaa", "srr", "cla", "um", "umm", "ummm", "uh", "hmm", "aa"}      # hesitations in the reference: not words to recognise
 CURRENCY = {"rs", "rupaye", "rupees", "rupee", "inr", "rupay"}
 SPELLING = {"nai": "nahi", "nahin": "nahi", "achha": "accha", "acha": "accha", "kuchh": "kuch", "banaoon": "banaun",
-            "alava": "alawa", "vali": "wali", "iss": "is"}   # same word, different Roman spelling: not a recognition error
+            "alava": "alawa", "vali": "wali", "iss": "is", "ik": "ek", "chaiyye": "chahiye", "hajaar": "hazaar"}   # same word, different Roman spelling: not a recognition error
 SPLITS = {"inmein": ["in", "mein"]}
 SMALL = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split())}
 SMALL.update({"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90})
@@ -128,6 +128,7 @@ def load_clips():
         clips.append({
             "file": r["file"], "said": r["what_i_said"], "type": r["type"], "language": r["language"], "note": r["note"],
             "extra_noise": bool(re.search(r"tv|motor|reels|street", r["note"].lower())), "heldout": r["file"] in held,
+            "round2": int(re.match(r"q(\d+)", r["file"]).group(1)) >= 43,
             "brands": [b for b in (k.get("brands") or "").split(";") if b],
             "brand_spoken": [b for b in (k.get("brand_spoken") or "").split(";") if b],
             "terms": [t for t in (k.get("terms") or "").split(";") if t],
@@ -274,7 +275,7 @@ def score_clip(clip, hyp):
         price_ok = clip["price"] in H
     wrong_script = bool(DEV.search(hyp["hypothesis"]))
     return {
-        "file": clip["file"], "language": clip["language"], "type": clip["type"], "heldout": clip["heldout"], "extra_noise": clip["extra_noise"],
+        "file": clip["file"], "language": clip["language"], "type": clip["type"], "heldout": clip["heldout"], "round2": clip["round2"], "extra_noise": clip["extra_noise"],
         "said": clip["said"], "heard": hyp["hypothesis"], "seconds": hyp.get("seconds"), "detected_language": hyp.get("language_code"),
         "exact": [stem(x) for x in R] == [stem(x) for x in H], "ref_words": len(R),
         "word_errors": edit_distance([stem(x) for x in R], [stem(x) for x in H]),
@@ -317,25 +318,25 @@ def brand_rate(s):
 
 
 def write_report(config, rows):
-    allx, held = summarise(rows), summarise([r for r in rows if r["heldout"]])
+    allx, held, r2 = summarise(rows), summarise([r for r in rows if r["heldout"]]), summarise([r for r in rows if r["round2"]])
     by = lambda f: {k: summarise([r for r in rows if f(r) == k]) for k in sorted({f(r) for r in rows})}
     L = [f"# Speech evaluation: {config}", "",
          f"Run on {date.today().isoformat()} with {len(rows)} clips ({held['clips']} held-out). Setup: `{json.dumps(stt_check.CONFIGS[config])}`.",
          "Scoring rules: agreed spelling variants count as correct (`brand_variants.json`); hesitations in what was said are ignored; "
          "numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).",
          "**Limitation:** all clips are one speaker (the PM) with a fan running; the figures describe one voice and one accent, not all users.", "",
-         "## Summary", "", "| Measure | All clips | Held-out only |", "|---|---|---|",
-         f"| Brand accuracy (exact or agreed variant) | {brand_rate(allx)} | {brand_rate(held)} |",
-         f"| Brands: exact / variant / needs confirm / missed | {allx['brand_exact']} / {allx['brand_variant']} / {allx['brand_confirm']} / {allx['brand_miss']} | {held['brand_exact']} / {held['brand_variant']} / {held['brand_confirm']} / {held['brand_miss']} |",
-         f"| Product and colour words heard | {pct(allx['terms_hit'], allx['terms'])} | {pct(held['terms_hit'], held['terms'])} |",
-         f"| Prices heard correctly | {pct(allx['prices_ok'], allx['prices'])} | {pct(held['prices_ok'], held['prices'])} |",
-         f"| Clips heard exactly (after normalising) | {pct(allx['exact_clips'], allx['clips'])} | {pct(held['exact_clips'], held['clips'])} |",
-         f"| Word error rate (reported only) | {allx['wer_micro']:.2f} | {held['wer_micro']:.2f} |",
-         f"| Clips returned in the wrong script (Devanagari) | {allx['wrong_script']} | {held['wrong_script']} |",
-         f"| Time per clip (mean / p90, seconds) | {allx['secs_mean']:.2f} / {allx['secs_p90']:.2f} | {held['secs_mean']:.2f} / {held['secs_p90']:.2f} |", ""]
-    L += ["## Error types", "", "| Type | Count (all) | Count (held-out) |", "|---|---|---|"]
-    for k in sorted(set(allx["events"]) | set(held["events"])):
-        L.append(f"| {k} | {allx['events'].get(k, 0)} | {held['events'].get(k, 0)} |")
+         "## Summary", "", "| Measure | All clips | Held-out only | Round 2 only (q43 onwards) |", "|---|---|---|---|",
+         f"| Brand accuracy (exact or agreed variant) | {brand_rate(allx)} | {brand_rate(held)} | {brand_rate(r2)} |",
+         f"| Brands: exact / variant / needs confirm / missed | {allx['brand_exact']} / {allx['brand_variant']} / {allx['brand_confirm']} / {allx['brand_miss']} | {held['brand_exact']} / {held['brand_variant']} / {held['brand_confirm']} / {held['brand_miss']} | {r2['brand_exact']} / {r2['brand_variant']} / {r2['brand_confirm']} / {r2['brand_miss']} |",
+         f"| Product and colour words heard | {pct(allx['terms_hit'], allx['terms'])} | {pct(held['terms_hit'], held['terms'])} | {pct(r2['terms_hit'], r2['terms'])} |",
+         f"| Prices heard correctly | {pct(allx['prices_ok'], allx['prices'])} | {pct(held['prices_ok'], held['prices'])} | {pct(r2['prices_ok'], r2['prices'])} |",
+         f"| Clips heard exactly (after normalising) | {pct(allx['exact_clips'], allx['clips'])} | {pct(held['exact_clips'], held['clips'])} | {pct(r2['exact_clips'], r2['clips'])} |",
+         f"| Word error rate (reported only) | {allx['wer_micro']:.2f} | {held['wer_micro']:.2f} | {r2['wer_micro']:.2f} |",
+         f"| Clips returned in the wrong script (Devanagari) | {allx['wrong_script']} | {held['wrong_script']} | {r2['wrong_script']} |",
+         f"| Time per clip (mean / p90, seconds) | {allx['secs_mean']:.2f} / {allx['secs_p90']:.2f} | {held['secs_mean']:.2f} / {held['secs_p90']:.2f} | {r2['secs_mean']:.2f} / {r2['secs_p90']:.2f} |", ""]
+    L += ["## Error types", "", "| Type | Count (all) | Count (held-out) | Count (round 2) |", "|---|---|---|---|"]
+    for k in sorted(set(allx["events"]) | set(held["events"]) | set(r2["events"])):
+        L.append(f"| {k} | {allx['events'].get(k, 0)} | {held['events'].get(k, 0)} | {r2['events'].get(k, 0)} |")
     L += ["", "*Accepted variants are not errors; they are listed so you can see them.*", ""]
     for title, f in (("language", lambda r: r["language"]), ("clip type", lambda r: r["type"]), ("extra background noise", lambda r: "extra noise" if r["extra_noise"] else "fan only")):
         L += [f"## By {title}", "", "| Group | Clips | Brand accuracy | Terms heard | Clips exact | Word error rate |", "|---|---|---|---|---|---|"]
@@ -353,10 +354,11 @@ def write_report(config, rows):
         L.append(f"| {r['file'][:-5]} | {r['said']} | {r['heard']} | {kinds} |")
     (RESULTS / f"speech_report_{config}.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     (RESULTS / f"speech_eval_{config}.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
-    return allx, held
+    return allx, held, r2
 
 
 def write_compare(done):
+    done = {k: v[:2] for k, v in done.items()}
     L = ["# Speech evaluation: setups compared", "", f"Run on {date.today().isoformat()}.", "",
          "| Measure | " + " | ".join(done) + " |", "|---|" + "---|" * len(done)]
     rows = [("Brand accuracy (all)", lambda a, h: brand_rate(a)), ("Brand accuracy (held-out)", lambda a, h: brand_rate(h)),
@@ -384,7 +386,7 @@ def main():
         hyps = stt(cfg, clips, args.refresh)
         rows = [score_clip(c, hyps[c["file"]]) for c in clips]
         done[cfg] = write_report(cfg, rows)
-        a, h = done[cfg]
+        a, h, _ = done[cfg]
         print(f"{cfg}: brands {brand_rate(a)} | held-out {brand_rate(h)} | terms {pct(a['terms_hit'], a['terms'])} | exact clips {pct(a['exact_clips'], a['clips'])} | WER {a['wer_micro']:.2f}")
     if len(done) > 1:
         write_compare(done)
