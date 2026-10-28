@@ -1,0 +1,3764 @@
+[
+ {
+  "id": "c01#1",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "lime green saree ka petticoat chahiye",
+    "text": "lime green saree ka petticoat chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "petticoat"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma lime green saree ka petticoat style ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 2722,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c02#1",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "asics ke running wale gel wale shoes chahiye",
+    "text": "asics ke running wale gel wale shoes chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      [
+       "shoe"
+      ]
+     ],
+     "brand": [
+      "asics"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Asics Asics running gel shoes style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4288,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c03#1",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "i need a pair of nice jeans",
+    "text": "i need a pair of nice jeans",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4237,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c04#1",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "striped tshirt please",
+    "text": "striped tshirt please",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      [
+       "tshirt",
+       "t-shirt",
+       "t shirt"
+      ]
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma striped tshirt style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4099,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c05#1",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "white linen srr white linen shirt",
+    "text": "white linen srr white linen shirt",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "shirt",
+      "linen"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma white linen shirt style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4150,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c06#1",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "i need a van & heusen vest",
+    "text": "i need a van & heusen vest",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "vest"
+     ],
+     "brand": [
+      "heusen"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma Van Heusen vest style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4168,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c07#1",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "schwazkorf ka hair mask dikhao",
+    "text": "schwazkorf ka hair mask dikhao",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "hair"
+     ],
+     "brand": [
+      "schwarzkopf",
+      "schwazkorf"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price schwazkorf schwazkorf hair mask style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4305,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c08#1",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "zara jaise kapde chahiye",
+    "text": "zara jaise kapde chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "brand": [
+      "zara"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma zara jaise kapde style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4240,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c09#1",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "fabindia ki nehru jacket chahiye",
+    "text": "fabindia ki nehru jacket chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jacket"
+     ],
+     "brand": [
+      "fabindia"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Fabindia nehru jacket style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4192,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c10#1",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "revlon kajal",
+    "text": "revlon kajal",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "kajal"
+     ],
+     "brand": [
+      "revlon"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma revlon kajal style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4067,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c11#1",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "kay beauty ki creamy wali lipstick milegi",
+    "text": "kay beauty ki creamy wali lipstick milegi",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty creamy lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4065,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c12#1",
+  "type": "misheard",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "onitsuka sneakers",
+    "text": "onitsuka sneakers",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      "sneaker"
+     ],
+     "brand": [
+      "onitsuka"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma onitsuka sneakers style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4165,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c13#1",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "mujhe purple saree ka blouse chahiye",
+    "text": "mujhe purple saree ka blouse chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "purple"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma purple saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4196,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "purple ke alawa green nai chalega iss par",
+    "text": "purple ke alawa green nai chalega iss par",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "green"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma green saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4339,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c14#1",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "mujhe purple saree ka blouse chahiye",
+    "text": "mujhe purple saree ka blouse chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "purple"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma purple saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4191,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "iske alawa white mein nai milega kuch",
+    "text": "iske alawa white mein nai milega kuch",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "white"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma white saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4135,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c15#1",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "asics ke running wale gel wale shoes chahiye",
+    "text": "asics ke running wale gel wale shoes chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      [
+       "shoe"
+      ]
+     ],
+     "brand": [
+      "asics"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price ASICS asics running gel shoes style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4393,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "show me isse accha kuch",
+    "text": "show me isse accha kuch",
+    "expect": {
+     "tool": "choices"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aap kya chahenge: zyada rating wale, mehenge wale, ya naya search?",
+    "chips": [
+     "Zyada rating wale",
+     "Mehenge wale",
+     "Naya search"
+    ],
+    "ms": 4031,
+    "llmCalls": 2,
+    "tools": [
+     "show_choices"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c16#1",
+  "type": "followup",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "i need a pair of nice jeans",
+    "text": "i need a pair of nice jeans",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4320,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "aur dikhao",
+    "text": "aur dikhao",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "page": 2
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 4 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4337,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c17#1",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "ferrari ke white sneakers 1500 ke andar",
+    "text": "ferrari ke white sneakers 1500 ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear",
+      "max_price": 1500
+     },
+     "query_has": [
+      "ferrari",
+      "sneaker"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'white sneakers' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahengi?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4214,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c18#1",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "huda beauty ka concealer 100 rupaye ke andar",
+    "text": "huda beauty ka concealer 100 rupaye ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty",
+      "max_price": 100
+     },
+     "query_has": [
+      "concealer"
+     ],
+     "brand": [
+      "huda"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe Huda Beauty concealer ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4292,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c19#1",
+  "type": "out of scope",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "aaj dinner mein kya banaoon",
+    "text": "aaj dinner mein kya banaoon",
+    "expect": {
+     "tool": "none"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Main sirf fashion aur beauty products search karne mein help kar sakti hoon. Aap kya dekhna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 1937,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c20#1",
+  "type": "out of scope",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "where can i find a black labrador puppy",
+    "text": "where can i find a black labrador puppy",
+    "expect": {
+     "tool": "none"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "I can only help with finding fashion and beauty products. What would you like to look for?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 1963,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c21#1",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "K Beauty ki lipstick chahiye",
+    "text": "K Beauty ki lipstick chahiye",
+    "expect": {
+     "tool": "confirm"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aapka matlab kaunsa hai: Kay Beauty ya Korean beauty?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 2745,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   },
+   {
+    "said": "Mujhe Kay Beauty chahiye",
+    "text": "Mujhe Kay Beauty chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 4270,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c01#2",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "lime green saree ka petticoat chahiye",
+    "text": "lime green saree ka petticoat chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "petticoat"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma lime green saree petticoat style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4206,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c02#2",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "asics ke running wale gel wale shoes chahiye",
+    "text": "asics ke running wale gel wale shoes chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      [
+       "shoe"
+      ]
+     ],
+     "brand": [
+      "asics"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Asics Asics gel running shoes style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4385,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c03#2",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "i need a pair of nice jeans",
+    "text": "i need a pair of nice jeans",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4084,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c04#2",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "striped tshirt please",
+    "text": "striped tshirt please",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      [
+       "tshirt",
+       "t-shirt",
+       "t shirt"
+      ]
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma striped tshirt style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4171,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c05#2",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "white linen srr white linen shirt",
+    "text": "white linen srr white linen shirt",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "shirt",
+      "linen"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma white linen shirt style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4073,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c06#2",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "i need a van & heusen vest",
+    "text": "i need a van & heusen vest",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "vest"
+     ],
+     "brand": [
+      "heusen"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma van & heusen vest style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4258,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c07#2",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "schwazkorf ka hair mask dikhao",
+    "text": "schwazkorf ka hair mask dikhao",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "hair"
+     ],
+     "brand": [
+      "schwarzkopf",
+      "schwazkorf"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma schwazkorf hair mask style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4276,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c08#2",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "zara jaise kapde chahiye",
+    "text": "zara jaise kapde chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "brand": [
+      "zara"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma zara jaise kapde style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4263,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c09#2",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "fabindia ki nehru jacket chahiye",
+    "text": "fabindia ki nehru jacket chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jacket"
+     ],
+     "brand": [
+      "fabindia"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma fabindia nehru jacket style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4212,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c10#2",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "revlon kajal",
+    "text": "revlon kajal",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "kajal"
+     ],
+     "brand": [
+      "revlon"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma revlon kajal style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4176,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c11#2",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "kay beauty ki creamy wali lipstick milegi",
+    "text": "kay beauty ki creamy wali lipstick milegi",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty creamy lipstick style ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4310,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c12#2",
+  "type": "misheard",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "onitsuka sneakers",
+    "text": "onitsuka sneakers",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      "sneaker"
+     ],
+     "brand": [
+      "onitsuka"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma onitsuka sneakers style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4246,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c13#2",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "mujhe purple saree ka blouse chahiye",
+    "text": "mujhe purple saree ka blouse chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "purple"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma purple saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4275,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "purple ke alawa green nai chalega iss par",
+    "text": "purple ke alawa green nai chalega iss par",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "green"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma green saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4242,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c14#2",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "mujhe purple saree ka blouse chahiye",
+    "text": "mujhe purple saree ka blouse chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "purple"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma purple saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4206,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "iske alawa white mein nai milega kuch",
+    "text": "iske alawa white mein nai milega kuch",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "white"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma white saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4112,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c15#2",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "asics ke running wale gel wale shoes chahiye",
+    "text": "asics ke running wale gel wale shoes chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      [
+       "shoe"
+      ]
+     ],
+     "brand": [
+      "asics"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Asics running gel shoes asics style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4168,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "show me isse accha kuch",
+    "text": "show me isse accha kuch",
+    "expect": {
+     "tool": "choices"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aap kya chahenge: zyada rating wale, mehenge wale, ya naya search?",
+    "chips": [
+     "Zyada rating wale",
+     "Mehenge wale",
+     "Naya search"
+    ],
+    "ms": 4042,
+    "llmCalls": 2,
+    "tools": [
+     "show_choices"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c16#2",
+  "type": "followup",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "i need a pair of nice jeans",
+    "text": "i need a pair of nice jeans",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4314,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "aur dikhao",
+    "text": "aur dikhao",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "page": 2
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "I already showed you all the available options. Would you like to see more results on a different platform, or shall I search for something else?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4273,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c17#2",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "ferrari ke white sneakers 1500 ke andar",
+    "text": "ferrari ke white sneakers 1500 ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear",
+      "max_price": 1500
+     },
+     "query_has": [
+      "ferrari",
+      "sneaker"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'white sneakers, under 1500 rupees' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4284,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c18#2",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "huda beauty ka concealer 100 rupaye ke andar",
+    "text": "huda beauty ka concealer 100 rupaye ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty",
+      "max_price": 100
+     },
+     "query_has": [
+      "concealer"
+     ],
+     "brand": [
+      "huda"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'huda beauty concealer 100 rupaye ke andar' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4148,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c19#2",
+  "type": "out of scope",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "aaj dinner mein kya banaoon",
+    "text": "aaj dinner mein kya banaoon",
+    "expect": {
+     "tool": "none"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Main sirf fashion aur beauty products search karne mein help kar sakti hoon. Aap kya dekhna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 1991,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c20#2",
+  "type": "out of scope",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "where can i find a black labrador puppy",
+    "text": "where can i find a black labrador puppy",
+    "expect": {
+     "tool": "none"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "I can only help with finding fashion and beauty products. What would you like to look for?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 1994,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c21#2",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "K Beauty ki lipstick chahiye",
+    "text": "K Beauty ki lipstick chahiye",
+    "expect": {
+     "tool": "confirm"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aapka matlab kaunsa hai: Kay Beauty ya Korean beauty?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 1988,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   },
+   {
+    "said": "Mujhe Kay Beauty chahiye",
+    "text": "Mujhe Kay Beauty chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 4080,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c01#3",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "lime green saree ka petticoat chahiye",
+    "text": "lime green saree ka petticoat chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "petticoat"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma lime green saree ka petticoat style ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4238,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c02#3",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "asics ke running wale gel wale shoes chahiye",
+    "text": "asics ke running wale gel wale shoes chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      [
+       "shoe"
+      ]
+     ],
+     "brand": [
+      "asics"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price ASICS gel running shoes style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4166,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c03#3",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "i need a pair of nice jeans",
+    "text": "i need a pair of nice jeans",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4160,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c04#3",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "striped tshirt please",
+    "text": "striped tshirt please",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      [
+       "tshirt",
+       "t-shirt",
+       "t shirt"
+      ]
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma striped tshirt style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4165,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c05#3",
+  "type": "simple",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "white linen srr white linen shirt",
+    "text": "white linen srr white linen shirt",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "shirt",
+      "linen"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma white linen shirt style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4082,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c06#3",
+  "type": "simple",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "i need a van & heusen vest",
+    "text": "i need a van & heusen vest",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "vest"
+     ],
+     "brand": [
+      "heusen"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma van & heusen vest style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4191,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c07#3",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "schwazkorf ka hair mask dikhao",
+    "text": "schwazkorf ka hair mask dikhao",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "hair"
+     ],
+     "brand": [
+      "schwarzkopf",
+      "schwazkorf"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price schwazkorf schwazkorf hair mask style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4174,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c08#3",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "zara jaise kapde chahiye",
+    "text": "zara jaise kapde chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "brand": [
+      "zara"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma Zara jaise kapde style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4158,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c09#3",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "fabindia ki nehru jacket chahiye",
+    "text": "fabindia ki nehru jacket chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jacket"
+     ],
+     "brand": [
+      "fabindia"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma Fabindia nehru jacket style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4187,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c10#3",
+  "type": "brand",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "revlon kajal",
+    "text": "revlon kajal",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "kajal"
+     ],
+     "brand": [
+      "revlon"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma revlon kajal style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4189,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c11#3",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "kay beauty ki creamy wali lipstick milegi",
+    "text": "kay beauty ki creamy wali lipstick milegi",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty creamy lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4180,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c12#3",
+  "type": "misheard",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "onitsuka sneakers",
+    "text": "onitsuka sneakers",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      "sneaker"
+     ],
+     "brand": [
+      "onitsuka"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma onitsuka sneakers style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4040,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c13#3",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "mujhe purple saree ka blouse chahiye",
+    "text": "mujhe purple saree ka blouse chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "purple"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma purple saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4156,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "purple ke alawa green nai chalega iss par",
+    "text": "purple ke alawa green nai chalega iss par",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "green"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma green saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4258,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c14#3",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "mujhe purple saree ka blouse chahiye",
+    "text": "mujhe purple saree ka blouse chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "purple"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma purple saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4246,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "iske alawa white mein nai milega kuch",
+    "text": "iske alawa white mein nai milega kuch",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "blouse",
+      "white"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Puma white saree blouse style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4240,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c15#3",
+  "type": "followup",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "asics ke running wale gel wale shoes chahiye",
+    "text": "asics ke running wale gel wale shoes chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear"
+     },
+     "query_has": [
+      [
+       "shoe"
+      ]
+     ],
+     "brand": [
+      "asics"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price ASICS ASICS running gel shoes style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4240,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "show me isse accha kuch",
+    "text": "show me isse accha kuch",
+    "expect": {
+     "tool": "choices"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aap kya chahenge: zyada rating wale, mehenge wale, ya naya search?",
+    "chips": [
+     "Zyada rating wale",
+     "Mehenge wale",
+     "Naya search"
+    ],
+    "ms": 3915,
+    "llmCalls": 2,
+    "tools": [
+     "show_choices"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c16#3",
+  "type": "followup",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "i need a pair of nice jeans",
+    "text": "i need a pair of nice jeans",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "clothing"
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The lowest listed price is Puma nice jeans style 1 at 750 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4142,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   },
+   {
+    "said": "aur dikhao",
+    "text": "aur dikhao",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "page": 2
+     },
+     "query_has": [
+      "jeans"
+     ],
+     "forbid": [
+      "platform",
+      "brand"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "The next lowest listed price is Puma nice jeans style 2 at 800 rupees on Myntra, rated 4.1. Would you like to pick one, or see more?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 4149,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c17#3",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "ferrari ke white sneakers 1500 ke andar",
+    "text": "ferrari ke white sneakers 1500 ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "footwear",
+      "max_price": 1500
+     },
+     "query_has": [
+      "ferrari",
+      "sneaker"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'white sneakers' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4138,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c18#3",
+  "type": "no match",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "huda beauty ka concealer 100 rupaye ke andar",
+    "text": "huda beauty ka concealer 100 rupaye ke andar",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty",
+      "max_price": 100
+     },
+     "query_has": [
+      "concealer"
+     ],
+     "brand": [
+      "huda"
+     ],
+     "forbid": [
+      "platform"
+     ],
+     "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true,
+     "reply_says": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sorry, mujhe 'Huda Beauty concealer 100 rupaye ke andar' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahengi?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 4292,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c19#3",
+  "type": "out of scope",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "aaj dinner mein kya banaoon",
+    "text": "aaj dinner mein kya banaoon",
+    "expect": {
+     "tool": "none"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Main sirf fashion aur beauty products search karne mein help kar sakti hoon. Aap kya dekhna chahengi?",
+    "chips": [
+     "2000 ke andar white sneakers",
+     "pink saree ke liye blouse",
+     "Huda Beauty ka concealer"
+    ],
+    "ms": 2002,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c20#3",
+  "type": "out of scope",
+  "lang": "en",
+  "turns": [
+   {
+    "said": "where can i find a black labrador puppy",
+    "text": "where can i find a black labrador puppy",
+    "expect": {
+     "tool": "none"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "I can only help with finding fashion and beauty products. What would you like to look for?",
+    "chips": [
+     "white sneakers under 2000",
+     "pink saree blouse",
+     "Huda Beauty concealer"
+    ],
+    "ms": 1979,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   }
+  ]
+ },
+ {
+  "id": "c21#3",
+  "type": "misheard",
+  "lang": "hi",
+  "turns": [
+   {
+    "said": "K Beauty ki lipstick chahiye",
+    "text": "K Beauty ki lipstick chahiye",
+    "expect": {
+     "tool": "confirm"
+    },
+    "checks": {
+     "tool": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Aapka matlab kaunsa hai: Kay Beauty, ya Korean beauty?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 1901,
+    "llmCalls": 1,
+    "tools": [],
+    "err": null
+   },
+   {
+    "said": "Mujhe Kay Beauty chahiye",
+    "text": "Mujhe Kay Beauty chahiye",
+    "expect": {
+     "tool": "search",
+     "args": {
+      "category": "beauty"
+     },
+     "query_has": [
+      "lipstick"
+     ],
+     "brand": [
+      "kay beauty"
+     ],
+     "forbid": [
+      "platform"
+     ]
+    },
+    "checks": {
+     "tool": true,
+     "args": true,
+     "query": true,
+     "brand": true,
+     "no_invented": true,
+     "language": true,
+     "register": true,
+     "length": true,
+     "grounded": true,
+     "reply": true
+    },
+    "pass": true,
+    "notes": [],
+    "rewrote": false,
+    "reply": "Sabse kam price Kay Beauty lipstick style 1 ka hai: Myntra par 750 rupaye, rating 4.1. Kaunsa pick karna hai, ya aur options dikhaun?",
+    "chips": [
+     "Kay Beauty",
+     "Korean beauty"
+    ],
+    "ms": 4220,
+    "llmCalls": 2,
+    "tools": [
+     "search_products"
+    ],
+    "err": null
+   }
+  ]
+ }
+]

@@ -1,0 +1,6 @@
+{
+  "name": "pia-pipeline-eval",
+  "private": true,
+  "description": "Runs the real page code in a simulated browser against the real Sarvam model, to evaluate understanding, tool calling and replies.",
+  "dependencies": { "jsdom": "^26.0.0" }
+}

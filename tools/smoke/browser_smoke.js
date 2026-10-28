@@ -37,7 +37,7 @@
       if (/Rewrite your last reply/.test(last.content)) return say('Sorry, I found nothing. Would you like to change the budget?');
       if (typeof body.tool_choice === 'object') return call('search_products', { query: 'lipstick', category: 'beauty', brand: 'Kay Beauty' });
       if (/accha kuch/.test(last.content)) return call('show_choices', { kind: 'refine' });
-      if (/Agle 3/.test(last.content)) return call('search_products', { query: 'sneakers', category: 'footwear', page: 2 });
+      if (/Agle 3|Aur 3|next 3/i.test(last.content)) return call('search_products', { query: 'sneakers', category: 'footwear', page: 2 });
       if (/Mujhe Kay Beauty/.test(last.content)) return say('Aap Kay Beauty ya Korean beauty mein se kaunsa keh rahe hain?');
       return call('search_products', { query: 'sneakers', category: 'footwear' });
     }
@@ -49,7 +49,7 @@
   if (!$('app').hidden) leaveMain();
   check('intro visible', !$('intro').hidden && $('app').hidden, 0);
   setLang('en'); check('english intro', /Tell Pia what you want/.test($('intro').innerText), $('intro').innerText.slice(0, 80));
-  setLang('hi'); check('hinglish intro', /Pia ko bataiye/.test($('intro').innerText), 0);
+  setLang('hi'); check('hinglish intro', /Bas boliye aapko kya chahiye/.test($('intro').innerText), 0);
   $('key').value = 'x'; $('name').value = 'Neha'; $('gender').value = 'female'; $('start').click();
   check('app visible', !$('app').hidden && $('intro').hidden, 0);
   check('hinglish starter chips', [...document.querySelectorAll('#chips button')].map(b => b.textContent).join('|') === '2000 ke andar white sneakers|pink saree ke liye blouse|Huda Beauty ka concealer', 0);
@@ -66,7 +66,7 @@
 
   // vague request: refine buttons
   await runTurn('isse accha kuch dikhao', 'hi-IN', 0, performance.now());
-  check('refine presets in hinglish', [...document.querySelectorAll('#chips button')].map(b => b.textContent).join('|') === 'Zyada rating wale|Zyada price wale|Naya search', [...document.querySelectorAll('#chips button')].map(b => b.textContent));
+  check('refine presets in hinglish', [...document.querySelectorAll('#chips button')].map(b => b.textContent).join('|') === 'Zyada rating wale|Mehenge wale|Naya search', [...document.querySelectorAll('#chips button')].map(b => b.textContent));
 
   // ambiguous brand: question first, answer forces the search, never asked twice
   const before = searches.length;

@@ -1,0 +1,53 @@
+[
+  {"id": "c01", "type": "simple", "lang": "hi", "turns": [
+    {"clip": "q01_simple_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["petticoat"], "forbid": ["platform", "brand"]}}]},
+  {"id": "c02", "type": "simple", "lang": "hi", "turns": [
+    {"clip": "q03_simple_hinglish.webm", "expect": {"tool": "search", "args": {"category": "footwear"}, "query_has": [["shoe"]], "brand": ["asics"], "forbid": ["platform"]}}]},
+  {"id": "c03", "type": "simple", "lang": "en", "turns": [
+    {"clip": "q27_simple_en.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["jeans"], "forbid": ["platform", "brand"]}}]},
+  {"id": "c04", "type": "simple", "lang": "en", "turns": [
+    {"clip": "q29_simple_en.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": [["tshirt", "t-shirt", "t shirt"]], "forbid": ["platform", "brand"]}}]},
+  {"id": "c05", "type": "simple", "lang": "en", "turns": [
+    {"clip": "q28_simple_en.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["shirt", "linen"], "forbid": ["platform", "brand"]}}]},
+  {"id": "c06", "type": "simple", "lang": "hi", "turns": [
+    {"clip": "q05_simple_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["vest"], "brand": ["heusen"], "forbid": ["platform"]}}]},
+  {"id": "c07", "type": "brand", "lang": "hi", "turns": [
+    {"clip": "q20_brand_hinglish.webm", "expect": {"tool": "search", "args": {"category": "beauty"}, "query_has": ["hair"], "brand": ["schwarzkopf", "schwazkorf"], "forbid": ["platform"]}}]},
+  {"id": "c08", "type": "brand", "lang": "hi", "turns": [
+    {"clip": "q22_brand_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "brand": ["zara"], "forbid": ["platform"]}}]},
+  {"id": "c09", "type": "brand", "lang": "hi", "turns": [
+    {"clip": "q32_brand_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["jacket"], "brand": ["fabindia"], "forbid": ["platform"]}}]},
+  {"id": "c10", "type": "brand", "lang": "hi", "turns": [
+    {"clip": "q36_brand_hinglish.webm", "expect": {"tool": "search", "args": {"category": "beauty"}, "query_has": ["kajal"], "brand": ["revlon"], "forbid": ["platform"]}}]},
+  {"id": "c11", "type": "misheard", "lang": "hi", "turns": [
+    {"clip": "q23_brand_hinglish.webm",
+     "expect": {"tool": "search", "args": {"category": "beauty"}, "query_has": ["lipstick"], "brand": ["kay beauty"], "forbid": ["platform"]},
+     "expect_heard": {"tool": "confirm"}}]},
+  {"id": "c12", "type": "misheard", "lang": "en", "turns": [
+    {"clip": "q39_brand_en.webm",
+     "expect": {"tool": "search", "args": {"category": "footwear"}, "query_has": ["sneaker"], "brand": ["onitsuka"], "forbid": ["platform"]},
+     "expect_heard": {"tool": "confirm"}}]},
+  {"id": "c13", "type": "followup", "lang": "hi", "turns": [
+    {"clip": "q12_noisy_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["blouse", "purple"], "forbid": ["platform", "brand"]}},
+    {"clip": "q16_followup_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["blouse", "green"], "forbid": ["platform", "brand"]}}]},
+  {"id": "c14", "type": "followup", "lang": "hi", "turns": [
+    {"clip": "q12_noisy_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["blouse", "purple"], "forbid": ["platform", "brand"]}},
+    {"clip": "q18_followup_hinglish.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["blouse", "white"], "forbid": ["platform", "brand"]}}]},
+  {"id": "c15", "type": "followup", "lang": "hi", "turns": [
+    {"clip": "q03_simple_hinglish.webm", "expect": {"tool": "search", "args": {"category": "footwear"}, "query_has": [["shoe"]], "brand": ["asics"], "forbid": ["platform"]}},
+    {"clip": "q17_followup_hinglish.webm", "expect": {"tool": "choices"}}]},
+  {"id": "c16", "type": "followup", "lang": "en", "turns": [
+    {"clip": "q27_simple_en.webm", "expect": {"tool": "search", "args": {"category": "clothing"}, "query_has": ["jeans"], "forbid": ["platform", "brand"]}},
+    {"clip": "q19_followup_hinglish.webm", "expect": {"tool": "search", "args": {"page": 2}, "query_has": ["jeans"], "forbid": ["platform", "brand"]}}]},
+  {"id": "c17", "type": "no match", "lang": "hi", "turns": [
+    {"clip": "q41_tricky_hinglish.webm", "expect": {"tool": "search", "args": {"category": "footwear", "max_price": 1500}, "query_has": ["ferrari", "sneaker"], "forbid": ["platform"], "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"}}]},
+  {"id": "c18", "type": "no match", "lang": "hi", "turns": [
+    {"clip": "q42_tricky_hinglish.webm", "expect": {"tool": "search", "args": {"category": "beauty", "max_price": 100}, "query_has": ["concealer"], "brand": ["huda"], "forbid": ["platform"], "reply_matches": "nahi mila|nahi mil|could not find|nothing|no result"}}]},
+  {"id": "c19", "type": "out of scope", "lang": "hi", "turns": [
+    {"clip": "q08_tricky_hinglish.webm", "expect": {"tool": "none"}}]},
+  {"id": "c20", "type": "out of scope", "lang": "en", "turns": [
+    {"clip": "q14_noisy_hinglish.webm", "expect": {"tool": "none"}}]},
+  {"id": "c21", "type": "misheard", "lang": "hi", "turns": [
+    {"text": "K Beauty ki lipstick chahiye", "expect": {"tool": "confirm"}},
+    {"text": "Mujhe Kay Beauty chahiye", "expect": {"tool": "search", "args": {"category": "beauty"}, "query_has": ["lipstick"], "brand": ["kay beauty"], "forbid": ["platform"]}}]}
+]

@@ -78,46 +78,46 @@ const I18N = {
   },
   hi: {
     resultsTitle: 'Results',
-    heroTitle: 'Pia ko bataiye aap kya chahte hain. Sabse achha price woh nikaal degi.',
-    heroSub: 'English ya Hinglish mein bolein. Pia Myntra, Amazon aur Nykaa dekhkar sabse kam daam ke teen options dikhati hai.',
-    howTitle: 'Yeh kaise kaam karta hai',
-    step1T: '1. Bolein', step1P: 'Mic dabayein aur bataiye aapko kya chahiye.',
-    step2T: '2. Pia dekhti hai', step2P: 'Woh stores ko live compare karti hai.',
-    step3T: '3. Aap chunein', step3P: 'Kisi bhi option par tap karke store kholein.',
-    tryTitle: 'Aazma kar dekhein',
+    heroTitle: 'Bas boliye aapko kya chahiye. Pia aapko best price dikha degi.',
+    heroSub: 'English ya Hinglish mein boliye. Pia Myntra, Amazon aur Nykaa check karke sabse kam price wale teen options dikhati hai.',
+    howTitle: 'Kaise kaam karta hai',
+    step1T: '1. Boliye', step1P: 'Mic par tap karke batayein ki aapko kya chahiye.',
+    step2T: '2. Pia search karti hai', step2P: 'Alag-alag stores ke live prices check karti hai.',
+    step3T: '3. Aap choose karein', step3P: 'Kisi bhi option par tap karke seedha store par jayein.',
+    tryTitle: 'Shuru karein',
     lblKey: 'Sarvam API key', phKey: 'Apni Sarvam key paste karein',
     lblName: 'Aapka naam (optional)', phName: 'jaise Neha',
-    lblGender: 'Gender (optional)', gNone: 'Batana nahi chahte', gFemale: 'Female', gMale: 'Male',
-    advanced: 'Advanced', lblVoice: 'Pia ki awaaz', btnStart: 'Shuru karein',
-    keyNote: 'Aapki key sirf is browser tab mein rehti hai aur sirf Sarvam ko bheji jaati hai. Hamare server par save nahi hoti.',
-    getKey: 'Sarvam key kaise paayein', demoLink: 'Recorded demo dekhein (jaldi aa raha hai)',
+    lblGender: 'Gender (optional)', gNone: 'Prefer not to say', gFemale: 'Female', gMale: 'Male',
+    advanced: 'Advanced', lblVoice: 'Pia ki voice', btnStart: 'Start karein',
+    keyNote: 'Aapki key sirf is browser tab mein rehti hai aur sirf Sarvam ko jaati hai. Hamare server par save nahi hoti.',
+    getKey: 'Sarvam key kaise milegi', demoLink: 'Demo video dekhein (jald aa raha hai)',
     github: 'Code aur specs GitHub par dekhein',
-    disclaimer: 'Yeh ek portfolio project hai, Sarvam AI ke saath banaya gaya. Myntra, Amazon ya Nykaa se judaa nahi hai. Prices ek third-party search se aate hain aur store mein alag ho sakte hain.',
+    disclaimer: 'Yeh ek portfolio project hai, jo Sarvam AI ke saath banaya gaya hai. Iska Myntra, Amazon ya Nykaa se koi link nahi hai. Prices third-party search se aate hain, isliye store par alag ho sakte hain.',
     needKey: 'Pehle apni Sarvam key paste karein.',
-    greeting: n => `Namaste${n ? ' ' + n : ''}! Bolkar batayein aap kya dhoondh rahe hain. Main Myntra, Amazon aur Nykaa dekh sakti hoon.`,
+    greeting: n => `Hi${n ? ' ' + n : ''}! Bataiye, aapko kya chahiye? Main Myntra, Amazon aur Nykaa par check kar sakti hoon.`,
     chips: ['2000 ke andar white sneakers', 'pink saree ke liye blouse', 'Huda Beauty ka concealer'],
-    statusReady: 'Bolne ke liye tap karein', statusListen: 'Sun rahi hoon... bhejne ke liye tap karein', statusThink: 'Soch rahi hoon...', statusSpeak: 'Pia bol rahi hai',
-    earlier: n => `Pehle ki baatein (${n})`, replay: 'Yeh jawab sunein', stopPlay: 'Roken',
-    btnMore: 'Agle 3 dikhao', moreText: 'Agle 3 dikhao', changeKey: 'Key badlein',
+    statusReady: 'Bolne ke liye tap karein', statusListen: 'Sun rahi hoon... bhejne ke liye tap karein', statusThink: 'Dekh rahi hoon...', statusSpeak: 'Pia bol rahi hai',
+    earlier: n => `Pehle ke messages (${n})`, replay: 'Reply sunein', stopPlay: 'Stop',
+    btnMore: 'Aur 3 dikhao', moreText: 'Aur 3 dikhao', changeKey: 'Key change karein',
     detailsTitle: 'Details', speedTitle: 'Speed (ms)', checksTitle: 'Automatic checks',
-    refine: [{ label: 'Zyada rating wale', send: 'Zyada rating wale dikhao' }, { label: 'Zyada price wale', send: 'Zyada price wale dikhao' }, { label: 'Naya search', send: 'Mujhe naya search karna hai' }],
+    refine: [{ label: 'Zyada rating wale', send: 'Zyada rating wale dikhao' }, { label: 'Mehenge wale', send: 'Mehenge wale dikhao' }, { label: 'Naya search', send: 'Mujhe naya search karna hai' }],
     confirmSend: c => `Mujhe ${c} chahiye`, confirmOriginal: o => `(Meri pehli request thi: "${o}")`, platformOnly: p => `${p} par hi dikhao`, platformAll: 'Sab platforms', platformAllSend: 'Sab platforms dikhao',
-    details: 'Details', typePh: 'Apni request type karein', typeSend: 'Bhejein', typeToggle: 'Type karein', editHeard: 'Jo suna use theek karein',
-    usageTitle: 'Bolne ki jagah type karna', usageLine: (a, b) => `Type kiya: ${a} · Bolne ke baad theek kiya: ${b}`,
+    details: 'Details', typePh: 'Yahan type karein', typeSend: 'Send', typeToggle: 'Type karein', editHeard: 'Jo suna use edit karein',
+    usageTitle: 'Speech ki jagah type kiya', usageLine: (a, b) => `Type kiya: ${a} · Edit kiya: ${b}`,
     notRated: 'Abhi ratings nahi hain', viewOn: (p, price) => `${p} ${price}`, pniaName: 'Pia',
-    errKeyBad: 'Sarvam key sahi nahi lag rahi. Key badal kar dekhein.',
-    errCredits: 'Sarvam credits ya limit khatam ho gayi lagti hai. Dashboard mein check karein.',
-    errServer: 'Sarvam abhi jawab nahi de raha. Thodi der baad try karein.',
-    errRejected: m => 'Sarvam ne request nahi li' + (m ? ': ' + m : '.'),
-    errNet: 'Internet ya Sarvam se connection nahi ho paaya.',
-    errSearchNet: 'Product search se connection nahi ho paaya.',
-    errSearch: 'Product search mein dikkat aayi. Thodi der baad try karein.',
-    errMic: 'Microphone ki permission nahi mili. Browser mein mic allow karein.',
-    errShort: 'Bahut chhota tha. Dobara bolein.',
-    noSpeech: 'Mujhe kuch sunai nahi diya, kripya dobara bolein.',
-    errGeneric: 'Kuch gadbad ho gayi: ',
-    errPlay: 'Browser ne awaaz chalane se roka. Page par ek baar click karke dobara try karein.',
-    fallback: 'Maaf kijiye, kuch gadbad ho gayi. Kya aap dobara bol sakte hain?',
+    errKeyBad: 'Sarvam key kaam nahi kar rahi. Dusri key try karein.',
+    errCredits: 'Sarvam ke credits ya limit khatam ho gaye lagte hain. Dashboard mein check karein.',
+    errServer: 'Sarvam abhi respond nahi kar raha. Thodi der baad try karein.',
+    errRejected: m => 'Sarvam ne request accept nahi ki' + (m ? ': ' + m : '.'),
+    errNet: 'Internet ya Sarvam se connect nahi ho paaya.',
+    errSearchNet: 'Product search se connect nahi ho paaya.',
+    errSearch: 'Product search mein problem aayi. Thodi der baad try karein.',
+    errMic: 'Mic ki permission nahi mili. Browser mein mic allow karein.',
+    errShort: 'Awaaz bahut chhoti thi. Dobara boliye.',
+    noSpeech: 'Mujhe kuch sunai nahi diya. Ek baar phir se boliye.',
+    errGeneric: 'Kuch problem aa gayi: ',
+    errPlay: 'Browser ne audio block kar diya. Page par ek baar click karke phir try karein.',
+    fallback: 'Sorry, kuch problem aa gayi. Kya aap ek baar phir bol sakte hain?',
   },
 };
 const t = (k, ...a) => { const v = (I18N[S.lang] || I18N.hi)[k]; return typeof v === 'function' ? v(...a) : v ?? k; };
@@ -291,12 +291,12 @@ function wording() {
 - Not shopping: "I can only help with finding fashion and beauty products. What would you like to look for?"
 - Brand check: "Did you mean {candidates}?"`;
   return `Use these sentence patterns and fill in the gaps. Do not invent other forms, and never use the word "dhoondh"; say "search" or "dekh".
-- Results: "Sabse kam daam {short_name} ka hai, {price} rupaye mein {platform} par, rating {rating}. Aap pick kijiye ya aur dekhein?"
-- No match: "Sorry, mujhe '{searched_for}' ke liye kuch nahi mila. Kya aap rang ya budget badalna chahenge?"
-- Nothing on the chosen platform: "{platform} par yeh nahi mila, lekin {platforms} par mila hai. Kya main dikhaun?"
-- Vague request: "Aap kya chahenge: zyada rating wale, zyada price wale, ya naya search?"
-- Not shopping: "Main sirf fashion aur beauty products search karne mein madad kar sakti hoon. Aap kya dekhna chahenge?"
-- Brand check: "Aap {candidates} mein se kaunsa keh rahe hain?"
+- Results: "Sabse kam price {short_name} ka hai: {platform} par {price} rupaye, rating {rating}. Kaunsa pick karna hai, ya aur options dikhaun?"
+- No match: "Sorry, mujhe '{searched_for}' ke liye kuch nahi mila. Kya aap colour ya budget change karna chahenge?"
+- Nothing on the chosen platform: "{platform} par yeh nahi mila, lekin {platforms} par available hai. Wo dikhaun?"
+- Vague request: "Aap kya chahenge: zyada rating wale, mehenge wale, ya naya search?"
+- Not shopping: "Main sirf fashion aur beauty products search karne mein help kar sakti hoon. Aap kya dekhna chahenge?"
+- Brand check: "Aapka matlab kaunsa hai: {candidates}?" (agar ek hi candidate ho: "Kya aapka matlab {candidate} hai?")
 Grammar: Pia is female and speaks about herself in feminine forms. Pia never offers to do something herself that she cannot do, such as trying another product or brand on her own. Address the user with neutral polite forms like "chahenge" and "dekhein".`;
 }
 
@@ -316,6 +316,8 @@ Style:
 
 Rules:
 - For any product request, call search_products. Set brand and platform ONLY if the user said them. If the user gives a colour, put it in the query, but never claim that a result is that colour.
+- Search first. When the user has named a brand, a product type or a category, search with what you have: do not ask what kind of item they want ("Zara jaise kapde" means search clothing like Zara). Ask a question only when the request has nothing at all to search.
+- Never drop a brand or product word the user said, even one you do not recognise (for example Ferrari or Hush Puppies): put it in the brand field or in the query.
 - The screen already shows all results. Speak only about the first result, in ONE short sentence: its short_name (never read a full product title), its lowest price and platform, and its rating. Then invite the user to pick one or ask for more. Say "lowest listed price", never "cheapest overall". If the rating is null, say "abhi iske ratings nahi hain". Use only numbers that appear in the tool result. The whole reply must stay under 30 words.
 - If platforms_failed is not empty, add one short line saying those platforms did not respond this time.
 - If status is no_match, say sorry, that you found nothing for what was searched (repeat it), and ask whether they would like to change the colour or the budget. If available_elsewhere is present, instead say there is nothing on the platform they asked for, but there are results on the platforms listed there, and ask if they want to see them.
@@ -453,7 +455,7 @@ function withLangReminder(msgs) {
 }
 
 /* ---------------- audio: the searching line and Pia's replies ---------------- */
-const CUES = { hi: 'एक मिनट, ढूँढ रही हूँ।', en: 'One moment, searching for you.' };
+const CUES = { hi: 'एक सेकंड, देख रही हूँ।', en: 'One moment, searching for you.' };
 function preloadCues() {
   S.cues = {};
   for (const [k, text] of Object.entries(CUES)) {
