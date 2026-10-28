@@ -196,7 +196,8 @@ def repair_query(query, brands, threshold=0.8):
             # similar length too: stops a common word like "beauty" being swapped for "Kay Beauty"
             ratio, best = max(((SequenceMatcher(None, w, nb).ratio(), nb) for nb in brands
                                if len(nb) >= 4 and min(len(w), len(nb)) / max(len(w), len(nb)) >= 0.75), default=(0, None))
-            if best and ratio >= threshold:
+            # a correction in the 0.8 band must keep the first letter ('Libus' -> 'Libas' yes, 'Mama's' -> 'Vamas' no)
+            if best and ratio >= threshold and (w[0] == best[0] or ratio >= 0.9):
                 fixes.append({"heard": window, "brand": brands[best], "score": round(ratio, 2)})
                 used.update(range(i, i + n))
     new = query

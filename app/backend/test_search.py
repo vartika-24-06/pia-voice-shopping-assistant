@@ -84,3 +84,10 @@ print("korean lipstick groups:", [(x["brand"], x["display_name"][:30]) for x in 
 assert all("swiss" not in x["brand"].lower() for x in kg)
 assert all(is_korean(x["best"]) for x in kg)
 print("korean check ok")
+
+# 13. Round 2 findings: a near-miss is repaired, a lookalike of a different brand is not
+fixed, fx = repair_query("Libus ka kurta set chahiye", qc.BRANDS)
+assert fixed.startswith("Libas"), fixed
+fixed, fx = repair_query("Mama's ka face wash dikhao", qc.BRANDS)
+assert fixed == "Mama's ka face wash dikhao" and not fx, (fixed, fx)
+print("round 2 brand repair checks ok")
