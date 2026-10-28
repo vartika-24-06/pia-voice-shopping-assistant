@@ -58,6 +58,7 @@ Offline checks (no credits used): `python test_search.py` in `app/backend`, whic
 - Colour is not verified in results (the data has no colour field).
 - Many items have no ratings; unrated items appear only when too few rated ones qualify.
 - Indian-pronounced brand names are the main speech-recognition error.
+- The speech evaluation uses one speaker (the author) with background noise from a fan, so its accuracy figures are an estimate for one voice, not for all users.
 - No pincode or delivery check.
 - Prices come from a third-party search API and can change.
 

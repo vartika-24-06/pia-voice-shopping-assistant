@@ -311,7 +311,8 @@ def write_report(config, rows):
     L = [f"# Speech evaluation: {config}", "",
          f"Run on {date.today().isoformat()} with {len(rows)} clips ({held['clips']} held-out). Setup: `{json.dumps(stt_check.CONFIGS[config])}`.",
          "Scoring rules: agreed spelling variants count as correct (`brand_variants.json`); hesitations in what was said are ignored; "
-         "numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).", "",
+         "numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).",
+         "**Limitation:** all clips are one speaker (the PM) with a fan running; the figures describe one voice and one accent, not all users.", "",
          "## Summary", "", "| Measure | All clips | Held-out only |", "|---|---|---|",
          f"| Brand accuracy (exact or agreed variant) | {brand_rate(allx)} | {brand_rate(held)} |",
          f"| Brands: exact / variant / needs confirm / missed | {allx['brand_exact']} / {allx['brand_variant']} / {allx['brand_confirm']} / {allx['brand_miss']} | {held['brand_exact']} / {held['brand_variant']} / {held['brand_confirm']} / {held['brand_miss']} |",

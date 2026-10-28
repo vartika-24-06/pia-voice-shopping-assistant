@@ -2,6 +2,7 @@
 
 Run on 2026-10-28 with 41 clips (13 held-out). Setup: `{"model": "saaras:v3", "mode": "translit", "language_code": "unknown"}`.
 Scoring rules: agreed spelling variants count as correct (`brand_variants.json`); hesitations in what was said are ignored; numbers are compared as digits; word error rate is reported but not used as a pass mark (Hinglish spelling varies).
+**Limitation:** all clips are one speaker (the PM) with a fan running; the figures describe one voice and one accent, not all users.
 
 ## Summary
 

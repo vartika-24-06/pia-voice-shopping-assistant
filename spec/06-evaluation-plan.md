@@ -172,3 +172,12 @@ Reading: the production setup is clearly the best for a Roman-letter search. Bra
 
 **Mechanics:** one script reads the transcripts and the variants file, runs a configuration, labels errors, and writes a dated markdown report to `tools/eval/results/`. Each run records the configuration, so changes can be compared with the baseline.
 
+## 10. Known limitations of this evaluation
+
+1. **Single speaker.** All 41 clips are one person's voice (the PM's), with a fan running in the background. No other speaker, accent or microphone was available. Every speech figure (brand accuracy 67%, product words 91%, and the pipeline results on recognised text) therefore describes one voice and one accent. Differences between speakers, accents, microphones and noise are not measured, and the real error rate for the target users is likely higher. *(Recorded 2026-10-28; first fix: record two or more other speakers.)*
+2. **Clips were chosen by the PM,** including the brands, so the brand set is not a random sample of what shoppers ask for.
+3. **Small sample:** 41 clips and 27 brand mentions. A difference of a few points is within noise; treat each figure as an estimate, not a measurement.
+4. **Dropped and inserted words are barely tested:** only one dropped word appeared in 41 clips, so no conclusion about dropped words is possible yet.
+5. **The model is not deterministic:** the pipeline results are reported over repeated runs where possible, and a single run can differ.
+6. **The test search and voice are simulated** in the pipeline harness (no live search, no real speech output), so it measures understanding and replies, not search quality or how Pia sounds.
+
